@@ -22,6 +22,8 @@ export class TestRunComponent {
     testCaseCount: number;
     sendData = true;
     totalTestCases = 0;
+    tempTestResults: TestResult[] = [];
+
 
     constructor(
         private testRunsService: TestRunsService,
@@ -82,19 +84,30 @@ export class TestRunComponent {
             testCase.testResult.status = 0;
         }
 
+        testCase.testResult.index = this.testResults.indexOf(testCase.testResult);
+
+        const isInQueue = this.tempTestResults.find(result => result.id === testCase.testResult.id);
+        if (!!isInQueue) {
+            this.tempTestResults.splice(this.tempTestResults.find(isInQueue), 0)
+        }
+        this.tempTestResults.push(testCase.testResult);
+
         if (this.sendData) {
             this.sendData = false;
 
             setTimeout(() => {
-                this.testResultsService.upsertTestResult(testCase.testResult)
-                    .subscribe(testResult => {
-                        const index = this.testResults.indexOf(testCase.testResult);
-                        if (index > -1) {
-                            this.testResults.splice(index, 0)
-                        }
-                        this.testResults.push(testResult)
+                this.testResultsService.upsertTestResult(this.tempTestResults)
+                    .subscribe(responseArr => {
+                        responseArr.forEach((res) => {
+
+                            if (testCase.testResult.index > -1) {
+                                this.testResults.splice(testCase.testResult.index, 0)
+                            }
+                            this.testResults.push(res)
+                        })
                     });
                 this.sendData = true;
+                this.tempTestResults = [];
             }, 1000);
         }
     }

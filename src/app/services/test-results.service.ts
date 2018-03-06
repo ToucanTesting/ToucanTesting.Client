@@ -13,7 +13,7 @@ export class TestResultsService {
         return this.http.get<TestResult[]>(`test-results?testRunId=${testRunId}`);
     }
 
-    public upsertTestResult(result: TestResult): Observable<TestResult> {
-        return this.http.put<TestResult>(`test-results`, result);
+    public upsertTestResult(results: TestResult[]): Observable<TestResult[]> {
+        return this.http.put<TestResult[]>(`test-results`, results);
     }
 }
