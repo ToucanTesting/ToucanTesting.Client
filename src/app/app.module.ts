@@ -1,4 +1,4 @@
-const baseUrl = '//localhost:4200/api/';
+
 import {
   ExpectedResultsService,
   TestSuitesService,
