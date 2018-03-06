@@ -88,7 +88,7 @@ export class TestRunComponent {
 
         const isInQueue = this.tempTestResults.find(result => result.id === testCase.testResult.id);
         if (!!isInQueue) {
-            this.tempTestResults.splice(this.tempTestResults.find(isInQueue), 0)
+            this.tempTestResults.splice(this.tempTestResults.indexOf(this.tempTestResults.find((res) => res.id === isInQueue.id), 0))
         }
         this.tempTestResults.push(testCase.testResult);
 
