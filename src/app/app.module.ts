@@ -11,7 +11,7 @@ import {
 } from '@services';
 
 import { Http, RequestOptions } from '@angular/http';
-import { AuthModule, AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -77,12 +77,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    tokenGetter: (() => localStorage.getItem('access_token'))
-  }), http, options);
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,7 +98,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ],
   entryComponents: [CreateDialog, DeleteDialog],
   imports: [
-    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -141,6 +134,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MatStepperModule,
     CommonModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['localhost:5000']
+      }
+    }),
     FormsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
@@ -160,16 +161,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     TestCasesService,
     TestActionsService,
     AuthService,
-    AUTH_PROVIDERS,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true
-    },
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
     }
   ],
   bootstrap: [AppComponent]

@@ -1,23 +1,19 @@
-import { TestResult, TestCase } from '@models';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AuthHttp } from 'angular2-jwt';
-import { BaseUrl } from './base';
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
+import { TestResult, TestCase } from '@models';
 
 @Injectable()
 export class TestResultsService {
-    constructor(private authHttp: AuthHttp) {
+    constructor(private http: HttpClient) {
 
     }
 
     public getTestResults(testRunId: number): Observable<TestResult[]> {
-        return this.authHttp.get(`${BaseUrl}test-results?testRunId=${testRunId}`)
-            .map(res => res.json());
+        return this.http.get<TestResult[]>(`test-results?testRunId=${testRunId}`);
     }
 
     public upsertTestResult(result: TestResult): Observable<TestResult> {
-        return this.authHttp.put(`${BaseUrl}test-results`, result)
-            .map(res => res.json());
+        return this.http.put<TestResult>(`test-results`, result);
     }
 }
