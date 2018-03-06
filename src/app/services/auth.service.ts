@@ -19,6 +19,7 @@ export class AuthService {
   constructor(public router: Router) {}
 
   public login(): void {
+    console.log(this.auth0.redirectUri);
     this.auth0.authorize();
   }
 

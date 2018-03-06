@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: '//tucantesting.com/',
+  baseUrl: 'http://tucantesting.com/',
   apiUrl: '//tucantesting.com/api/'
 };
