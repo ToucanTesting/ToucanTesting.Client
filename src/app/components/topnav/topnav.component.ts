@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@services';
+import { AuthService } from '../../services';
 
 @Component({
   selector: 'tt-topnav',
@@ -7,19 +7,12 @@ import { AuthService } from '@services';
   styleUrls: ['./topnav.component.scss']
 })
 export class TopnavComponent implements OnInit {
-  profile: any;
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {
+    auth.handleAuthentication();
+  }
 
   ngOnInit() {
-    if (this.auth.userProfile) {
-      this.profile = this.auth.userProfile;
-      console.log(this.profile)
-    } else {
-      this.auth.getProfile((err, profile) => {
-        this.profile = profile;
-      });
-    }
   }
 
 }

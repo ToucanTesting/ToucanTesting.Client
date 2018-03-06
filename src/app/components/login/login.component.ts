@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@services';
 
 @Component({
   selector: 'tt-login',
@@ -8,8 +7,7 @@ import { AuthService } from '@services';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth: AuthService) {
-    auth.handleAuthentication();
+  constructor() {
   }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@services';
+import { AuthService } from './services';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -8,5 +8,5 @@ import { AuthService } from '@services';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    constructor(private auth: AuthService) {}
+    constructor(public auth: AuthService) { }
 }

@@ -61,7 +61,6 @@ export class TestRunComponent {
                 this.testResultsService.getTestResults(this.testRunId)
                     .subscribe(testResults => {
                         if (testResults.length > 0) {
-                            console.log(testResults)
                             this.testResults = testResults;
                             this.getTestModuleTestResults(testModule);
                         }

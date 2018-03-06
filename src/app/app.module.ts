@@ -1,3 +1,4 @@
+const baseUrl = '//localhost:4200/api/';
 import {
   ExpectedResultsService,
   TestSuitesService,
@@ -9,6 +10,8 @@ import {
   AuthService
 } from '@services';
 
+import { Http, RequestOptions } from '@angular/http';
+import { AuthModule, AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -74,6 +77,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
 
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenGetter: (() => localStorage.getItem('access_token'))
+  }), http, options);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +104,7 @@ import { LoginComponent } from './components/login/login.component';
   ],
   entryComponents: [CreateDialog, DeleteDialog],
   imports: [
+    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -150,10 +160,16 @@ import { LoginComponent } from './components/login/login.component';
     TestCasesService,
     TestActionsService,
     AuthService,
+    AUTH_PROVIDERS,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true
+    },
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
     }
   ],
   bootstrap: [AppComponent]

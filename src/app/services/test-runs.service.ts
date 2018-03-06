@@ -1,31 +1,38 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { TestRun } from '@models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { AuthHttp } from 'angular2-jwt';
+import { BaseUrl } from './base';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TestRunsService {
-    constructor(private http: HttpClient) {
+    constructor(private authHttp: AuthHttp) {
 
     }
 
     public createTestRun(testRun: TestRun): Observable<TestRun> {
-        return this.http.post<TestRun>(`test-runs`, testRun);
+        return this.authHttp.post(`${BaseUrl}test-runs`, testRun)
+            .map(res => res.json());
     }
 
     public getTestRuns(): Observable<TestRun[]> {
-        return this.http.get<TestRun[]>(`test-runs`);
+        return this.authHttp.get(`${BaseUrl}test-runs`)
+            .map(res => res.json());
     }
 
     public getTestRun(id: number): Observable<TestRun> {
-        return this.http.get<TestRun>(`test-runs/${id}`);
+        return this.authHttp.get(`${BaseUrl}test-runs/${id}`)
+            .map(res => res.json());
     }
 
     public updateTestRun(testRun: TestRun): Observable<TestRun> {
-        return this.http.put<TestRun>(`test-runs/${testRun.id}`, testRun)
+        return this.authHttp.put(`${BaseUrl}test-runs/${testRun.id}`, testRun)
+            .map(res => res.json());
     }
 
     public deleteTestRun(id: number) {
-        return this.http.delete(`test-runs/${id}`);
+        return this.authHttp.delete(`${BaseUrl}test-runs/${id}`)
+            .map(res => res.json());
     }
 }

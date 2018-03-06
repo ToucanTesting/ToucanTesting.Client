@@ -1,31 +1,37 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { TestSuite } from '@models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { AuthHttp } from 'angular2-jwt';
+import { BaseUrl } from './base';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TestSuitesService {
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(
+        private authHttp: AuthHttp
+    ) { }
 
     public createTestSuites(testSuite: TestSuite): Observable<TestSuite> {
-        return this.http.post<TestSuite>(`test-suites`, testSuite);
+        return this.authHttp.post(`${BaseUrl}test-suites`, testSuite)
+            .map(res => res.json());
     }
 
     public getTestSuites(): Observable<TestSuite[]> {
-        return this.http.get<TestSuite[]>(`test-suites`);
+        return this.authHttp.get(`${BaseUrl}test-suites`)
+            .map(res => res.json());
     }
 
     public getTestSuite(id: number): Observable<TestSuite> {
-        return this.http.get<TestSuite>(`test-suites/${id}`);
+        return this.authHttp.get(`${BaseUrl}test-suites/${id}`)
+            .map(res => res.json());
     }
 
     public updateTestSuite(testSuite: TestSuite): Observable<TestSuite> {
-        return this.http.put<TestSuite>(`test-suites/${testSuite.id}`, testSuite)
+        return this.authHttp.put(`${BaseUrl}test-suites/${testSuite.id}`, testSuite)
+            .map(res => res.json());
     }
 
     public deleteTestSuite(id: number) {
-        return this.http.delete(`test-suites/${id}`);
+        return this.authHttp.delete(`${BaseUrl}test-suites/${id}`);
     }
 }

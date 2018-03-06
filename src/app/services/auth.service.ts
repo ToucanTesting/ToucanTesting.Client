@@ -5,35 +5,20 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
-  userProfile: any;
+
   auth0 = new auth0.WebAuth({
-    clientID: 'Vq9BKEQbTbdPBZGBoqKoHdZYhZvJTuIE',
+    clientID: 'vJP5mgf5wTdsRCfmfxwjpYsxqswwIJdT',
     domain: 'tucantesting.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://tucantesting.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/test-suites',
+    audience: 'https://api.tucantesting.com',
+    redirectUri: 'http://localhost:4200/',
     scope: 'openid'
   });
 
-  constructor(public router: Router) { }
+  constructor(public router: Router) {}
 
   public login(): void {
     this.auth0.authorize();
-  }
-
-  public getProfile(cb): void {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('Access Token must exist to fetch profile');
-    }
-
-    const self = this;
-    this.auth0.client.userInfo(accessToken, (err, profile) => {
-      if (profile) {
-        self.userProfile = profile;
-      }
-      cb(err, profile);
-    });
   }
 
   public handleAuthentication(): void {
@@ -41,9 +26,9 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.router.navigate(['/test-suites']);
+        this.router.navigate(['/']);
       } else if (err) {
-        this.router.navigate(['/test-sutes']);
+        this.router.navigate(['/']);
         console.log(err);
       }
     });

@@ -1,18 +1,15 @@
-<div class="container-fluid" *ngIf="!auth.isAuthenticated(); else isAuthenticated">
-<tt-login></tt-login>
-</div>
-<ng-template #isAuthenticated>
-  <tt-topnav>
-  </tt-topnav>
-  <div class="container-fluid">
-
-    <div class='row'>
-      <div class='col-sm-2'>
-        <tt-sidenav></tt-sidenav>
-      </div>
-      <div class='col-sm-10 body-content'>
-        <router-outlet></router-outlet>
-      </div>
+<tt-topnav>
+</tt-topnav>
+<div class="container-fluid" *ngIf="auth.isAuthenticated()">
+  <div class='row'>
+    <div class='col-sm-2'>
+      <tt-sidenav></tt-sidenav>
+    </div>
+    <div class='col-sm-10 body-content'>
+      <router-outlet></router-outlet>
     </div>
   </div>
-</ng-template>
+</div>
+<div *ngIf="!auth.isAuthenticated()">
+<tt-login></tt-login>
+</div>

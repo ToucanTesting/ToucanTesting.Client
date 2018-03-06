@@ -19,6 +19,9 @@
             <li class="nav-item" *ngIf="auth.isAuthenticated()">
                 <a class="nav-link" (click)="auth.logout()">Logout</a>
             </li>
+            <li class="nav-item no-href" *ngIf="!auth.isAuthenticated()">
+                <a class="nav-link" (click)="auth.login()">Login</a>
+            </li>
         </ul>
     </div>
 </nav>
