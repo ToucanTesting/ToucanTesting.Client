@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 })
 export class TestRunsComponent {
     testRuns: TestRun[];
+    panelOpenState: boolean = false;
 
     constructor(
         private testRunsService: TestRunsService,

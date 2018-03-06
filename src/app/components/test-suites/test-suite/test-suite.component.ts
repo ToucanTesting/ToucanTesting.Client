@@ -23,7 +23,6 @@ export class TestSuiteComponent {
     ) { }
 
     ngOnInit() {
-        let id;
         this.route.paramMap
             .subscribe(params => {
                 this.testSuiteId = +params.get('id')!;
@@ -35,7 +34,7 @@ export class TestSuiteComponent {
     }
 
     getTestCases(testModule: TestModule) {
-        let index = this.testModules.indexOf(testModule);
+        const index = this.testModules.indexOf(testModule);
         this.testCasesService
             .getTestCases(testModule)
             .subscribe(testCases => {

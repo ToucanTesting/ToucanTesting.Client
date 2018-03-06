@@ -77,6 +77,17 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
 
+export function gettoken() {
+  return localStorage.getItem('access_token');
+};
+
+const jwtConf = {
+  config: {
+    tokenGetter: gettoken,
+    whitelistedDomains: ['localhost:5000']
+  }
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,14 +145,7 @@ import { LoginComponent } from './components/login/login.component';
     MatStepperModule,
     CommonModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:5000']
-      }
-    }),
+    JwtModule.forRoot(jwtConf),
     FormsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
@@ -174,3 +178,5 @@ export class AppModule { }
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
 }
+
+

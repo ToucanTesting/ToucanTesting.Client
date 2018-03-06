@@ -1,7 +1,7 @@
 import { TestModule, TestCase, TestAction } from '@models';
+import { TestCasesService, TestActionsService } from '@services';
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatGridList } from '@angular/material';
-import { TestCasesService, TestActionsService } from '@services';
 import { DeleteDialog } from '../../../../shared/dialogs/delete/delete-dialog.component';
 import { Priority } from '../../../../../enums';
 
@@ -10,6 +10,7 @@ import { Priority } from '../../../../../enums';
     templateUrl: './test-case.component.html'
 })
 export class TestCaseComponent {
+    panelOpenState: boolean = false;
     @Input() testCase: TestCase;
     @Input() testModule: TestModule;
     isEditing = false;
