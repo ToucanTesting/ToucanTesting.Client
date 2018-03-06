@@ -1,0 +1,13 @@
+<h1>{{suite?.name}}</h1>
+<div *ngFor="let testModule of testModules">
+    <br>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header (click)="(panelOpenState) ? getTestCases(testModule) : false">
+            <mat-panel-title>
+                {{testModule.name}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <test-module [testModule]="testModule"></test-module>
+    </mat-expansion-panel>
+</div>
+<tt-buttons (click)="openCreateDialog()"></tt-buttons>

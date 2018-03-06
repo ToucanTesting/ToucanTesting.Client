@@ -1,0 +1,14 @@
+<ng-container *ngIf="testModule.testCases?.length > 0">
+    <div *ngFor="let testCase of testModule.testCases">
+        <test-case [testCase]="testCase" [testModule]="testModule"></test-case>
+    </div>
+</ng-container>
+<ng-container *ngIf="testModule.testCases?.length < 1">
+    <p>
+        No test cases
+    </p>
+</ng-container>
+<mat-action-row>
+    <button mat-button color="warn" (click)="openDeleteDialog(testModule)">DELETE TEST MODULE</button>
+    <button mat-button color="primary" (click)="openCreateDialog()">ADD TEST CASE</button>
+</mat-action-row>

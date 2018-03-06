@@ -1,0 +1,18 @@
+<div *ngFor="let testSuite of testSuites">
+    <br>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title *ngIf="!isEditing">{{testSuite.name}}</mat-card-title>
+            <mat-form-field *ngIf="isEditing">
+                <input matInput [(ngModel)]="testSuite.name">
+            </mat-form-field>
+        </mat-card-header>
+        <mat-action-row>
+            <button mat-button [routerLink]="['/test-suites', testSuite.id]">VIEW</button>
+            <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
+            <button mat-button *ngIf="isEditing" (click)="renameTestSuite(testSuite); isEditing = !isEditing">SAVE</button>
+            <button mat-button (click)="openDeleteDialog(testSuite)">DELETE</button>
+        </mat-action-row>
+    </mat-card>
+</div>
+<tt-buttons (click)="openCreateDialog()"></tt-buttons>

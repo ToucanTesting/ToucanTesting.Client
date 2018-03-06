@@ -1,0 +1,23 @@
+<h1>{{testRun?.name}}</h1>
+
+<div *ngFor="let testModule of testModules">
+  <br>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header (click)="(panelOpenState) ? getTestResults(testModule) : false">
+      <mat-panel-title>
+        {{testModule.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+
+    <ng-container *ngIf="testModule.testCases?.length > 0">
+      <mat-card class="top-buffer flex-card" *ngFor="let testCase of testModule.testCases">
+        <span>
+          {{testCase.description}}
+        </span>
+        <button class="pull-right result-button" mat-button (click)="changeTestCaseStatus(testCase)">{{testCase.testResult?.status | status}}</button>
+      </mat-card>
+    </ng-container>
+
+  </mat-expansion-panel>
+</div>

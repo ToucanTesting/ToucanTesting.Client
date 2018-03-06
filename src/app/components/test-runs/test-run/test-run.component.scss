@@ -1,0 +1,13 @@
+.pull-right {
+    align-self: flex-end;
+}
+
+.flex-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.result-button {
+    top: -5px;
+}
