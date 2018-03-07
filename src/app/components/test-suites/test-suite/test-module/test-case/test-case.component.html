@@ -1,96 +1,103 @@
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            {{testCase.description}}
-        </mat-panel-title>
-    </mat-expansion-panel-header>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{testCase.description}}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-    <div *ngIf="!isEditing" cols="3" rowHeight="400px" style="display:flex;justify-content:space-between;">
-        <div>
-            <p>{{testCase.priority | priority}}</p>
-            <p>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</p>
-        </div>
-        <div *ngIf="testCase.expectedResults.length > 0">
-            <h4>Expected Results</h4>
-            <ul style="padding-left: 16px;" *ngFor="let expectedResult of testCase.expectedResults">
-                <li value="{{testCase.expectedResults.indexOf(expectedResult) + 1}}">{{expectedResult.description}}</li>
-            </ul>
-        </div>
-        <div *ngIf="testCase.testConditions.length > 0">
-            <h4>Pre-Conditions</h4>
-            <ul style="padding-left: 16px;" *ngFor="let testCondition of testCase.testConditions">
-                <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
-            </ul>
-        </div>
-        <div *ngIf="testCase.testActions.length > 0">
-            <h4>Steps</h4>
-            <ol style="padding-left: 16px;" *ngFor="let testAction of testCase.testActions">
-                <li value="{{testCase.testActions.indexOf(testAction) + 1}}">{{testAction.description}}</li>
-            </ol>
-        </div>
-    </div>
+  <mat-tab-group class="demo-tab-group" *ngIf="!isEditing" cols="3" rowHeight="400px" style="display:flex;justify-content:space-between;">
+    <mat-tab label="Overview">
+      <div>
+        <p>{{testCase.priority | priority}}</p>
+        <p>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</p>
+      </div>
+    </mat-tab>
+    <mat-tab label="Expected Results">
+      <div *ngIf="testCase.expectedResults.length > 0">
+        <ul style="padding-left: 16px;" *ngFor="let expectedResult of testCase.expectedResults">
+          <li value="{{testCase.expectedResults.indexOf(expectedResult) + 1}}">{{expectedResult.description}}</li>
+        </ul>
+      </div>
+      <div *ngIf="!(testCase.expectedResults.length > 0)">
+        <p>No expected results defined</p>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pre-Conditions">
+      <div *ngIf="testCase.testConditions.length > 0">
+        <ul style="padding-left: 16px;" *ngFor="let testCondition of testCase.testConditions">
+          <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
+        </ul>
+      </div>
+      <div *ngIf="testCase.testActions.length > 0">
+        <p>No conditions defined</p>
+      </div>
+    </mat-tab>
+    <mat-tab label="User Actions">
+      <tt-test-actions [testCase]="testCase"></tt-test-actions>
+    </mat-tab>
+  </mat-tab-group>
 
-    <div *ngIf="isEditing">
-        <mat-form-field>
-            <input placeholder="Description" matInput [(ngModel)]="testCase.description">
-        </mat-form-field>
-        <div>
-            <ol>
-                <li *ngFor="let expectedResult of testCase.expectedResults">
-                    <mat-form-field>
-                        <input *ngIf="expectedResult" matInput [(ngModel)]="expectedResult.description">
-                    </mat-form-field>
-                </li>
-                <li>
-                    <mat-form-field>
-                        <input placeholder="Result" matInput (keyup.enter)="createExpectedResult(value.value); value.value = ''" #value>
-                    </mat-form-field>
-                </li>
-            </ol>
-        </div>
-        <div>
-            <ol>
-                <li *ngFor="let testCondition of testCase.testConditions">
-                    <mat-form-field>
-                        <input *ngIf="testCondition" matInput [(ngModel)]="testCondition.description">
-                    </mat-form-field>
-                </li>
-                <li>
-                    <mat-form-field>
-                        <input placeholder="Condition" matInput (keyup.enter)="createTestCondition(value.value); value.value = ''" #value>
-                    </mat-form-field>
-                </li>
-            </ol>
-        </div>
-        <div>
-            <ol>
-                <li *ngFor="let testAction of testCase.testActions">
-                    <mat-form-field>
-                        <input *ngIf="testAction" matInput [(ngModel)]="testAction.description">
-                    </mat-form-field>
-                </li>
-                <li>
-                    <mat-form-field>
-                        <input placeholder="Step" matInput (keyup.enter)="createTestAction(value.value); value.value = ''" #value>
-                    </mat-form-field>
-                </li>
-            </ol>
-        </div>
-        <p>
-            <mat-checkbox [(ngModel)]="testCase.isAutomated">Automated</mat-checkbox>
-        </p>
-        <mat-form-field>
-            <mat-select placeholder="Priority" [(ngModel)]="testCase.priority">
-                <mat-option [value]="priorityOptions.Low">Low</mat-option>
-                <mat-option [value]="priorityOptions.Medium">Medium</mat-option>
-                <mat-option [value]="priorityOptions.High">High</mat-option>
-                <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
-            </mat-select>
-        </mat-form-field>
+  <div *ngIf="isEditing" rowHeight="400px" style="display:flex;justify-content:space-between;">
+    <mat-form-field>
+      <input placeholder="Description" matInput [(ngModel)]="testCase.description">
+    </mat-form-field>
+    <div>
+      <ol>
+        <li *ngFor="let expectedResult of testCase.expectedResults">
+          <mat-form-field>
+            <input *ngIf="expectedResult" matInput [(ngModel)]="expectedResult.description">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input placeholder="Result" matInput (keyup.enter)="createExpectedResult(value.value); value.value = ''" #value>
+          </mat-form-field>
+        </li>
+      </ol>
     </div>
-    <mat-action-row>
-        <button mat-button color="warn" (click)="openDeleteDialog(testCase)">DELETE CASE</button>
-        <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
-        <button mat-button *ngIf="isEditing" (click)="updateTestCase(testCase); isEditing = !isEditing">SAVE</button>
-    </mat-action-row>
+    <div>
+      <ol>
+        <li *ngFor="let testCondition of testCase.testConditions">
+          <mat-form-field>
+            <input *ngIf="testCondition" matInput [(ngModel)]="testCondition.description">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input placeholder="Condition" matInput (keyup.enter)="createTestCondition(value.value); value.value = ''" #value>
+          </mat-form-field>
+        </li>
+      </ol>
+    </div>
+    <div>
+      <ol>
+        <li *ngFor="let testAction of testCase.testActions">
+          <mat-form-field>
+            <input *ngIf="testAction" matInput [(ngModel)]="testAction.description">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input placeholder="Step" matInput (keyup.enter)="createTestAction(value.value); value.value = ''" #value>
+          </mat-form-field>
+        </li>
+      </ol>
+    </div>
+    <p>
+      <mat-checkbox [(ngModel)]="testCase.isAutomated">Automated</mat-checkbox>
+    </p>
+    <mat-form-field>
+      <mat-select placeholder="Priority" [(ngModel)]="testCase.priority">
+        <mat-option [value]="priorityOptions.Low">Low</mat-option>
+        <mat-option [value]="priorityOptions.Medium">Medium</mat-option>
+        <mat-option [value]="priorityOptions.High">High</mat-option>
+        <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-action-row>
+    <button mat-button color="warn" (click)="openDeleteDialog(testCase)">DELETE CASE</button>
+    <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
+    <button mat-button *ngIf="isEditing" (click)="updateTestCase(testCase); isEditing = !isEditing">SAVE</button>
+  </mat-action-row>
 </mat-expansion-panel>

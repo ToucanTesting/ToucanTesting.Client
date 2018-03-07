@@ -10,7 +10,7 @@ export class TestActionsService {
     }
 
     public getTestActions(testModule: TestModule, testCase: TestCase): Observable<TestAction[]> {
-        return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-actions`)
+        return this.http.get<TestAction[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-actions`)
     }
 
     public createTestAction(testAction: TestAction): Observable<TestAction> {
@@ -25,9 +25,9 @@ export class TestActionsService {
     //     return this.http.get<TestAction>(`${getBaseUrl()}api/test-actions/${id}`);
     // }
 
-    // public updateTestAction(testAction: TestAction): Observable<TestAction> {
-    //     return this.http.put<TestAction>(`${getBaseUrl()}api/test-actions/${testAction.id}`, testAction)
-    // }
+    public updateTestAction(testAction: TestAction): Observable<TestAction> {
+        return this.http.put<TestAction>(`test-actions/${testAction.id}`, testAction)
+    }
 
     // public deleteTestAction(id: number) {
     //     return this.http.delete(`${getBaseUrl()}api/test-actions/${id}`);

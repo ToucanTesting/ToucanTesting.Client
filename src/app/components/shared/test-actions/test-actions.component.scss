@@ -1,0 +1,15 @@
+mat-card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 2px;
+}
+
+.pull-right {
+    align-self: flex-end;
+}
+
+.flex-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

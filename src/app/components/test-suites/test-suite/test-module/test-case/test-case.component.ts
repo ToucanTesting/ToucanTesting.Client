@@ -7,7 +7,8 @@ import { Priority } from '../../../../../enums';
 
 @Component({
     selector: 'test-case',
-    templateUrl: './test-case.component.html'
+    templateUrl: './test-case.component.html',
+    styleUrls: ['./test-case.component.scss']
 })
 export class TestCaseComponent {
     panelOpenState: boolean = false;
@@ -41,16 +42,6 @@ export class TestCaseComponent {
                 if (index > -1) {
                     this.testModule.testCases.splice(index, 1);
                 }
-            })
-    }
-
-    createTestAction(description: string) {
-        let testAction = new TestAction();
-        testAction.description = description;
-        testAction.testCaseId = this.testCase.id;
-        this.testActionsService.createTestAction(testAction)
-            .subscribe(success => {
-                this.testCase.testActions.push(testAction)
             })
     }
 }

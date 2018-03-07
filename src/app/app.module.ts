@@ -76,6 +76,9 @@ import { APIInterceptor } from './services/api-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { TestActionsComponent } from './components/shared/test-actions/test-actions.component';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -106,6 +109,9 @@ const jwtConf = {
     PriorityPipe,
     TopnavComponent,
     LoginComponent,
+    ReportsComponent,
+    TestActionsComponent,
+    OrderByPipe
   ],
   entryComponents: [CreateDialog, DeleteDialog],
   imports: [
@@ -153,6 +159,7 @@ const jwtConf = {
       { path: 'test-suites', component: TestSuitesComponent },
       { path: 'test-runs', component: TestRunsComponent },
       { path: 'test-runs/:id', component: TestRunComponent },
+      { path: 'reports', component: ReportsComponent },
       { path: '**', redirectTo: 'suites' }
     ])
   ],
