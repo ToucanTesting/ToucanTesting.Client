@@ -1,7 +1,7 @@
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{testCase.description}}
+      {{testCase.description}} <span *ngIf="testCase.bugId" matTooltip="{{testCase.bugId}}"><mat-icon >bug_report</mat-icon></span>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
@@ -28,7 +28,7 @@
           <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
         </ul>
       </div>
-      <div *ngIf="testCase.testActions.length > 0">
+      <div *ngIf="!(testCase.testActions.length > 0)">
         <p>No conditions defined</p>
       </div>
     </mat-tab>

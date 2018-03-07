@@ -1,3 +1,11 @@
-<p>
-  issues works!
-</p>
+<ng-container *ngFor="let issue of testCases">
+  <mat-card class="flex-card">
+    <span>
+      <strong>{{issue.bugId}}</strong> {{issue.description}}</span>
+    <span class="pull-right">
+      <button mat-button (click)="removeIssue(issue)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+  </mat-card>
+</ng-container>

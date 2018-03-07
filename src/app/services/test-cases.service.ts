@@ -16,6 +16,10 @@ export class TestCasesService {
     return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
   }
 
+  public getIssues(): Observable<TestCase[]> {
+    return this.http.get<TestCase[]>(`test-cases?issuesOnly=true`)
+  }
+
   public addTestCase(testCase: TestCase): Observable<TestCase> {
     const res = this.http.post<TestCase>(`test-cases`, testCase);
     return res;
