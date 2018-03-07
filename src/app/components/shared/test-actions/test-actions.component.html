@@ -1,11 +1,12 @@
 <div *ngIf="testCase.testConditions.length > 0">
   <br>
-  <ng-container *ngFor="let testAction of testCase.testActions | orderBy:'sequence':true">
+  <ng-container *ngFor="let testAction of testCase.testActions">
     <mat-card *ngIf="!testAction.isEditing" class="flex-card">
           <span (click)="blurOthers();testAction.isEditing = true"><strong>{{testAction.sequence}}.</strong> {{testAction.description}}</span>
           <span class="pull-right">
             <button *ngIf="testAction.sequence > 1" class="result-button" mat-button (click)="moveUp(testAction)"><mat-icon>vertical_align_top</mat-icon></button>
             <button *ngIf="testAction.sequence < testCase.testActions.length" class="result-button" mat-button (click)="moveDown(testAction)"><mat-icon>vertical_align_bottom</mat-icon></button>
+            <button mat-button (click)="deleteTestAction(testAction)"><mat-icon>delete</mat-icon></button>
           </span>
     </mat-card>
     <mat-form-field style="width:400px" *ngIf="testAction.isEditing">

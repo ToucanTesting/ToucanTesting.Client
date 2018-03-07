@@ -28,7 +28,7 @@ export class TestCaseComponent {
     }
 
     openDeleteDialog(testCase: TestCase): void {
-        let dialogRef = this.dialog.open(DeleteDialog, { data: { title: testCase.description } });
+        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testCase.description } });
 
         dialogRef.afterClosed().subscribe(res => {
             res ? this.deleteTestCase(testCase) : false;

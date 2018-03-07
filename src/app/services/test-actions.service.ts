@@ -29,7 +29,7 @@ export class TestActionsService {
         return this.http.put<TestAction>(`test-actions/${testAction.id}`, testAction)
     }
 
-    // public deleteTestAction(id: number) {
-    //     return this.http.delete(`${getBaseUrl()}api/test-actions/${id}`);
-    // }
+    public deleteTestAction(id: number) {
+        return this.http.delete(`test-actions/${id}`);
+    }
 }

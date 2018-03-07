@@ -67,4 +67,14 @@ export class TestActionsComponent implements OnInit {
       })
   }
 
+  deleteTestAction(testAction: TestAction) {
+    this.testActionsService.deleteTestAction(testAction.id)
+      .subscribe(response => {
+        const index = this.testCase.testActions.indexOf(testAction, 0);
+        if (index > -1) {
+          this.testCase.testActions.splice(index, 1);
+        }
+      })
+  }
+
 }
