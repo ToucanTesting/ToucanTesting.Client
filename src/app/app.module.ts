@@ -10,13 +10,12 @@ import {
   AuthService
 } from '@services';
 
-import { Http, RequestOptions } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -188,5 +187,3 @@ export class AppModule { }
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
 }
-
-
