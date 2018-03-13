@@ -9,6 +9,10 @@ export class TestCasesService {
 
   }
 
+  public addTestCase(testCase: TestCase): Observable<TestCase> {
+    return this.http.post<TestCase>(`test-cases`, testCase);
+  }
+
   public getTestCases(testModule: TestModule, beforeDate?: Date): Observable<TestCase[]> {
     if (beforeDate) {
       return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases?beforeDate=${beforeDate}`)
@@ -20,10 +24,6 @@ export class TestCasesService {
     return this.http.get<TestCase[]>(`test-cases?issuesOnly=true`)
   }
 
-  public addTestCase(testCase: TestCase): Observable<TestCase> {
-    const res = this.http.post<TestCase>(`test-cases`, testCase);
-    return res;
-  }
 
   public updateTestCase(testCase: TestCase): Observable<TestCase> {
     return this.http.put<TestCase>(`test-cases/${testCase.id}`, testCase)

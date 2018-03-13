@@ -13,6 +13,10 @@ export class TestConditionsService {
         return this.http.post<TestCondition>(`test-conditions`, testCondition);
     }
 
+    public getTestConditions(testModule: TestModule, testCase: TestCase): Observable<TestCondition[]> {
+        return this.http.get<TestCondition[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-conditions`)
+    }
+
     // public getTestConditions(testModule: TestModule, testCase: TestCase): Observable<TestCondition[]> {
     //     return this.http.get<TestCase[]>(`${getBaseUrl()}api/test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-conditions`)
     // }

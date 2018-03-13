@@ -7,40 +7,38 @@ import { TestActionsService } from '@services';
   templateUrl: './test-actions.component.html',
   styleUrls: ['./test-actions.component.scss']
 })
-export class TestActionsComponent implements OnInit {
+export class TestActionsComponent {
   isEditing: boolean = false;
   @Input() testCase: TestCase;
-
-  ngOnInit() {
-
-  }
 
   constructor(
     private testActionsService: TestActionsService
   ) { }
 
   moveUp(testAction: TestAction) {
-    const previous = this.testCase.testActions.find(p => p.sequence === (testAction.sequence - 1));
-    const tempSequence = previous.sequence;
-    previous.sequence = testAction.sequence;
-    testAction.sequence = tempSequence;
+    const prev = this.testCase.testActions.find(ta => ta.sequence === (testAction.sequence - 1));
+    testAction.sequence -= 1;
+    prev.sequence += 1;
 
-    const index = this.testCase.testActions.indexOf(testAction, 0);
+    const index = this.testCase.testActions.indexOf(testAction);
+    this.testCase.testActions.splice(index, 1);
+    this.testCase.testActions.splice(index - 1, 0, testAction);
 
-    this.updateTestAction(previous);
     this.updateTestAction(testAction);
+    this.updateTestAction(prev);
   }
 
   moveDown(testAction: TestAction) {
-    const next = this.testCase.testActions.find(n => n.sequence === (testAction.sequence + 1));
-    const tempSequence = next.sequence;
-    next.sequence = testAction.sequence;
-    testAction.sequence = tempSequence;
+    const next = this.testCase.testActions.find(ta => ta.sequence === (testAction.sequence + 1));
+    testAction.sequence -= 1;
+    next.sequence += 1;
 
-    const index = this.testCase.testActions.indexOf(testAction, 0);
+    const index = this.testCase.testActions.indexOf(testAction);
+    this.testCase.testActions.splice(index, 1);
+    this.testCase.testActions.splice(index + 1, 0, testAction);
 
-    this.updateTestAction(next);
     this.updateTestAction(testAction);
+    this.updateTestAction(next);
   }
 
   updateTestAction(testAction: TestAction) {
@@ -73,6 +71,11 @@ export class TestActionsComponent implements OnInit {
         const index = this.testCase.testActions.indexOf(testAction, 0);
         if (index > -1) {
           this.testCase.testActions.splice(index, 1);
+          this.testCase.testActions
+            .filter((ta) => ta.sequence > testAction.sequence)
+            .forEach(ta => {
+              ta.sequence -= 1;
+            })
         }
       })
   }

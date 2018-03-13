@@ -1,7 +1,7 @@
 import { TestModule, TestCase, TestAction } from '@models';
-import { TestCasesService, TestActionsService } from '@services';
+import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService } from '@services';
 import { Component, Input } from '@angular/core';
-import { MatDialog, MatGridList } from '@angular/material';
+import { MatDialog, MatGridList, MatTabChangeEvent } from '@angular/material';
 import { DeleteDialog } from '../../../../shared/dialogs/delete/delete-dialog.component';
 import { Priority } from '../../../../../enums';
 
@@ -20,6 +20,8 @@ export class TestCaseComponent {
     constructor(
         private testCasesService: TestCasesService,
         private testActionsService: TestActionsService,
+        private expectedResultsService: ExpectedResultsService,
+        private testConditionsService: TestConditionsService,
         public dialog: MatDialog
     ) { }
 
@@ -38,10 +40,55 @@ export class TestCaseComponent {
     deleteTestCase(testCase: TestCase) {
         this.testCasesService.deleteTestCase(testCase.id)
             .subscribe(success => {
-                let index = this.testModule.testCases.indexOf(testCase, 0);
+                const index = this.testModule.testCases.indexOf(testCase, 0);
                 if (index > -1) {
                     this.testModule.testCases.splice(index, 1);
                 }
+            })
+    }
+
+    getData(event: MatTabChangeEvent) {
+        const selectedLabel = event.tab.textLabel;
+
+        switch (selectedLabel) {
+            case 'User Actions':
+                if (this.testCase.testActions.length <= 0) {
+                    this.getTestActions();
+                }
+                break;
+            case 'Expected Results':
+                if (this.testCase.expectedResults.length <= 0) {
+                    this.getTestResults();
+                }
+                break;
+            case 'Pre-Conditions':
+                if (this.testCase.expectedResults.length <= 0) {
+                    this.getTestConditions();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private getTestActions() {
+        this.testActionsService.getTestActions(this.testModule, this.testCase)
+            .subscribe(testActions => {
+                this.testCase.testActions = testActions;
+            })
+    }
+
+    private getTestResults() {
+        this.expectedResultsService.getTestResults(this.testModule, this.testCase)
+            .subscribe(expectedResults => {
+                this.testCase.expectedResults = expectedResults;
+            })
+    }
+
+    private getTestConditions() {
+        this.testConditionsService.getTestConditions(this.testModule, this.testCase)
+            .subscribe(testConditions => {
+                this.testCase.testConditions = testConditions;
             })
     }
 }

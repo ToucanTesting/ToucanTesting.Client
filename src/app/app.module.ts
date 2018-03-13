@@ -79,6 +79,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { TestActionsComponent } from './components/shared/test-actions/test-actions.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { IssuesComponent } from './components/issues/issues.component';
+import { TestConditionsService } from './services';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -173,6 +174,8 @@ const jwtConf = {
     TestModulesService,
     TestCasesService,
     TestActionsService,
+    ExpectedResultsService,
+    TestConditionsService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

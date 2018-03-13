@@ -9,21 +9,13 @@ export class TestActionsService {
 
     }
 
-    public getTestActions(testModule: TestModule, testCase: TestCase): Observable<TestAction[]> {
-        return this.http.get<TestAction[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-actions`)
-    }
-
     public createTestAction(testAction: TestAction): Observable<TestAction> {
         return this.http.post<TestAction>(`test-actions`, testAction);
     }
 
-    // public getTestActions(): Observable<TestAction[]> {
-    //     return this.http.get<TestAction[]>(`${getBaseUrl()}api/test-actions`);
-    // }
-
-    // public getTestAction(id: number): Observable<TestAction> {
-    //     return this.http.get<TestAction>(`${getBaseUrl()}api/test-actions/${id}`);
-    // }
+    public getTestActions(testModule: TestModule, testCase: TestCase): Observable<TestAction[]> {
+        return this.http.get<TestAction[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-actions`)
+    }
 
     public updateTestAction(testAction: TestAction): Observable<TestAction> {
         return this.http.put<TestAction>(`test-actions/${testAction.id}`, testAction)

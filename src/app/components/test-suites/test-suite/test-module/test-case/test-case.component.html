@@ -5,7 +5,13 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <mat-tab-group class="demo-tab-group" *ngIf="!isEditing" cols="3" rowHeight="400px" style="display:flex;justify-content:space-between;">
+  <mat-tab-group 
+  class="demo-tab-group" 
+  *ngIf="!isEditing" 
+  cols="3" 
+  rowHeight="400px" 
+  style="display:flex;justify-content:space-between;"
+  (selectedTabChange)="getData($event)">
     <mat-tab label="Overview">
       <div>
         <p>{{testCase.priority | priority}}</p>

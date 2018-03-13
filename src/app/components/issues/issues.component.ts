@@ -23,7 +23,6 @@ export class IssuesComponent implements OnInit {
   }
 
   removeIssue(testCase: TestCase) {
-    console.log(testCase.bugId)
     testCase.bugId = null;
     this.testCasesService.updateTestCase(testCase)
       .subscribe(response => {

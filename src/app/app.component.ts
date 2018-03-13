@@ -14,7 +14,6 @@ export class AppComponent {
     constructor(public auth: AuthService) { }
 
     ngOnInit() {
-        console.log(environment.baseUrl)
     }
 
 }
