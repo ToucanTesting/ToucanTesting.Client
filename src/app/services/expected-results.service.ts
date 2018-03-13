@@ -12,5 +12,5 @@ export class ExpectedResultsService {
     public getTestResults(testModule: TestModule, testCase: TestCase): Observable<ExpectedResult[]> {
         return this.http.get<ExpectedResult[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/expected-results`)
     }
-    
+
 }

@@ -62,7 +62,7 @@ export class TestCaseComponent {
                 }
                 break;
             case 'Pre-Conditions':
-                if (this.testCase.expectedResults.length <= 0) {
+                if (this.testCase.testConditions.length <= 0) {
                     this.getTestConditions();
                 }
                 break;

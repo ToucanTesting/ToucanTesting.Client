@@ -17,7 +17,7 @@ export class TestRunComponent {
     testRun: TestRun;
     testRunId: number;
     testCases: TestCase[];
-    testResults: TestResult[];
+    testResults: TestResult[] = [];
     testModules: TestModule[];
     testCaseCount: number;
     sendData = true;
