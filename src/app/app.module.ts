@@ -80,6 +80,7 @@ import { TestActionsComponent } from './components/shared/test-actions/test-acti
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { IssuesComponent } from './components/issues/issues.component';
 import { TestConditionsService } from './services';
+import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -113,7 +114,8 @@ const jwtConf = {
     ReportsComponent,
     TestActionsComponent,
     IssuesComponent,
-    OrderByPipe
+    OrderByPipe,
+    PreConditionsComponent
   ],
   entryComponents: [CreateDialog, DeleteDialog],
   imports: [

@@ -1,0 +1,8 @@
+<div *ngIf="testCase.testConditions.length > 0">
+  <ul style="padding-left: 16px;" *ngFor="let testCondition of testCase.testConditions">
+    <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
+  </ul>
+</div>
+<div *ngIf="!(testCase.testConditions.length > 0)">
+  <p>No conditions defined</p>
+</div>

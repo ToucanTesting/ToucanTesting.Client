@@ -29,14 +29,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Pre-Conditions">
-      <div *ngIf="testCase.testConditions.length > 0">
-        <ul style="padding-left: 16px;" *ngFor="let testCondition of testCase.testConditions">
-          <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
-        </ul>
-      </div>
-      <div *ngIf="!(testCase.testActions.length > 0)">
-        <p>No conditions defined</p>
-      </div>
+      <tt-pre-conditions [testCase]="testCase"></tt-pre-conditions>
     </mat-tab>
     <mat-tab label="User Actions">
       <tt-test-actions [testCase]="testCase"></tt-test-actions>
