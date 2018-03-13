@@ -4,8 +4,8 @@
     <mat-card *ngIf="!testAction.isEditing" class="flex-card">
           <span (click)="blurOthers();testAction.isEditing = true"><strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}</span>
           <span class="pull-right">
-            <button *ngIf="testAction.sequence > 1" class="result-button" mat-button (click)="moveUp(testAction)"><mat-icon>vertical_align_top</mat-icon></button>
-            <button *ngIf="testAction.sequence < testCase.testActions.length" class="result-button" mat-button (click)="moveDown(testAction)"><mat-icon>vertical_align_bottom</mat-icon></button>
+            <button *ngIf="testCase.testActions.indexOf(testAction) > 0" class="result-button" mat-button (click)="moveUp(testAction)"><mat-icon>vertical_align_top</mat-icon></button>
+            <button *ngIf="testCase.testActions.indexOf(testAction) < testCase.testActions.length - 1" class="result-button" mat-button (click)="moveDown(testAction)"><mat-icon>vertical_align_bottom</mat-icon></button>
             <button mat-button (click)="deleteTestAction(testAction)"><mat-icon>delete</mat-icon></button>
           </span>
     </mat-card>

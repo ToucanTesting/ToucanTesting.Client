@@ -16,11 +16,14 @@ export class TestActionsComponent {
   ) { }
 
   moveUp(testAction: TestAction) {
-    const prev = this.testCase.testActions.find(ta => ta.sequence === (testAction.sequence - 1));
-    testAction.sequence -= 1;
-    prev.sequence += 1;
-
+    console.log(testAction);
     const index = this.testCase.testActions.indexOf(testAction);
+    const prev = this.testCase.testActions[index - 1];
+    const temp = prev.sequence;
+
+    testAction.sequence = prev.sequence;
+    prev.sequence = temp;
+
     this.testCase.testActions.splice(index, 1);
     this.testCase.testActions.splice(index - 1, 0, testAction);
 
@@ -29,11 +32,13 @@ export class TestActionsComponent {
   }
 
   moveDown(testAction: TestAction) {
-    const next = this.testCase.testActions.find(ta => ta.sequence === (testAction.sequence + 1));
-    testAction.sequence -= 1;
-    next.sequence += 1;
-
     const index = this.testCase.testActions.indexOf(testAction);
+    const next = this.testCase.testActions[index + 1];
+    const temp = next.sequence;
+
+    next.sequence = testAction.sequence;
+    testAction.sequence = temp;
+
     this.testCase.testActions.splice(index, 1);
     this.testCase.testActions.splice(index + 1, 0, testAction);
 
@@ -71,11 +76,6 @@ export class TestActionsComponent {
         const index = this.testCase.testActions.indexOf(testAction, 0);
         if (index > -1) {
           this.testCase.testActions.splice(index, 1);
-          this.testCase.testActions
-            .filter((ta) => ta.sequence > testAction.sequence)
-            .forEach(ta => {
-              ta.sequence -= 1;
-            })
         }
       })
   }
