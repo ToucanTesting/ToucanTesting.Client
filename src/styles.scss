@@ -8,3 +8,16 @@ body {
     background-color: #efefef;
     height: 100%;
 }
+
+.options-dropdown,  {
+    color: #666;
+}
+
+.options-dropdown, .dropdown-item, .clickable-text, .expansion-button {
+    cursor: pointer;
+}
+
+.edit-icon {
+    color: #666;
+    font-size: 16px !important;
+}
