@@ -13,6 +13,7 @@ import { TestSuite } from '@models';
 export class TestSuitesComponent {
     testSuites: TestSuite[];
     isEditing = false;
+    hoverIndex: number | null;
 
     constructor(
         private testSuitesService: TestSuitesService,
@@ -28,6 +29,7 @@ export class TestSuitesComponent {
     }
 
     openDeleteDialog(testSuite: TestSuite): void {
+        console.log('here')
         const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testSuite.name } });
 
         dialogRef.afterClosed().subscribe(res => {

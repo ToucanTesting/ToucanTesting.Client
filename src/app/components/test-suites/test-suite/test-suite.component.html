@@ -1,5 +1,25 @@
+<div id="accordion" *ngFor="let testModule of testModules; let i = index">
+  <div class="card list-group list-group-flush">
+    <div class="list-group-item d-flex justify-content-between align-items-center" id="heading-{{i}}">
+      <span class="">
+        {{testModule.name}}
+      </span>
+      <mat-icon (click)="getTestCases(testModule)" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i">keyboard_arrow_down</mat-icon>
+    </div>
+
+
+    <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
+      <div class="card-body">
+        <test-module [testModule]="testModule"></test-module>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- <h1>{{suite?.name}}</h1> -->
-<div *ngFor="let testModule of testModules">
+<!-- <div *ngFor="let testModule of testModules">
     <br>
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header (click)="(panelOpenState) ? getTestCases(testModule) : false">
@@ -10,4 +30,4 @@
         <test-module [testModule]="testModule"></test-module>
     </mat-expansion-panel>
 </div>
-<tt-buttons (click)="openCreateDialog()"></tt-buttons>
+<tt-buttons (click)="openCreateDialog()"></tt-buttons> -->

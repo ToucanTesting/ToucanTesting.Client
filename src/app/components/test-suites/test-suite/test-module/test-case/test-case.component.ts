@@ -6,7 +6,7 @@ import { DeleteDialog } from '../../../../shared/dialogs/delete/delete-dialog.co
 import { Priority } from '../../../../../enums';
 
 @Component({
-    selector: 'test-case',
+    selector: '[test-case]',
     templateUrl: './test-case.component.html',
     styleUrls: ['./test-case.component.scss']
 })
@@ -14,6 +14,7 @@ export class TestCaseComponent {
     panelOpenState: boolean = false;
     @Input() testCase: TestCase;
     @Input() testModule: TestModule;
+    @Input() testIndex: number;
     isEditing = false;
     priorityOptions = Priority;
 
