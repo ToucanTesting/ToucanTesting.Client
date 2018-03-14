@@ -1,4 +1,21 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<tr class="accordion-toggle">
+  <td *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</td>
+  <td *ngIf="!testCase.lastTested"></td>
+  <td>{{testCase.priority | priority}}</td>
+  <td>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</td>
+  <td>{{testCase.bugId}}</td>
+  <td>{{testCase.description}}</td>
+  <td data-toggle="collapse" [attr.data-target]="'#test-case-' + testIndex"><mat-icon>keyboard_arrow_down</mat-icon></td>
+</tr>
+<tr>
+  <td class="accordian-body collapse" id="test-case-{{testIndex}}" colspan="12">
+    <div>
+      Now You See Me
+    </div>
+  </td>
+</tr>
+
+<!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
       {{testCase.description}} <span *ngIf="testCase.bugId" matTooltip="{{testCase.bugId}}"><mat-icon >bug_report</mat-icon></span>
@@ -92,4 +109,4 @@
     <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
     <button mat-button *ngIf="isEditing" (click)="updateTestCase(testCase); isEditing = !isEditing">SAVE</button>
   </mat-action-row>
-</mat-expansion-panel>
+</mat-expansion-panel> -->

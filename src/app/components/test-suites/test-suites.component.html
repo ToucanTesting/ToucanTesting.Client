@@ -5,7 +5,7 @@
         *ngIf="!testSuite.isEditing" class="clickable-text">{{testSuite.name}}
         <mat-icon class="edit-icon" *ngIf="hoverIndex === i">edit</mat-icon>
       </span>
-      <input class="form-control" *ngIf="testSuite.isEditing" matInput (keyup.enter)="renameTestSuite(testSuite); testSuite.isEditing = !testSuite.isEditing"
+      <input autofocus class="form-control" *ngIf="testSuite.isEditing" matInput (keyup.escape)="testSuite.isEditing = !testSuite.isEditing" (keyup.enter)="renameTestSuite(testSuite); testSuite.isEditing = !testSuite.isEditing"
         [(ngModel)]="testSuite.name" />
       <div class="dropdown">
         <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

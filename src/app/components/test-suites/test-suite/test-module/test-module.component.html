@@ -1,4 +1,23 @@
-<ng-container *ngIf="testModule.testCases?.length > 0">
+<div class="panel panel-default">
+  <div class="panel-body" *ngIf="testModule.testCases?.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 10%">Last Test</th>
+          <th style="width: 10%">Priority</th>
+          <th style="width: 10%">Automated</th>
+          <th style="width: 10%">Issue</th>
+          <th style="width: 55%">Description</th>
+          <th style="width: 5%"></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let testCase of testModule.testCases; let testIndex = index;" test-case [testCase]="testCase" [testModule]="testModule" [testIndex]="testIndex"></tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- <ng-container *ngIf="testModule.testCases?.length > 0">
     <div *ngFor="let testCase of testModule.testCases">
         <test-case [testCase]="testCase" [testModule]="testModule"></test-case>
     </div>
@@ -11,4 +30,4 @@
 <mat-action-row>
     <button mat-button color="warn" (click)="openDeleteDialog(testModule)">DELETE TEST MODULE</button>
     <button mat-button color="primary" (click)="openCreateDialog()">ADD TEST CASE</button>
-</mat-action-row>
+</mat-action-row> -->
