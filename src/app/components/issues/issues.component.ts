@@ -26,7 +26,7 @@ export class IssuesComponent implements OnInit {
     testCase.bugId = null;
     this.testCasesService.updateTestCase(testCase)
       .subscribe(response => {
-        const index = this.testCases.indexOf(testCase, 0);
+        const index = this.testCases.indexOf(testCase);
         if (index > -1) {
           this.testCases.splice(index, 1);
         }

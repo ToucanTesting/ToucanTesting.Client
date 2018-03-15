@@ -82,6 +82,7 @@ import { IssuesComponent } from './components/issues/issues.component';
 import { TestConditionsService } from './services';
 import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
 import { ExpectedResultsComponent } from './components/shared/expected-results/expected-results.component';
+import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -117,7 +118,8 @@ const jwtConf = {
     IssuesComponent,
     OrderByPipe,
     PreConditionsComponent,
-    ExpectedResultsComponent
+    ExpectedResultsComponent,
+    ToolbarComponent
   ],
   entryComponents: [CreateDialog, DeleteDialog],
   imports: [

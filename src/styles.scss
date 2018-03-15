@@ -17,6 +17,14 @@ body {
     cursor: pointer;
 }
 
+.expansion-button.open::after {
+    content: "keyboard_arrow_up";
+}
+
+.expansion-button.close::after {
+    content: "keyboard_arrow_down";
+}
+
 .edit-icon {
     color: #666;
     font-size: 16px !important;

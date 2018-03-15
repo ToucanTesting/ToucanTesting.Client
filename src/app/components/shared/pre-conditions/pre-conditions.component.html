@@ -1,8 +1,20 @@
-<div *ngIf="testCase.testConditions.length > 0">
-  <ul style="padding-left: 16px;" *ngFor="let testCondition of testCase.testConditions">
-    <li value="{{testCase.testConditions.indexOf(testCondition) + 1}}">{{testCondition.description}}</li>
-  </ul>
-</div>
-<div *ngIf="!(testCase.testConditions.length > 0)">
-  <p>No conditions defined</p>
+<br>
+<ng-container *ngFor="let testCondition of testCase.testConditions">
+  <div class="card" *ngIf="testCase.testConditions.length > 0">
+    <div class="card-body">
+      {{testCondition.description}}
+    </div>
+  </div>
+  <div class="card" *ngIf="!testCase.testConditions.length > 0">
+    <div class="card-body">
+      No conditions
+    </div>
+  </div>
+</ng-container>
+<br>
+<div class="input-group mb-3">
+  <input #condition type="text" class="form-control" placeholder="Add a condition" (keyup.enter)="addTestCondition(condition.value);condition.value=''">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" (click)="addTestCondition(condition.value);condition.value=''">Save</button>
+  </div>
 </div>

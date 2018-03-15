@@ -1,112 +1,41 @@
-<tr class="accordion-toggle">
-  <td *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</td>
-  <td *ngIf="!testCase.lastTested"></td>
-  <td>{{testCase.priority | priority}}</td>
-  <td>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</td>
-  <td>{{testCase.bugId}}</td>
-  <td>{{testCase.description}}</td>
-  <td data-toggle="collapse" [attr.data-target]="'#test-case-' + testIndex"><mat-icon>keyboard_arrow_down</mat-icon></td>
-</tr>
-<tr>
-  <td class="accordian-body collapse" id="test-case-{{testIndex}}" colspan="12">
-    <div>
-      Now You See Me
+<!-- Modal -->
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">{{testCase.description.substring(0,75) + "..."}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-  </td>
-</tr>
-
-<!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      {{testCase.description}} <span *ngIf="testCase.bugId" matTooltip="{{testCase.bugId}}"><mat-icon >bug_report</mat-icon></span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-
-  <mat-tab-group 
-  class="demo-tab-group" 
-  *ngIf="!isEditing" 
-  cols="3" 
-  rowHeight="400px" 
-  style="display:flex;justify-content:space-between;"
-  (selectedTabChange)="getData($event)">
-    <mat-tab label="Overview">
-      <div>
-        <p>{{testCase.priority | priority}}</p>
-        <p>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</p>
+    <div class="modal-body">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="expected-tab-{{testIndex}}" data-toggle="tab" href="#expected-{{testIndex}}" role="tab" [attr.aria-controls]="'expected-tab-' + testIndex"
+            aria-selected="true" (click)="getTestResults(testModule, testCase)">Expected Results</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pre-conditions-tab-{{testIndex}}" data-toggle="tab" href="#pre-conditions-{{testIndex}}" role="tab"
+            [attr.aria-controls]="'expected-tab-' + testIndex" aria-selected="false" (click)="getTestConditions(testModule, testCase)">Pre-Conditions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="test-actions-tab-{{testIndex}}" data-toggle="tab" href="#test-actions-{{testIndex}}" role="tab" aria-controls="contact"
+            [attr.aria-controls]="'expected-tab-' + testIndex" aria-selecte="false" (click)="getTestActions(testModule, testCase)">Test Actions</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="expected-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'expected-tab-' + testIndex">
+          <tt-expected-results [testCase]="testCase"></tt-expected-results>
+        </div>
+        <div class="tab-pane fade" id="pre-conditions-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'pre-conditions-' + testIndex">
+          <tt-pre-conditions [testCase]="testCase"></tt-pre-conditions>
+        </div>
+        <div class="tab-pane fade" id="test-actions-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'test-actions-' + testIndex">
+          <tt-test-actions [testCase]="testCase"></tt-test-actions>
+        </div>
       </div>
-    </mat-tab>
-    <mat-tab label="Expected Results">
-      <tt-expected-results [testCase]="testCase"></tt-expected-results>
-    </mat-tab>
-    <mat-tab label="Pre-Conditions">
-      <tt-pre-conditions [testCase]="testCase"></tt-pre-conditions>
-    </mat-tab>
-    <mat-tab label="User Actions">
-      <tt-test-actions [testCase]="testCase"></tt-test-actions>
-    </mat-tab>
-  </mat-tab-group>
-
-  <div *ngIf="isEditing" rowHeight="400px" style="display:flex;justify-content:space-between;">
-    <mat-form-field>
-      <input placeholder="Description" matInput [(ngModel)]="testCase.description">
-    </mat-form-field>
-    <div>
-      <ol>
-        <li *ngFor="let expectedResult of testCase.expectedResults">
-          <mat-form-field>
-            <input *ngIf="expectedResult" matInput [(ngModel)]="expectedResult.description">
-          </mat-form-field>
-        </li>
-        <li>
-          <mat-form-field>
-            <input placeholder="Result" matInput (keyup.enter)="createExpectedResult(value.value); value.value = ''" #value>
-          </mat-form-field>
-        </li>
-      </ol>
     </div>
-    <div>
-      <ol>
-        <li *ngFor="let testCondition of testCase.testConditions">
-          <mat-form-field>
-            <input *ngIf="testCondition" matInput [(ngModel)]="testCondition.description">
-          </mat-form-field>
-        </li>
-        <li>
-          <mat-form-field>
-            <input placeholder="Condition" matInput (keyup.enter)="createTestCondition(value.value); value.value = ''" #value>
-          </mat-form-field>
-        </li>
-      </ol>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
-    <div>
-      <ol>
-        <li *ngFor="let testAction of testCase.testActions">
-          <mat-form-field>
-            <input *ngIf="testAction" matInput [(ngModel)]="testAction.description">
-          </mat-form-field>
-        </li>
-        <li>
-          <mat-form-field>
-            <input placeholder="Step" matInput (keyup.enter)="createTestAction(value.value); value.value = ''" #value>
-          </mat-form-field>
-        </li>
-      </ol>
-    </div>
-    <p>
-      <mat-checkbox [(ngModel)]="testCase.isAutomated">Automated</mat-checkbox>
-    </p>
-    <mat-form-field>
-      <mat-select placeholder="Priority" [(ngModel)]="testCase.priority">
-        <mat-option [value]="priorityOptions.Low">Low</mat-option>
-        <mat-option [value]="priorityOptions.Medium">Medium</mat-option>
-        <mat-option [value]="priorityOptions.High">High</mat-option>
-        <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
-      </mat-select>
-    </mat-form-field>
   </div>
-  <mat-action-row>
-    <button mat-button color="warn" (click)="openDeleteDialog(testCase)">DELETE CASE</button>
-    <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
-    <button mat-button *ngIf="isEditing" (click)="updateTestCase(testCase); isEditing = !isEditing">SAVE</button>
-  </mat-action-row>
-</mat-expansion-panel> -->
+</div>

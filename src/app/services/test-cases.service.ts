@@ -29,7 +29,7 @@ export class TestCasesService {
     return this.http.put<TestCase>(`test-cases/${testCase.id}`, testCase)
   }
 
-  public deleteTestCase(id: number) {
-    return this.http.delete(`test-cases/${id}`);
+  public deleteTestCase(testCase: TestCase) {
+    return this.http.delete(`test-cases/${testCase.id}`);
   }
 }

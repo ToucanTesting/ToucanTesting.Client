@@ -1,8 +1,12 @@
-<div *ngIf="testCase.expectedResults.length > 0">
-  <ul style="padding-left: 16px;" *ngFor="let expectedResult of testCase.expectedResults">
-    <li value="{{testCase.expectedResults.indexOf(expectedResult) + 1}}">{{expectedResult.description}}</li>
-  </ul>
-</div>
-<div *ngIf="!(testCase.expectedResults.length > 0)">
-  <p>No expected results defined</p>
+<div class="top-buffer" *ngFor="let expectedResult of testCase.expectedResults">
+  <div class="card" *ngIf="testCase.expectedResults.length > 0">
+    <div class="card-body">
+      {{expectedResult.description}}
+    </div>
+  </div>
+  <div class="card" *ngIf="!testCase.testConditions.length > 0">
+    <div class="card-body">
+      No expected results defined
+    </div>
+  </div>
 </div>
