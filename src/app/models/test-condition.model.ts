@@ -5,4 +5,4 @@ export class TestCondition extends Base {
     id: number;
     testCaseId?: number;
     description: string;
-}
+};

@@ -1,7 +1,7 @@
 import { TestModule, TestCase, TestAction } from '@models';
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService } from '@services';
 import { Component, Input } from '@angular/core';
-import { MatDialog, MatGridList, MatTabChangeEvent } from '@angular/material';
+import { MatDialog, MatGridList } from '@angular/material';
 import { DeleteDialog } from '../../../../shared/dialogs/delete/delete-dialog.component';
 import { Priority } from '../../../../../enums';
 
@@ -39,7 +39,7 @@ export class TestCaseComponent {
     }
 
     deleteTestCase(testCase: TestCase) {
-        this.testCasesService.deleteTestCase(testCase.id)
+        this.testCasesService.deleteTestCase(testCase)
             .subscribe(success => {
                 const index = this.testModule.testCases.indexOf(testCase, 0);
                 if (index > -1) {
@@ -48,48 +48,31 @@ export class TestCaseComponent {
             })
     }
 
-    getData(event: MatTabChangeEvent) {
-        const selectedLabel = event.tab.textLabel;
-
-        switch (selectedLabel) {
-            case 'User Actions':
-                if (this.testCase.testActions.length <= 0) {
-                    this.getTestActions();
-                }
-                break;
-            case 'Expected Results':
-                if (this.testCase.expectedResults.length <= 0) {
-                    this.getTestResults();
-                }
-                break;
-            case 'Pre-Conditions':
-                if (this.testCase.testConditions.length <= 0) {
-                    this.getTestConditions();
-                }
-                break;
-            default:
-                break;
+    public getTestActions(testModule: TestModule, testCase: TestCase) {
+        if (testCase.testActions.length <= 0) {
+            this.testActionsService.getTestActions(testModule, testCase)
+                .subscribe(testActions => {
+                    this.testCase.testActions = testActions;
+                })
         }
     }
 
-    private getTestActions() {
-        this.testActionsService.getTestActions(this.testModule, this.testCase)
-            .subscribe(testActions => {
-                this.testCase.testActions = testActions;
-            })
+    public getTestResults(testModule: TestModule, testCase: TestCase) {
+        if (testCase.expectedResults.length <= 0) {
+            this.expectedResultsService.getTestResults(testModule, testCase)
+                .subscribe(expectedResults => {
+                    console.log(expectedResults)
+                    this.testCase.expectedResults = expectedResults;
+                })
+        }
     }
 
-    private getTestResults() {
-        this.expectedResultsService.getTestResults(this.testModule, this.testCase)
-            .subscribe(expectedResults => {
-                this.testCase.expectedResults = expectedResults;
-            })
-    }
-
-    private getTestConditions() {
-        this.testConditionsService.getTestConditions(this.testModule, this.testCase)
-            .subscribe(testConditions => {
-                this.testCase.testConditions = testConditions;
-            })
+    public getTestConditions(testModule: TestModule, testCase: TestCase) {
+        if (testCase.testConditions.length <= 0) {
+            this.testConditionsService.getTestConditions(testModule, testCase)
+                .subscribe(testConditions => {
+                    this.testCase.testConditions = testConditions;
+                })
+        }
     }
 }

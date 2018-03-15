@@ -16,7 +16,6 @@ export class TestActionsComponent {
   ) { }
 
   moveUp(testAction: TestAction) {
-    console.log(testAction);
     const index = this.testCase.testActions.indexOf(testAction);
     const prev = this.testCase.testActions[index - 1];
     const temp = prev.sequence;

@@ -1,4 +1,4 @@
-<div *ngIf="testCase.testActions.length > 0">
+<!-- <div *ngIf="testCase.testActions.length > 0">
   <br>
   <ng-container *ngFor="let testAction of testCase.testActions">
     <mat-card *ngIf="!testAction.isEditing" class="flex-card">
@@ -17,4 +17,18 @@
 </div>
 <div *ngIf="!(testCase.testActions.length > 0)">
   <p>No actions defined</p>
-</div>
+</div> -->
+
+<div class="top-buffer" *ngFor="let testAction of testCase.testActions">
+    <div class="card" *ngIf="testCase.testActions.length > 0">
+      <div class="card-body">
+          <span><strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}</span>
+      </div>
+    </div>
+    <div class="card" *ngIf="!testCase.testActions.length > 0">
+      <div class="card-body">
+          No actions defined
+      </div>
+    </div>
+  </div>
+  

@@ -1,10 +1,10 @@
 <div id="accordion" *ngFor="let testModule of testModules; let i = index">
   <div class="card list-group list-group-flush">
     <div class="list-group-item d-flex justify-content-between align-items-center" id="heading-{{i}}">
-      <span class="">
+      <span class="test">
         {{testModule.name}}
       </span>
-      <mat-icon (click)="getTestCases(testModule)" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i">keyboard_arrow_down</mat-icon>
+      <mat-icon class="expansion-button" [ngClass]="(testModule.isExpanded) ? 'open' : 'close'" (click)="getTestCases(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
     </div>
 
 
@@ -15,6 +15,8 @@
     </div>
   </div>
 </div>
+<tt-buttons (click)="openCreateDialog()"></tt-buttons>
+
 
 
 

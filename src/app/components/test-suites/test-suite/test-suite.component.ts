@@ -5,6 +5,7 @@ import { CreateDialog } from '../../shared/dialogs/create/create-dialog.componen
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { DeleteDialog } from '../../shared/dialogs/delete/delete-dialog.component';
 
 @Component({
     selector: 'test-suite',
@@ -43,7 +44,7 @@ export class TestSuiteComponent {
     }
 
     openCreateDialog(): void {
-        let dialogRef = this.dialog.open(CreateDialog, { data: { title: "Add a Test Module", type: DialogType.TestModule } });
+        const dialogRef = this.dialog.open(CreateDialog, { data: { title: "Add a Test Module", type: DialogType.TestModule } });
 
         dialogRef.afterClosed().subscribe(testModule => {
             testModule ? this.createTestModule(testModule) : false;
@@ -53,8 +54,26 @@ export class TestSuiteComponent {
     createTestModule(testModule: TestModule) {
         testModule.testSuiteId = this.testSuiteId;
         this.testModulesService.createTestModule(testModule)
-            .subscribe(testModule => {
-                this.testModules.push(testModule);
+            .subscribe(res => {
+                this.testModules.push(res);
+            })
+    }
+
+    openModuleDeleteDialog(testModule: TestModule): void {
+        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testModule.name } });
+
+        dialogRef.afterClosed().subscribe(res => {
+            res ? this.deleteTestModule(testModule) : false;
+        });
+    }
+
+    deleteTestModule(testModule: TestModule) {
+        this.testModulesService.deleteTestModule(testModule)
+            .subscribe(res => {
+                const index = this.testModules.indexOf(testModule, 0);
+                if (index > -1) {
+                    this.testModules.splice(index, 1);
+                }
             })
     }
 }

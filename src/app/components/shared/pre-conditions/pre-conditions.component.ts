@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestCase } from '@models';
+import { TestCase, TestCondition } from '@models';
+import { TestConditionsService } from '@services';
 
 @Component({
   selector: 'tt-pre-conditions',
@@ -8,9 +9,23 @@ import { TestCase } from '@models';
 })
 export class PreConditionsComponent implements OnInit {
   @Input() testCase: TestCase;
-  constructor() { }
+  constructor(
+    private testConditionsService: TestConditionsService
+  ) { }
 
   ngOnInit() {
+  }
+
+  addTestCondition(description: string) {
+    const testCondition: TestCondition = new TestCondition();
+    testCondition.testCaseId = this.testCase.id
+    testCondition.description = description;
+    console.log(testCondition)
+
+    this.testConditionsService.createTestCondition(testCondition)
+      .subscribe(res => {
+        this.testCase.testConditions.push(res)
+      })
   }
 
 }
