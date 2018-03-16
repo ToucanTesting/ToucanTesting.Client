@@ -62,7 +62,13 @@ export class TestActionsComponent {
     const testAction = new TestAction();
     testAction.description = description;
     testAction.testCaseId = this.testCase.id;
-    testAction.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1 || 0;
+
+    if (this.testCase.testActions[this.testCase.testActions.length - 1].sequence) {
+      testAction.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+    } else {
+      testAction.sequence = 1;
+    }
+
     this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
     this.testActionsService.createTestAction(testAction)
       .subscribe(res => {
