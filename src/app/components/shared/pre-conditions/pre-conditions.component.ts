@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService } from '@services';
+import { TestCondition } from '../../../models';
 
 @Component({
   selector: 'tt-pre-conditions',
@@ -25,6 +26,23 @@ export class PreConditionsComponent implements OnInit {
     this.testConditionsService.createTestCondition(testCondition)
       .subscribe(res => {
         this.testCase.testConditions.push(res)
+      })
+  }
+
+  updateTestCondition(testCondition: TestCondition) {
+    this.testConditionsService
+      .updateTestCondition(testCondition)
+      .subscribe(res => {
+      })
+  }
+
+  deleteTestCondition(testCondition: TestCondition) {
+    this.testConditionsService.deleteTestCondition(testCondition.id)
+      .subscribe(res => {
+        const index = this.testCase.testConditions.indexOf(testCondition, 0);
+        if (index > -1) {
+          this.testCase.testConditions.splice(index, 1);
+        }
       })
   }
 

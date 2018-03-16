@@ -22,6 +22,10 @@ export class TestModulesService {
         return this.http.post<TestModule>(`test-suites/${testModule.testSuiteId}/test-modules`, testModule);
     }
 
+    public updateTestModule(testModule: TestModule): Observable<TestModule> {
+        return this.http.put<TestModule>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}`, testModule)
+    }
+
     public deleteTestModule(testModule: TestModule) {
         return this.http.delete(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}`);
     }

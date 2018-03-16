@@ -1,4 +1,4 @@
-import { TestSuite, TestModule } from '@models';
+import { TestSuite, TestModule, TestCase } from '@models';
 import { TestSuitesService, TestModulesService, TestCasesService } from '@services';
 import { DialogType } from '../../../enums';
 import { CreateDialog } from '../../shared/dialogs/create/create-dialog.component';
@@ -59,7 +59,15 @@ export class TestSuiteComponent {
             })
     }
 
+    renameTestModule(testModule: TestModule) {
+        this.testModulesService
+            .updateTestModule(testModule)
+            .subscribe(res => {
+            })
+    }
+
     openModuleDeleteDialog(testModule: TestModule): void {
+
         const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testModule.name } });
 
         dialogRef.afterClosed().subscribe(res => {
@@ -74,6 +82,25 @@ export class TestSuiteComponent {
                 if (index > -1) {
                     this.testModules.splice(index, 1);
                 }
+            })
+    }
+
+    openCreateTestCaseDialog(testModule: TestModule): void {
+        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Test Case', type: DialogType.TestCase } });
+
+        dialogRef.afterClosed().subscribe(testCase => {
+            testCase ? this.addTestCase(testCase, testModule) : false;
+        });
+    }
+
+    addTestCase(testCase: TestCase, testModule: TestModule): void {
+        console.log(testModule);
+        testCase.testModuleId = testModule.id;
+        testCase.isEnabled = true;
+        testCase.lastTested = null;
+        this.testCasesService.addTestCase(testCase)
+            .subscribe(result => {
+                testModule.testCases.push(result);
             })
     }
 }

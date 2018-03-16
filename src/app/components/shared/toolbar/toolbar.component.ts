@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   @Input() edit: boolean = false;
+  @Input() delete: boolean = false;
 
   constructor() { }
 
