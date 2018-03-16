@@ -1,5 +1,5 @@
 import { Priority } from '../enums';
-import { Base } from "@models";
+import { Base } from '@models';
 
 export class TestAction extends Base {
     id: number;

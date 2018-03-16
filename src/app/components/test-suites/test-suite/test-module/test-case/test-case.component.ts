@@ -26,6 +26,13 @@ export class TestCaseComponent {
         public dialog: MatDialog
     ) { }
 
+    truncateDescription(description: string): string {
+        if (description.length > 74) {
+            return description.substring(0, 75) + '...';
+        }
+        return description;
+    }
+
     updateTestCase(testCase: TestCase) {
         this.testCasesService.updateTestCase(testCase).subscribe();
     }
