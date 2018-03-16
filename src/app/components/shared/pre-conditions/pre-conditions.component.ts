@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService } from '@services';
-import { TestCondition } from '../../../models';
 
 @Component({
   selector: 'tt-pre-conditions',

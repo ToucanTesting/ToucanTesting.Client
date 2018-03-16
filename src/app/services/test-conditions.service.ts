@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { TestCondition, TestModule, TestCase } from '@models';
-import { TestCondition } from '../models';
 
 @Injectable()
 export class TestConditionsService {
