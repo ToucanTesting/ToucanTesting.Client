@@ -63,7 +63,7 @@ export class TestActionsComponent {
     testAction.description = description;
     testAction.testCaseId = this.testCase.id;
 
-    if (this.testCase.testActions[this.testCase.testActions.length - 1].sequence) {
+    if (this.testCase.testActions.length > 1) {
       testAction.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
     } else {
       testAction.sequence = 1;
