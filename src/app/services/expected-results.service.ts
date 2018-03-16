@@ -24,6 +24,4 @@ export class ExpectedResultsService {
     public deleteExpectedResult(id: number) {
         return this.http.delete(`expected-results/${id}`);
     }
-
-
 }

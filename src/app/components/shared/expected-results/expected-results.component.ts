@@ -37,7 +37,7 @@ export class ExpectedResultsComponent implements OnInit {
   }
 
   deleteExpectedResult(expectedResult: ExpectedResult) {
-    this.expectedResultsService.deleteTestCondition(expectedResult.id)
+    this.expectedResultsService.deleteExpectedResult(expectedResult.id)
       .subscribe(res => {
         const index = this.testCase.expectedResults.indexOf(expectedResult, 0);
         if (index > -1) {

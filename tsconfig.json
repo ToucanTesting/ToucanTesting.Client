@@ -10,6 +10,18 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@models": [
+        "app/models/index.ts"
+      ],
+      "@services": [
+        "app/services/index.ts"
+      ]
+    },
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -20,7 +32,6 @@
     "lib": [
       "es2017",
       "dom"
-    ],
-    "baseUrl": "src"
+    ]
   }
 }
