@@ -18,7 +18,7 @@ export class ExpectedResultsComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTestCondition(description: string) {
+  addExpectedResult(description: string) {
     const expectedResult: ExpectedResult = new ExpectedResult();
     expectedResult.testCaseId = this.testCase.id
     expectedResult.description = description;
