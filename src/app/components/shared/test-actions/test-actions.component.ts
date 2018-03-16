@@ -69,7 +69,6 @@ export class TestActionsComponent {
       testAction.sequence = 1;
     }
 
-    this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
     this.testActionsService.createTestAction(testAction)
       .subscribe(res => {
         this.testCase.testActions.push(res)
