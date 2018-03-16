@@ -1,8 +1,17 @@
 <br>
-<ng-container *ngFor="let testCondition of testCase.testConditions">
-  <div class="card" *ngIf="testCase.testConditions.length > 0">
-    <div class="card-body">
-      {{testCondition.description}}
+<ng-container *ngFor="let testCondition of testCase.testConditions; let i = index;">
+  <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card" *ngIf="testCase.testConditions.length > 0">
+    <div class="card-body d-flex justify-content-between">
+      <span *ngIf="!testCondition.isEditing" (click)="testCondition.isEditing = true">
+        {{testCondition.description}}
+        <mat-icon class="edit-icon" *ngIf="hoverIndex === i">edit</mat-icon>
+      </span>
+      <input autofocus class="form-control" *ngIf="testCondition.isEditing" matInput (blur)="testCondition.isEditing = false" (keyup.escape)="testCondition.isEditing = false"
+        (keyup.enter)="updateTestCondition(testCondition); testCondition.isEditing = false" [(ngModel)]="testCondition.description"
+      />
+      <span *ngIf="hoverIndex === i && !testCondition.isEditing" class="toolbar">
+        <mat-icon (click)="deleteTestCondition(testCondition)">delete</mat-icon>
+      </span>
     </div>
   </div>
   <div class="card" *ngIf="!testCase.testConditions.length > 0">

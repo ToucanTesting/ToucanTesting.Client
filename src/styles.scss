@@ -13,19 +13,24 @@ body {
     color: #666;
 }
 
-.options-dropdown, .dropdown-item, .clickable-text, .expansion-button {
+.options-dropdown, .dropdown-item, .clickable-text, .toolbar > mat-icon {
     cursor: pointer;
 }
 
-.expansion-button.open::after {
+.expansion-button.open::before {
     content: "keyboard_arrow_up";
 }
 
-.expansion-button.close::after {
+.expansion-button.close::before {
     content: "keyboard_arrow_down";
 }
 
-.edit-icon {
+.toolbar > mat-icon, .edit-icon {
     color: #666;
     font-size: 16px !important;
 }
+
+.toolbar mat-icon:hover {
+    color: #222;
+}
+

@@ -18,17 +18,33 @@
 <div *ngIf="!(testCase.testActions.length > 0)">
   <p>No actions defined</p>
 </div> -->
-
-<div class="top-buffer" *ngFor="let testAction of testCase.testActions">
-    <div class="card" *ngIf="testCase.testActions.length > 0">
-      <div class="card-body">
-          <span><strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}</span>
-      </div>
-    </div>
-    <div class="card" *ngIf="!testCase.testActions.length > 0">
-      <div class="card-body">
-          No actions defined
-      </div>
+<br>
+<ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
+  <div class="card" *ngIf="testCase.testActions.length > 0">
+    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
+      <span *ngIf="!testAction.isEditing" (click)="testAction.isEditing = true">
+        <strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}
+        <mat-icon class="edit-icon" *ngIf="hoverIndex === i">edit</mat-icon>
+      </span>
+      <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="testAction.isEditing = false" (keyup.escape)="testAction.isEditing = false"
+        (keyup.enter)="renameTestAction(testAction); testAction.isEditing = false" [(ngModel)]="testAction.description" />
+      <span *ngIf="hoverIndex === i && !testAction.isEditing" class="toolbar">
+        <mat-icon *ngIf="i !== 0" (click)="moveUp(testAction)">file_upload</mat-icon>
+        <mat-icon *ngIf="i !== testCase.testActions.length - 1" (click)="moveDown(testAction)">file_download</mat-icon>
+        <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
+      </span>
     </div>
   </div>
-  
+  <div class="card" *ngIf="!testCase.testActions.length > 0">
+    <div class="card-body">
+      No actions defined
+    </div>
+  </div>
+</ng-container>
+<br>
+<div class="input-group mb-3">
+  <input #action type="text" class="form-control" placeholder="Add an action" (keyup.enter)="createTestAction(action.value);action.value=''">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" (click)="createTestAction(action.value);action.value=''">Save</button>
+  </div>
+</div>

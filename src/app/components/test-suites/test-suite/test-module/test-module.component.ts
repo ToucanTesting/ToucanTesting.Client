@@ -62,7 +62,6 @@ export class TestModuleComponent {
             this.expectedResultsService.getTestResults(testModule, testCase)
                 .subscribe(expectedResults => {
                     const index = this.testModule.testCases.indexOf(testCase)
-                    console.log(expectedResults)
                     this.testModule.testCases[index].expectedResults = expectedResults;
                 })
         }

@@ -1,11 +1,11 @@
 <div>
   <ul class="list-group list-group-flush" *ngFor="let testSuite of testSuites; let i = index">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <span (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testSuite.isEditing = !testSuite.isEditing"
+      <span (mouseover)="hoverIndex = i"   (click)="testSuite.isEditing = true"
         *ngIf="!testSuite.isEditing" class="clickable-text">{{testSuite.name}}
         <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
       </span>
-      <input autofocus class="form-control" *ngIf="testSuite.isEditing" matInput (keyup.escape)="testSuite.isEditing = !testSuite.isEditing" (keyup.enter)="renameTestSuite(testSuite); testSuite.isEditing = !testSuite.isEditing"
+      <input autofocus class="form-control" *ngIf="testSuite.isEditing" matInput (blur)="testSuite.isEditing = false" (keyup.escape)="testSuite.isEditing = false" (keyup.enter)="renameTestSuite(testSuite); testSuite.isEditing = false"
         [(ngModel)]="testSuite.name" />
       <div class="dropdown">
         <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
