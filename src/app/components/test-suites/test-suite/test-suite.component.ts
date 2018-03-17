@@ -44,7 +44,7 @@ export class TestSuiteComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: "Add a Test Module", type: DialogType.TestModule } });
+        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
 
         dialogRef.afterClosed().subscribe(testModule => {
             testModule ? this.createTestModule(testModule) : false;
@@ -89,18 +89,19 @@ export class TestSuiteComponent {
         const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Test Case', type: DialogType.TestCase } });
 
         dialogRef.afterClosed().subscribe(testCase => {
-            testCase ? this.addTestCase(testCase, testModule) : false;
+            testCase ? this.createTestCase(testCase, testModule) : false;
         });
     }
 
-    addTestCase(testCase: TestCase, testModule: TestModule): void {
-        console.log(testModule);
+    createTestCase(testCase: TestCase, testModule: TestModule): void {
         testCase.testModuleId = testModule.id;
         testCase.isEnabled = true;
         testCase.lastTested = null;
-        this.testCasesService.addTestCase(testCase)
+        this.testCasesService.createTestCase(testCase)
             .subscribe(result => {
-                testModule.testCases.push(result);
+                if (testModule.testCases) {
+                    testModule.testCases.push(result);
+                }
             })
     }
 }

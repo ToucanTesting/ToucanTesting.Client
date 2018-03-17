@@ -9,7 +9,7 @@ export class TestCasesService {
 
   }
 
-  public addTestCase(testCase: TestCase): Observable<TestCase> {
+  public createTestCase(testCase: TestCase): Observable<TestCase> {
     return this.http.post<TestCase>(`test-cases`, testCase);
   }
 
