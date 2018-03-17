@@ -23,6 +23,10 @@
       <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <input placeholder="Bug ID" matInput [(ngModel)]="payload.bugId">
+  </mat-form-field>
+
 </div>
 
 <!-- Test Run -->

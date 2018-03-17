@@ -8,6 +8,7 @@ import { DialogType, Priority } from './../../../../enums';
 interface IDialogData {
     title: string;
     type: DialogType;
+    payload?: TestCase;
 }
 
 @Component({
@@ -27,7 +28,7 @@ export class CreateDialog {
         @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
         this.title = data.title;
         this.type = data.type;
-        this.payload = {};
+        this.payload = (data.payload) ? data.payload : {};
     }
 
     onNoClick(): void {

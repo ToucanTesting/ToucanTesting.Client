@@ -33,7 +33,7 @@ export class TestModuleComponent {
     addTestCase(testCase: TestCase): void {
         testCase.testModuleId = this.testModule.id;
         testCase.isEnabled = true;
-        this.testCasesService.addTestCase(testCase)
+        this.testCasesService.createTestCase(testCase)
             .subscribe(result => {
                 this.testModule.testCases.push(result);
             })
@@ -43,8 +43,25 @@ export class TestModuleComponent {
         const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testCase.description } });
 
         dialogRef.afterClosed().subscribe(res => {
-            res ? this.deleteTestCase(testCase) : false;
+            res ? this.deleteTestCase(res) : false;
         });
+    }
+
+    openTestCaseEditDialog(testCase: TestCase): void {
+        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Update a Test Case', type: DialogType.TestCase, payload: testCase } });
+
+        dialogRef.afterClosed().subscribe(res => {
+            // Make properties not update!!!
+            res ? this.updateTestCase(res) : null;
+        });
+    }
+
+    updateTestCase(testCase: TestCase): void {
+        this.testCasesService.updateTestCase(testCase)
+            .subscribe(result => {
+                const index = this.testModule.testCases.indexOf(testCase);
+                this.testModule.testCases[index] = result;
+            })
     }
 
     deleteTestCase(testCase: TestCase) {
