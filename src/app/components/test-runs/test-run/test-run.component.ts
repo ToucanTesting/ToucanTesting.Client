@@ -67,18 +67,6 @@ export class TestRunComponent {
             });
     }
 
-    changeTestCaseStatus(testCase: TestCase, status: TestResultStatus) {
-        testCase.testResult = {
-            testCaseId: testCase.id,
-            testRunId: this.testRunId,
-            status: status
-        };
-        this.testResultsService.upsertTestResult(testCase.testResult)
-            .subscribe(testResult => {
-                this.testResults.push(testResult)
-            });
-    }
-
     getTestModuleTestResults(testModule: TestModule) {
         this.testResults.forEach((testResult: TestResult) => {
             const testModuleIndex = this.testModules.indexOf(testModule);
@@ -92,12 +80,9 @@ export class TestRunComponent {
     }
 
     public getExpectedResults(testModule: TestModule, testCase: TestCase) {
-        console.log(testCase);
         if (testCase.expectedResults.length <= 0) {
             this.expectedResultsService.getTestResults(testModule, testCase)
                 .subscribe(expectedResults => {
-                    // const index = this.testModule.testCases.indexOf(testCase)
-                    // this.testModule.testCases[index].expectedResults = expectedResults;
                     testCase.expectedResults = expectedResults;
                 })
         }

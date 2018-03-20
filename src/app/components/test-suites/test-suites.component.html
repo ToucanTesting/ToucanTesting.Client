@@ -1,7 +1,7 @@
 <div>
   <ul class="list-group list-group-flush" *ngFor="let testSuite of testSuites; let i = index">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <span (mouseover)="hoverIndex = i"   (click)="testSuite.isEditing = true"
+      <span (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testSuite.isEditing = true"
         *ngIf="!testSuite.isEditing" class="clickable-text">{{testSuite.name}}
         <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
       </span>
