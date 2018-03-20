@@ -12,7 +12,7 @@
             <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
           </div>
         </span>
-        <span class="btn-group btn-group-toggle" data-toggle="buttons">
+        <span class="btn-group btn-group-toggle" data-toggle="buttons" style="z-index: 0;">
           <label class="btn btn-secondary active" (click)="testModule.reverse = false">
             <input type="radio" name="options" autocomplete="off" [checked]="!testModule.reverse"> Asc
           </label>
@@ -38,7 +38,7 @@
             <div>
               <div class="pull-right">{{testCase.lastTested | date}}</div>
               <div *ngIf="isTestRun" class="dropdown">
-                <span class="btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                <span class="btn dropdown-toggle pull-right" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   [ngClass]="{
                           'btn-success': testCase.testResult?.status == testResultStatus.Pass,
                           'btn-danger': testCase.testResult?.status == testResultStatus.Fail,
@@ -57,9 +57,9 @@
               </div>
 
               <div *ngIf="!isTestRun" class="dropdown">
-                <span class="btn dropdown-toggle btn-secondary" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</span>
+                <span class="btn dropdown-toggle btn-secondary pull-right" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</span>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <span class="dropdown-item" (click)="openTestCaseEditDialog(testCase)">Edit</span>
+                  <span class="dropdown-item" (click)="openTestCaseEditDialog(testCase, testModule.testSuiteId)">Edit</span>
                   <span class="dropdown-item" (click)="openTestCaseDeleteDialog(testCase)">Delete</span>
                 </div>
               </div>

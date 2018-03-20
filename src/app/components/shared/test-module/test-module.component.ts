@@ -55,9 +55,8 @@ export class TestModuleComponent {
     });
   }
 
-  openTestCaseEditDialog(testCase: TestCase): void {
-    console.log(testCase);
-    const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Update a Test Case', type: DialogType.TestCase, payload: testCase } });
+  openTestCaseEditDialog(testCase: TestCase, testSuiteId?: number): void {
+    const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Update a Test Case', payload: testCase, testSuiteId: (testSuiteId) ? testSuiteId : null } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -65,6 +64,7 @@ export class TestModuleComponent {
         testCase.isAutomated = res.isAutomated;
         testCase.priority = res.priority;
         testCase.bugId = res.bugId;
+        testCase.testModuleId = res.testModuleId;
         this.updateTestCase(testCase)
       }
     });
@@ -74,8 +74,10 @@ export class TestModuleComponent {
     this.testCasesService.updateTestCase(testCase)
       .subscribe(result => {
         testCase = result;
-        const index = this.testModule.testCases.indexOf(testCase);
-        this.testModule.testCases[index] = result;
+        if (testCase.testModuleId !== this.testModule.id) {
+          const index = this.testModule.testCases.findIndex(tc => tc.id === testCase.id);
+          this.testModule.testCases.splice(index, 1)
+        }
       })
   }
 
@@ -91,14 +93,19 @@ export class TestModuleComponent {
 
   changeTestCaseStatus(testCase: TestCase, status: TestResultStatus) {
     testCase.testResult = {
-        testCaseId: testCase.id,
-        testRunId: this.testRunId,
-        status: status
+      testCaseId: testCase.id,
+      testRunId: this.testRunId,
+      status: status
     };
     this.testResultsService.upsertTestResult(testCase.testResult)
-        .subscribe(testResult => {
-        });
-}
+      .subscribe(testResult => {
+        testCase.lastTested = new Date(Date.now());
+        this.testCasesService.updateTestCase(testCase)
+          .subscribe(testCaseResponse => {
+
+          })
+      });
+  }
 
   public getExpectedResults(testModule: TestModule, testCase: TestCase) {
     if (testCase.expectedResults.length <= 0) {

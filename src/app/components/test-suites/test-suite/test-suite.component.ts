@@ -54,6 +54,16 @@ export class TestSuiteComponent {
         });
     }
 
+    // openMoveTestModuleDialog(testModule: TestModule): void {
+    //     const dialogRef = this.dialog.open(MoveTestModuleDialogComponent, { data: { title: 'Move Test Module', payload: testModule } });
+
+    //     dialogRef.afterClosed().subscribe(testModuleResponse => {
+    //         if (testModuleResponse) {
+    //             this.updateTestModule(testModuleResponse)
+    //         }
+    //     });
+    // }
+
     createTestModule(testModule: TestModule) {
         testModule.testSuiteId = this.testSuiteId;
         this.testModulesService.createTestModule(testModule)
@@ -62,7 +72,7 @@ export class TestSuiteComponent {
             })
     }
 
-    renameTestModule(testModule: TestModule) {
+    updateTestModule(testModule: TestModule) {
         this.testModulesService
             .updateTestModule(testModule)
             .subscribe(res => {
