@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { TestSuitesService } from '@services';
+import { TestSuitesService, TestModulesService } from '@services';
 import { TestSuite, TestModule, TestCase } from '@models';
 import { DialogType, Priority } from './../../../../../enums';
 
@@ -10,6 +10,7 @@ interface IDialogData {
     title: string;
     type: DialogType;
     payload?: TestCase;
+    testSuiteId?: number;
 }
 
 @Component({
@@ -17,38 +18,39 @@ interface IDialogData {
     templateUrl: './create-test-case-dialog.component.html',
 })
 export class CreateTestCaseDialogComponent {
+    testSuiteId: number;
+    testModules: TestModule[];
     title: string;
-    type: DialogType;
-    testSuites: TestSuite[];
     priorityOptions = Priority;
     testCaseForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private testSuitesService: TestSuitesService,
+        private testModulesService: TestModulesService,
         public dialogRef: MatDialogRef<CreateTestCaseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
         this.title = data.title;
-        this.type = data.type;
         this.createTestCaseForm();
-        if (data.payload) { this.setTestCaseForm(data.payload); }
+        if (data.payload) {
+            this.setTestCaseForm(data.payload);
+        }
+        this.testSuiteId = (data.testSuiteId) ? data.testSuiteId : null;
     }
 
     createTestCaseForm() {
         this.testCaseForm = this.fb.group({
-            description: '',
+            testModuleId: null,
+            description: null,
             isAutomated: false,
             priority: 0,
             bugId: null
         })
     }
 
-    printTestCase(testCase) {
-        console.log(testCase);
-    }
 
     setTestCaseForm(values) {
         this.testCaseForm.setValue({
+            testModuleId: values.testModuleId,
             description: values.description,
             isAutomated: values.isAutomated,
             priority: values.priority,
@@ -61,11 +63,11 @@ export class CreateTestCaseDialogComponent {
     }
 
     ngOnInit() {
-        if (this.type === 'test-run') {
-            this.testSuitesService
-                .getTestSuites()
-                .subscribe(testSuites => {
-                    this.testSuites = testSuites;
+        if (this.testSuiteId) {
+            this.testModulesService
+                .getTestModules(this.testSuiteId)
+                .subscribe(testModules => {
+                    this.testModules = testModules;
                 });
         }
     }

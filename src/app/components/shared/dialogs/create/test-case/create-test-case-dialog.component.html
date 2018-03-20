@@ -1,13 +1,10 @@
 <h1 mat-dialog-title>{{title}}</h1>
-
-<!-- Test Suite/Component/Run -->
-<!-- <div mat-dialog-content *ngIf="type === 'test-suite' || type === 'test-module'">
-  <mat-form-field>
-    <input placeholder="Name" matInput tabindex="1" [(ngModel)]="payload.name">
-  </mat-form-field>
-</div> -->
-
 <form mat-dialog-content [formGroup]="testCaseForm">
+  <div *ngIf="testSuiteId">
+    <select class="form-control" formControlName="testModuleId">
+      <option [value]="testModule.id" *ngFor="let testModule of testModules">{{testModule.name}}</option>
+    </select>
+  </div>
   <mat-form-field>
     <input placeholder="Description" matInput formControlName="description">
   </mat-form-field>
