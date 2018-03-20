@@ -6,6 +6,10 @@ export class TestModule extends Base {
     name: string;
     testCases: TestCase[];
     testResults: TestResult[];
+    passes: TestResult[];
+    failures: TestResult[];
+    cnt: TestResult[];
+    na: TestResult[];
     sort: string;
     reverse: boolean;
 };
