@@ -3,12 +3,12 @@
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="clickable-text" (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testModule.isEditing = true"
+        <span class="clickable-text" (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testModule.isEditing = true; tempName = testModule.name"
           *ngIf="!testModule.isEditing">{{testModule.name}}
           <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
         </span>
-          <input autofocus class="form-control" *ngIf="testModule.isEditing" matInput (blur)="testModule.isEditing = false" (keyup.escape)="testModule.isEditing = false"
-            (keyup.enter)="updateTestModule(testModule); testModule.isEditing = false" [(ngModel)]="testModule.name" />
+          <input autofocus class="form-control" *ngIf="testModule.isEditing" matInput (blur)="cancelEdit(testModule)" (keyup.escape)="cancelEdit(testModule)"
+            (keyup.enter)="updateTestModule(testModule)" [(ngModel)]="testModule.name" />
         <div class="dropdown">
           <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <mat-icon>more_vert</mat-icon>
@@ -17,7 +17,6 @@
             <span #toggle class="dropdown-item" (click)="getTestCases(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse"
               [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i">{{(testModule.isExpanded) ? 'Collapse' : 'Expand'}}</span>
             <span class="dropdown-item" (click)="openCreateTestCaseDialog(testModule)">Add Test Case</span>
-            <span class="dropdown-item" (click)="openMoveTestModuleDialog(testModule)">Move</span>
             <span class="dropdown-item" (click)="openModuleDeleteDialog(testModule)">Delete</span>
           </div>
         </div>

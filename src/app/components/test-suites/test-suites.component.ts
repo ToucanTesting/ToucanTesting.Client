@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TestSuitesService } from '@services';
 import { CreateTestSuiteDialogComponent } from '../shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
@@ -13,8 +14,10 @@ import { TestSuite } from '@models';
 export class TestSuitesComponent {
     testSuites: TestSuite[];
     hoverIndex: number | null;
+    tempName: string;
 
     constructor(
+        private fb: FormBuilder,
         private testSuitesService: TestSuitesService,
         public dialog: MatDialog
     ) { }
@@ -46,7 +49,13 @@ export class TestSuitesComponent {
             })
     }
 
-    renameTestSuite(testSuite: TestSuite) {
+    cancelEdit(testSuite: TestSuite) {
+        testSuite.isEditing = false;
+        testSuite.name = this.tempName;
+    }
+
+    renameTestSuite(testSuite: TestSuite, name: string) {
+        testSuite.isEditing = false;
         this.testSuitesService
             .updateTestSuite(testSuite)
             .subscribe(res => {

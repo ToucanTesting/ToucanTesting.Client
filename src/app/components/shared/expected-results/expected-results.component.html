@@ -2,12 +2,12 @@
 <ng-container *ngFor="let expectedResult of testCase.expectedResults; let i = index;">
   <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card" *ngIf="testCase.expectedResults.length > 0">
     <div class="card-body">
-      <span *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult)">
+      <span *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
         {{expectedResult.description}}
         <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
       </span>
-      <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="toggleIsEditing(expectedResult)" (keyup.escape)="toggleIsEditing(expectedResult)"
-        (keyup.enter)="updateExpectedResult(expectedResult); toggleIsEditing(expectedResult)" [(ngModel)]="expectedResult.description"
+      <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="cancelEdit(expectedResult)" (keyup.escape)="cancelEdit(expectedResult)"
+        (keyup.enter)="updateExpectedResult(expectedResult)" [(ngModel)]="expectedResult.description"
       />
 
     </div>
