@@ -1,5 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
-$theme-colors: ( "primary": #4189C7);
+
+$blue: #4189C7;
+$theme-colors: ( "primary":$blue);
 .btn.btn-circle {
   padding: 0;
   border-radius: 50%;

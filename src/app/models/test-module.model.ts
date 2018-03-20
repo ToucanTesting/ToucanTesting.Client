@@ -1,4 +1,4 @@
-import { TestCase, TestResult, Base } from "@models";
+import { TestCase, TestResult, Base } from '@models';
 
 export class TestModule extends Base {
     id: number;
@@ -6,4 +6,6 @@ export class TestModule extends Base {
     name: string;
     testCases: TestCase[];
     testResults: TestResult[];
-}
+    sort: string;
+    reverse: boolean;
+};

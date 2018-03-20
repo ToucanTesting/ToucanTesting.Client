@@ -1,11 +1,11 @@
 import { TestModulesService, TestCasesService, ExpectedResultsService } from '@services';
 import { TestModule, TestCase } from '@models';
 import { TestSuiteComponent } from './../test-suite.component';
-import { CreateDialog } from './../../../shared/dialogs/create/create-dialog.component';
+import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { Component, Input } from '@angular/core';
 import { DialogType } from '../../../../enums';
 import { MatDialog } from '@angular/material';
-import { DeleteDialog } from '../../../shared/dialogs/delete/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/dialogs/delete/delete-dialog.component';
 
 @Component({
     selector: 'test-module',
@@ -23,7 +23,7 @@ export class TestModuleComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Case', type: DialogType.TestCase } });
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Case', type: DialogType.TestCase } });
 
         dialogRef.afterClosed().subscribe(testCase => {
             testCase ? this.addTestCase(testCase) : false;
@@ -40,25 +40,34 @@ export class TestModuleComponent {
     }
 
     openTestCaseDeleteDialog(testCase: TestCase): void {
-        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testCase.description } });
+        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.description } });
 
         dialogRef.afterClosed().subscribe(res => {
-            res ? this.deleteTestCase(res) : false;
+            if (res) {
+                this.deleteTestCase(testCase)
+            }
         });
     }
 
     openTestCaseEditDialog(testCase: TestCase): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Update a Test Case', type: DialogType.TestCase, payload: testCase } });
+        console.log(testCase);
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Update a Test Case', type: DialogType.TestCase, payload: testCase } });
 
         dialogRef.afterClosed().subscribe(res => {
-            // Make properties not update!!!
-            res ? this.updateTestCase(res) : null;
+            if (res) {
+                testCase.description = res.description;
+                testCase.isAutomated = res.isAutomated;
+                testCase.priority = res.priority;
+                testCase.bugId = res.bugId;
+                this.updateTestCase(testCase)
+            }
         });
     }
 
     updateTestCase(testCase: TestCase): void {
         this.testCasesService.updateTestCase(testCase)
             .subscribe(result => {
+                testCase = result;
                 const index = this.testModule.testCases.indexOf(testCase);
                 this.testModule.testCases[index] = result;
             })

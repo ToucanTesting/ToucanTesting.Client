@@ -14,11 +14,10 @@ interface IDialogData {
     selector: 'delete-dialog',
     templateUrl: 'delete-dialog.component.html',
 })
-export class DeleteDialog {
+export class DeleteDialogComponent {
     title: string;
-    
 
-    constructor(public dialogRef: MatDialogRef<DeleteDialog>,
+    constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
         this.title = data.title;
     }

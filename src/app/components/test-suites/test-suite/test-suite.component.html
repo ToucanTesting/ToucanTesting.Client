@@ -7,8 +7,8 @@
           *ngIf="!testModule.isEditing">{{testModule.name}}
           <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
         </span>
-        <input autofocus class="form-control" *ngIf="testModule.isEditing" matInput (blur)="testModule.isEditing = false" (keyup.escape)="testModule.isEditing = false"
-          (keyup.enter)="renameTestModule(testModule); testModule.isEditing = false" [(ngModel)]="testModule.name" />
+          <input autofocus class="form-control" *ngIf="testModule.isEditing" matInput (blur)="testModule.isEditing = false" (keyup.escape)="testModule.isEditing = false"
+            (keyup.enter)="renameTestModule(testModule); testModule.isEditing = false" [(ngModel)]="testModule.name" />
         <div class="dropdown">
           <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <mat-icon>more_vert</mat-icon>

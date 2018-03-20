@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TestSuitesService } from '@services';
-import { CreateDialog } from '../shared/dialogs/create/create-dialog.component';
-import { DeleteDialog } from './../shared/dialogs/delete/delete-dialog.component';
+// import { CreateDialog } from '../shared/dialogs/create/create-dialog.component';
+import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
 import { DialogType } from './../../enums';
 import { TestSuite } from '@models';
 
@@ -28,7 +28,7 @@ export class TestSuitesComponent {
     }
 
     openDeleteDialog(testSuite: TestSuite): void {
-        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testSuite.name } });
+        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testSuite.name } });
 
         dialogRef.afterClosed().subscribe(res => {
             res ? this.deleteTestSuite(testSuite) : false;
@@ -54,11 +54,11 @@ export class TestSuitesComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Create a New Test Suite', type: DialogType.TestSuite } });
+        // const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Create a New Test Suite', type: DialogType.TestSuite } });
 
-        dialogRef.afterClosed().subscribe(testSuite => {
-            testSuite ? this.createTestSuite(testSuite) : false;
-        });
+        // dialogRef.afterClosed().subscribe(testSuite => {
+            // testSuite ? this.createTestSuite(testSuite) : false;
+        // });
     }
 
     createTestSuite(testSuite: TestSuite) {

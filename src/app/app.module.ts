@@ -15,7 +15,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -62,13 +62,14 @@ import { TestSuitesComponent } from './components/test-suites/test-suites.compon
 import { TestSuiteComponent } from './components/test-suites/test-suite/test-suite.component';
 import { TestModuleComponent } from './components/test-suites/test-suite/test-module/test-module.component';
 import { TestCaseComponent } from './components/test-suites/test-suite/test-module/test-case/test-case.component';
-import { CreateDialog } from './components/shared/dialogs/create/create-dialog.component';
-import { DeleteDialog } from './components/shared/dialogs/delete/delete-dialog.component';
+import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
+import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component'
+import { DeleteDialogComponent } from './components/shared/dialogs/delete/delete-dialog.component';
 import { ButtonComponent } from './components/shared/buttons/buttons.component';
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { PriorityPipe } from './pipes/priority.pipe';
-
+import { OrderModule } from 'ngx-order-pipe';
 
 import { AppComponent } from './app.component';
 import { APIInterceptor } from './services/api-interceptor';
@@ -77,7 +78,6 @@ import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { TestActionsComponent } from './components/shared/test-actions/test-actions.component';
-import { OrderByPipe } from './pipes/order-by.pipe';
 import { IssuesComponent } from './components/issues/issues.component';
 import { TestConditionsService } from './services';
 import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
@@ -105,8 +105,9 @@ const jwtConf = {
     TestSuiteComponent,
     TestModuleComponent,
     TestCaseComponent,
-    CreateDialog,
-    DeleteDialog,
+    CreateTestCaseDialogComponent,
+    CreateTestRunDialogComponent,
+    DeleteDialogComponent,
     ButtonComponent,
     KeysPipe,
     StatusPipe,
@@ -116,12 +117,11 @@ const jwtConf = {
     ReportsComponent,
     TestActionsComponent,
     IssuesComponent,
-    OrderByPipe,
     PreConditionsComponent,
     ExpectedResultsComponent,
     ToolbarComponent
   ],
-  entryComponents: [CreateDialog, DeleteDialog],
+  entryComponents: [CreateTestCaseDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -161,6 +161,8 @@ const jwtConf = {
     HttpClientModule,
     JwtModule.forRoot(jwtConf),
     FormsModule,
+    OrderModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
       { path: 'test-suites/:id', component: TestSuiteComponent },
