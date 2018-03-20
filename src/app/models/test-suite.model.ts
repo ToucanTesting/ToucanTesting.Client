@@ -4,4 +4,5 @@ export class TestSuite extends Base {
     id: number;
     name: string;
     testModules: TestModule[];
+    isEditing?: boolean;
 }

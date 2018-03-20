@@ -15,6 +15,7 @@ import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog
 export class TestSuiteComponent {
     testSuiteId: number;
     testModules: TestModule[];
+    tempName: string;
 
     constructor(
         private testSuitesService: TestSuitesService,
@@ -33,6 +34,11 @@ export class TestSuiteComponent {
                         this.testModules = testModules;
                     })
             })
+    }
+
+    cancelEdit(testModule: TestModule) {
+        testModule.isEditing = false;
+        testModule.name = this.tempName;
     }
 
     getTestCases(testModule: TestModule) {
@@ -73,6 +79,7 @@ export class TestSuiteComponent {
     }
 
     updateTestModule(testModule: TestModule) {
+        testModule.isEditing = false;
         this.testModulesService
             .updateTestModule(testModule)
             .subscribe(res => {

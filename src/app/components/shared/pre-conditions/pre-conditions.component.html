@@ -2,12 +2,12 @@
 <ng-container *ngFor="let testCondition of testCase.testConditions; let i = index;">
   <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card" *ngIf="testCase.testConditions.length > 0">
     <div class="card-body d-flex justify-content-between">
-      <span *ngIf="!testCondition.isEditing" (click)="toggleIsEditing(testCondition)">
+      <span *ngIf="!testCondition.isEditing" (click)="toggleIsEditing(testCondition); tempDescription = testCondition.description">
         {{testCondition.description}}
         <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
       </span>
-      <input autofocus class="form-control" *ngIf="testCondition.isEditing" matInput (blur)="toggleIsEditing(testCondition)" (keyup.escape)="toggleIsEditing(testCondition)"
-        (keyup.enter)="updateTestCondition(testCondition); toggleIsEditing(testCondition)" [(ngModel)]="testCondition.description"
+      <input autofocus class="form-control" *ngIf="testCondition.isEditing" matInput (blur)="cancelEdit(testCondition)" (keyup.escape)="cancelEdit(testCondition)"
+        (keyup.enter)="updateTestCondition(testCondition)" [(ngModel)]="testCondition.description"
       />
       <span *ngIf="hoverIndex === i && !testCondition.isEditing && !isTestRun" class="toolbar">
         <mat-icon (click)="deleteTestCondition(testCondition)">delete</mat-icon>

@@ -11,6 +11,7 @@ import { ExpectedResult } from '../../../models';
 export class ExpectedResultsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  tempDescription: string;
 
   constructor(
     private expectedResultsService: ExpectedResultsService
@@ -33,7 +34,13 @@ export class ExpectedResultsComponent {
       })
   }
 
+  cancelEdit(expectedResult: ExpectedResult) {
+    expectedResult.isEditing = false;
+    expectedResult.description = this.tempDescription;
+  }
+
   updateExpectedResult(expectedResult: ExpectedResult) {
+    expectedResult.isEditing = false;
     this.expectedResultsService
       .updateExpectedResult(expectedResult)
       .subscribe(res => {

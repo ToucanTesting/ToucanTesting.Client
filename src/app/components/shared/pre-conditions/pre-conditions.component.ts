@@ -10,6 +10,7 @@ import { TestConditionsService } from '@services';
 export class PreConditionsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  tempDescription: string;
 
   constructor(
     private testConditionsService: TestConditionsService
@@ -19,6 +20,11 @@ export class PreConditionsComponent {
     if (!this.isTestRun) {
       testCondition.isEditing = !testCondition.isEditing;
     }
+  }
+
+  cancelEdit(testCondition: TestCondition) {
+    testCondition.isEditing = false;
+    testCondition.description = this.tempDescription;
   }
 
   addTestCondition(description: string) {
@@ -34,6 +40,7 @@ export class PreConditionsComponent {
   }
 
   updateTestCondition(testCondition: TestCondition) {
+    testCondition.isEditing = false;
     this.testConditionsService
       .updateTestCondition(testCondition)
       .subscribe(res => {

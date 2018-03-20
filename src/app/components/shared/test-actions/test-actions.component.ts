@@ -10,6 +10,7 @@ import { TestActionsService } from '@services';
 export class TestActionsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  tempDescription: string;
 
   constructor(
     private testActionsService: TestActionsService
@@ -19,6 +20,11 @@ export class TestActionsComponent {
     if (!this.isTestRun) {
       testAction.isEditing = !testAction.isEditing;
     }
+  }
+
+  cancelEdit(testAction: TestAction) {
+    testAction.isEditing = false;
+    testAction.description = this.tempDescription;
   }
 
   moveUp(testAction: TestAction) {
@@ -52,6 +58,7 @@ export class TestActionsComponent {
   }
 
   updateTestAction(testAction: TestAction) {
+    testAction.isEditing = false;
     this.testActionsService
       .updateTestAction(testAction)
       .subscribe(res => {

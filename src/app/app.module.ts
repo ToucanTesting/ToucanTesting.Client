@@ -77,7 +77,6 @@ import { APIInterceptor } from './services/api-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LoginComponent } from './components/login/login.component';
-import { ReportsComponent } from './components/reports/reports.component';
 import { TestActionsComponent } from './components/shared/test-actions/test-actions.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { TestConditionsService } from './services';
@@ -118,7 +117,6 @@ const jwtConf = {
     PriorityPipe,
     TopnavComponent,
     LoginComponent,
-    ReportsComponent,
     TestActionsComponent,
     IssuesComponent,
     PreConditionsComponent,
@@ -174,7 +172,6 @@ const jwtConf = {
       { path: 'test-suites', component: TestSuitesComponent },
       { path: 'test-runs', component: TestRunsComponent },
       { path: 'test-runs/:id', component: TestRunComponent },
-      { path: 'reports', component: ReportsComponent },
       { path: 'issues', component: IssuesComponent },
       { path: '**', redirectTo: 'suites' }
     ])
