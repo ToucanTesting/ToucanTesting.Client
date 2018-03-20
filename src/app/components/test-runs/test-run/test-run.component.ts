@@ -36,7 +36,7 @@ export class TestRunComponent {
                 this.testRunsService
                     .getTestRun(this.testRunId)
                     .subscribe(testRun => {
-                        if (testRun.testResults.length > 0) {
+                        if (testRun.testResults && testRun.testResults.length > 0) {
                             this.testResults = testRun.testResults;
                         }
                         this.testRun = testRun;
