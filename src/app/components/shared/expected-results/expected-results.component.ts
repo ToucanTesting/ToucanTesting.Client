@@ -8,14 +8,18 @@ import { ExpectedResult } from '../../../models';
   templateUrl: './expected-results.component.html',
   styleUrls: ['./expected-results.component.scss']
 })
-export class ExpectedResultsComponent implements OnInit {
+export class ExpectedResultsComponent {
   @Input() testCase: TestCase;
+  @Input() isTestRun: boolean = false;
 
   constructor(
     private expectedResultsService: ExpectedResultsService
   ) { }
 
-  ngOnInit() {
+  toggleIsEditing(expectedResult: ExpectedResult) {
+    if (!this.isTestRun) {
+      expectedResult.isEditing = !expectedResult.isEditing;
+    }
   }
 
   addExpectedResult(description: string) {

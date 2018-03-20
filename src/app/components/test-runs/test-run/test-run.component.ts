@@ -1,9 +1,7 @@
-// Fixes needed
-
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { TestModulesService, TestRunsService, TestResultsService, TestCasesService } from '@services';
+import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService } from '@services';
 import { TestRun, TestModule, TestCase, TestResult } from '@models';
 import { TestResultStatus, Priority } from '../../../enums';
 
@@ -22,6 +20,7 @@ export class TestRunComponent {
     priority = Priority;
 
     constructor(
+        private expectedResultsService: ExpectedResultsService,
         private testRunsService: TestRunsService,
         private testModulesService: TestModulesService,
         private testCasesService: TestCasesService,
@@ -90,5 +89,17 @@ export class TestRunComponent {
                 this.testModules[testModuleIndex].testCases[testCaseIndex].testResult = testResult
             }
         })
+    }
+
+    public getExpectedResults(testModule: TestModule, testCase: TestCase) {
+        console.log(testCase);
+        if (testCase.expectedResults.length <= 0) {
+            this.expectedResultsService.getTestResults(testModule, testCase)
+                .subscribe(expectedResults => {
+                    // const index = this.testModule.testCases.indexOf(testCase)
+                    // this.testModule.testCases[index].expectedResults = expectedResults;
+                    testCase.expectedResults = expectedResults;
+                })
+        }
     }
 }

@@ -15,6 +15,7 @@ export class TestCaseComponent {
     @Input() testCase: TestCase;
     @Input() testModule: TestModule;
     @Input() testIndex: number;
+    @Input() isTestRun: boolean = false;
     isEditing = false;
     priorityOptions = Priority;
 

@@ -8,12 +8,18 @@ import { TestActionsService } from '@services';
   styleUrls: ['./test-actions.component.scss']
 })
 export class TestActionsComponent {
-  isEditing: boolean = false;
   @Input() testCase: TestCase;
+  @Input() isTestRun: boolean = false;
 
   constructor(
     private testActionsService: TestActionsService
   ) { }
+
+  toggleIsEditing(testAction: TestAction) {
+    if (!this.isTestRun) {
+      testAction.isEditing = !testAction.isEditing;
+    }
+  }
 
   moveUp(testAction: TestAction) {
     const index = this.testCase.testActions.indexOf(testAction);

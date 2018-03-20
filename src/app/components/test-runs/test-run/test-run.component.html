@@ -8,66 +8,10 @@
           (click)="getTestResults(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
           aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
       </div>
-
-      <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i">
-        <div class="card list-group list-group-flush" style="margin: 10px;">
-          <nav class="navbar navbar-light bg-light">
-            <span class="dropdown">
-              <button class="btn dropdown-toggle" id="sortByButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By
-                <strong>{{testModule.sort}}</strong>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByButton">
-                <span (click)="testModule.sort = 'priority'" class="dropdown-item">Priority</span>
-                <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
-              </div>
-            </span>
-            <span class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active" (click)="testModule.reverse = false">
-                <input type="radio" name="options" id="option1" autocomplete="off" [checked]="!testModule.reverse"> Asc
-              </label>
-              <label class="btn btn-secondary" (click)="testModule.reverse = true">
-                <input type="radio" name="options" id="option2" autocomplete="off" [checked]="testModule.reverse"> Desc
-              </label>
-            </span>
-          </nav>
-          <div class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let testCase of testModule.testCases | orderBy : testModule.sort : testModule.reverse">
-            <div class="test-run-item">
-              <i class="fa fa-lg fa-eye show-details"></i>
-              <i class="fa fa-lg fa-signal priority" [ngClass]="{
-                'priority-low': testCase.priority === priority.Low,
-                'priority-med': testCase.priority === priority.Medium,
-                'priority-high': testCase.priority === priority.High,
-                'priority-critical': testCase.priority === priority.Critical
-              }"></i>
-              <span>{{testCase.description}}</span>
-
-            </div>
-            <div>
-
-              <div class="pull-right">{{testCase.lastTested | date}}</div>
-              <div class="dropdown">
-                <span class="btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  [ngClass]="{
-                    'btn-success': testCase.testResult?.status == testResultStatus.Pass,
-                    'btn-danger': testCase.testResult?.status == testResultStatus.Fail,
-                    'btn-info': testCase.testResult?.status == testResultStatus.NA || testCase.testResult?.status == testResultStatus.CNT,
-                    'btn-secondary': testCase.testResult?.status == testResultStatus.Pending || !testCase.testResult
-                  }">
-                  {{testCase.testResult?.status | status}}
-                </span>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.Pass)">PASS</span>
-                  <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.Fail)">FAIL</span>
-                  <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.CNT)">CNT</span>
-                  <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.NA)">NA</span>
-                  <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.Pending)">PENDING</span>
-                </div>
-              </div>
-            </div>
-
+      <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
+          <div class="card-body">
+            <test-module-temp [testModule]="testModule" [isTestRun]=true></test-module-temp>
           </div>
         </div>
-      </div>
     </div>
   </div>
