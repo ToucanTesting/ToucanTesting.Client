@@ -1,26 +1,26 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'status' })
-export class StatusPipe {
+export class StatusPipe implements PipeTransform {
     transform(value: any): string {
         let result;
         switch (value) {
             case 0:
-                result = "PASS"
+                result = 'PASS'
                 break;
             case 1:
-                result = "FAIL"
+                result = 'FAIL'
                 break;
             case 2:
-                result = "CNT"
+                result = 'CNT'
                 break;
             case 3:
-                result = "NA"
+                result = 'NA'
                 break;
             case 4:
-                result = "PENDING"
+                result = 'PENDING'
                 break;
             default:
-                result = "PENDING"
+                result = 'PENDING'
         }
         return result;
     }

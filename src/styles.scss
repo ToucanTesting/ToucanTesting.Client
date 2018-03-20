@@ -20,6 +20,22 @@ body {
     cursor: pointer;
 }
 
+.show-details,  {
+    color: #666;
+    cursor: pointer;
+}
+
+.test-run-item > span, .test-run-item > i {
+    padding: 0 5px;
+}
+
+.show-details:hover {
+    color: #222;
+
+}
+
+
+
 .expansion-button.open::before {
     content: "keyboard_arrow_up";
 }
@@ -44,17 +60,14 @@ body {
 
 .priority.priority-low {
     color: green;
-    overflow: hidden; width: 0.4em;
 }
 
 .priority.priority-med {
     color: $blue;
-    overflow: hidden; width: 0.6em;
 }
 
 .priority.priority-high {
     color: orange;
-    overflow: hidden; width: 0.8em;
 }
 
 .priority.priority-critical {
