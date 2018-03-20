@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<form mat-dialog-content [formGroup]="testModuleForm">
+  <mat-form-field>
+    <input placeholder="Name" matInput formControlName="name">
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="testModuleForm.value">Ok</button>
+</div>

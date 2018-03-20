@@ -2,6 +2,7 @@ import { TestSuite, TestModule, TestCase } from '@models';
 import { TestSuitesService, TestModulesService, TestCasesService } from '@services';
 import { DialogType } from '../../../enums';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
+import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
@@ -44,10 +45,12 @@ export class TestSuiteComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
+        const dialogRef = this.dialog.open(CreateTestModuleDialogComponent, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
 
         dialogRef.afterClosed().subscribe(testModule => {
-            testModule ? this.createTestModule(testModule) : false;
+            if (testModule) {
+                this.createTestModule(testModule)
+            }
         });
     }
 

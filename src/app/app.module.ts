@@ -63,7 +63,9 @@ import { TestSuiteComponent } from './components/test-suites/test-suite/test-sui
 import { TestModuleComponent } from './components/test-suites/test-suite/test-module/test-module.component';
 import { TestCaseComponent } from './components/test-suites/test-suite/test-module/test-case/test-case.component';
 import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
-import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component'
+import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
+import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
+import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
 import { DeleteDialogComponent } from './components/shared/dialogs/delete/delete-dialog.component';
 import { ButtonComponent } from './components/shared/buttons/buttons.component';
 import { KeysPipe } from './pipes/keys.pipe';
@@ -106,6 +108,8 @@ const jwtConf = {
     TestModuleComponent,
     TestCaseComponent,
     CreateTestCaseDialogComponent,
+    CreateTestSuiteDialogComponent,
+    CreateTestModuleDialogComponent,
     CreateTestRunDialogComponent,
     DeleteDialogComponent,
     ButtonComponent,
@@ -121,7 +125,7 @@ const jwtConf = {
     ExpectedResultsComponent,
     ToolbarComponent
   ],
-  entryComponents: [CreateTestCaseDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
+  entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

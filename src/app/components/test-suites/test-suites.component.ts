@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TestSuitesService } from '@services';
-// import { CreateDialog } from '../shared/dialogs/create/create-dialog.component';
+import { CreateTestSuiteDialogComponent } from '../shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
 import { DialogType } from './../../enums';
 import { TestSuite } from '@models';
@@ -54,11 +54,13 @@ export class TestSuitesComponent {
     }
 
     openCreateDialog(): void {
-        // const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Create a New Test Suite', type: DialogType.TestSuite } });
+        const dialogRef = this.dialog.open(CreateTestSuiteDialogComponent, { data: { title: 'Create a New Test Suite', type: DialogType.TestSuite } });
 
-        // dialogRef.afterClosed().subscribe(testSuite => {
-            // testSuite ? this.createTestSuite(testSuite) : false;
-        // });
+        dialogRef.afterClosed().subscribe(testSuite => {
+            if (testSuite) {
+                this.createTestSuite(testSuite)
+            }
+        });
     }
 
     createTestSuite(testSuite: TestSuite) {
