@@ -92,17 +92,23 @@ export class TestModuleComponent {
   }
 
   changeTestCaseStatus(testCase: TestCase, status: TestResultStatus) {
-    testCase.testResult = {
-      testCaseId: testCase.id,
-      testRunId: this.testRunId,
-      status: status
-    };
+    if (testCase.testResult && testCase.testResult.testRunId === this.testRunId) {
+      testCase.testResult.status = status;
+    } else {
+      testCase.testResult = {
+        testCaseId: testCase.id,
+        testRunId: this.testRunId,
+        testModuleId: testCase.testModuleId,
+        status: status
+      };
+    }
+
     this.testResultsService.upsertTestResult(testCase.testResult)
       .subscribe(testResult => {
+        testCase.testResult = testResult;
         testCase.lastTested = new Date(Date.now());
         this.testCasesService.updateTestCase(testCase)
           .subscribe(testCaseResponse => {
-
           })
       });
   }

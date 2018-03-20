@@ -6,5 +6,6 @@ export class TestResult extends Base {
     index?: number;
     testCaseId: number;
     testRunId: number;
+    testModuleId: number;
     status: number;
 }

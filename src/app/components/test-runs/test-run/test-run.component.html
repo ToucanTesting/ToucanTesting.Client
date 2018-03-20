@@ -3,15 +3,29 @@
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="clickable-text">{{testModule.name}}</span>
-        <mat-icon #toggle [ngClass]="{'close': !testModule.isExpanded, 'open': testModule.isExpanded}" class="expansion-button options-dropdown"
-          (click)="getTestResults(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
-          aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
+        <div>
+          <span class="clickable-text">{{testModule.name}}</span>
+        </div>
+        <div>
+          <span class="clickable-text">
+            <i class="fa fa-square" style="color:green"></i> {{testModule.passes.length}} </span>
+          <span class="clickable-text">
+            <i class="fa fa-square" style="color:red"></i> {{testModule.failures.length}} </span>
+          <span class="clickable-text">
+            <i class="fa fa-square" style="color:blue"></i> {{testModule.cnt.length}} </span>
+          <span class="clickable-text">
+            <i class="fa fa-square" style="color:gray"></i> {{testModule.na.length}} </span>
+            <span>&nbsp;</span>
+          <mat-icon #toggle [ngClass]="{'close': !testModule.isExpanded, 'open': testModule.isExpanded}" class="expansion-button options-dropdown"
+            (click)="getTestResults(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
+            aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
+        </div>
+
       </div>
       <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
-          <div class="card-body">
-            <test-module-temp [testModule]="testModule" [isTestRun]=true [testRunId]="testRun.id"></test-module-temp>
-          </div>
+        <div class="card-body">
+          <test-module-temp [testModule]="testModule" [isTestRun]=true [testRunId]="testRun.id"></test-module-temp>
         </div>
+      </div>
     </div>
   </div>

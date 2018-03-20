@@ -13,8 +13,8 @@ import { TestResultStatus, Priority } from '../../../enums';
 export class TestRunComponent {
     testRun: TestRun;
     testRunId: number;
-    testCases: TestCase[];
     testResults: TestResult[] = [];
+    failures: TestResult[];
     testModules: TestModule[];
     testResultStatus = TestResultStatus;
     priority = Priority;
@@ -36,6 +36,9 @@ export class TestRunComponent {
                 this.testRunsService
                     .getTestRun(this.testRunId)
                     .subscribe(testRun => {
+                        if (testRun.testResults.length > 0) {
+                            this.testResults = testRun.testResults;
+                        }
                         this.testRun = testRun;
                         this.testModulesService
                             .getTestModules(testRun.testSuiteId, testRun.createdAt)
@@ -44,6 +47,21 @@ export class TestRunComponent {
                                     ...testModule,
                                     sort: null,
                                     reverse: false,
+                                    testResults: this.testResults.filter(testResult => {
+                                        return testResult.testModuleId === testModule.id;
+                                    }),
+                                    passes: this.testResults.filter(testResult => {
+                                        return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Pass;
+                                    }),
+                                    failures: this.testResults.filter(testResult => {
+                                        return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Fail;
+                                    }),
+                                    cnt: this.testResults.filter(testResult => {
+                                        return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.CNT;
+                                    }),
+                                    na: this.testResults.filter(testResult => {
+                                        return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.NA;
+                                    }),
                                 }));
                             })
                     })
@@ -57,13 +75,7 @@ export class TestRunComponent {
             .getTestCases(testModule, this.testRun.createdAt)
             .subscribe(testCases => {
                 this.testModules[index].testCases = testCases;
-                this.testResultsService.getTestResults(this.testRunId)
-                    .subscribe(testResults => {
-                        if (testResults.length > 0) {
-                            this.testResults = testResults;
-                            this.getTestModuleTestResults(testModule);
-                        }
-                    })
+                this.getTestModuleTestResults(testModule);
             });
     }
 
