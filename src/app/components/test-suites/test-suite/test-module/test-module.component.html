@@ -15,7 +15,14 @@
         <tr>
           <td *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</td>
           <td *ngIf="!testCase.lastTested"></td>
-          <td>{{testCase.priority | priority}}</td>
+          <td>
+            <i class="fa fa-lg fa-signal priority" [ngClass]="{
+            'priority-low': testCase.priority === priority.Low,
+            'priority-med': testCase.priority === priority.Medium,
+            'priority-high': testCase.priority === priority.High,
+            'priority-critical': testCase.priority === priority.Critical
+          }"></i>
+          </td>
           <td>{{testCase.isAutomated ? 'Automated' : 'Manual'}}</td>
           <td>{{testCase.bugId}}</td>
           <td>{{testCase.description}}</td>
@@ -25,7 +32,7 @@
                 <mat-icon>more_vert</mat-icon>
               </span>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <span class="dropdown-item" data-toggle="modal" [attr.data-target]="'#test-case-modal-' + testIndex" (click)="getTestResults(testModule, testCase)">View</span>
+                <span class="dropdown-item" data-toggle="modal" [attr.data-target]="'#test-case-modal-' + testIndex" (click)="getExpectedResults(testModule, testCase)">View</span>
                 <span class="dropdown-item" (click)="openTestCaseEditDialog(testCase)">Edit</span>
                 <span class="dropdown-item" (click)="openTestCaseDeleteDialog(testCase)">Delete</span>
               </div>
@@ -34,7 +41,7 @@
         </tr>
 
         <div test-case class="modal fade" id="test-case-modal-{{testIndex}}" tabindex="-1" role="dialog" [attr.aria-labelledby]="'test-case-modal-' + testIndex"
-          aria-hidden="true" [testCase]="testCase" [testModule]="testModule" [testIndex]="testIndex"></div>
+          aria-hidden="true" [testCase]="testCase" [testModule]="testModule" [testIndex]="testIndex" [isTestRun]="isTestRun"></div>
       </tbody>
     </table>
   </div>

@@ -3,7 +3,7 @@ import { TestModule, TestCase } from '@models';
 import { TestSuiteComponent } from './../test-suite.component';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { Component, Input } from '@angular/core';
-import { DialogType } from '../../../../enums';
+import { DialogType, Priority } from '../../../../enums';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../../../shared/dialogs/delete/delete-dialog.component';
 
@@ -83,7 +83,7 @@ export class TestModuleComponent {
             })
     }
 
-    public getTestResults(testModule: TestModule, testCase: TestCase) {
+    public getExpectedResults(testModule: TestModule, testCase: TestCase) {
         if (testCase.expectedResults.length <= 0) {
             this.expectedResultsService.getTestResults(testModule, testCase)
                 .subscribe(expectedResults => {

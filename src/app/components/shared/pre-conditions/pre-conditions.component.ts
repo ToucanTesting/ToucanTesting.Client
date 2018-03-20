@@ -7,13 +7,18 @@ import { TestConditionsService } from '@services';
   templateUrl: './pre-conditions.component.html',
   styleUrls: ['./pre-conditions.component.scss']
 })
-export class PreConditionsComponent implements OnInit {
+export class PreConditionsComponent {
   @Input() testCase: TestCase;
+  @Input() isTestRun: boolean = false;
+
   constructor(
     private testConditionsService: TestConditionsService
   ) { }
 
-  ngOnInit() {
+  toggleIsEditing(testCondition: TestCondition) {
+    if (!this.isTestRun) {
+      testCondition.isEditing = !testCondition.isEditing;
+    }
   }
 
   addTestCondition(description: string) {

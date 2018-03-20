@@ -85,6 +85,7 @@ import { TestConditionsService } from './services';
 import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
 import { ExpectedResultsComponent } from './components/shared/expected-results/expected-results.component';
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
+import { TestModuleTempComponent } from './components/shared/test-module-temp/test-module-temp.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -123,7 +124,8 @@ const jwtConf = {
     IssuesComponent,
     PreConditionsComponent,
     ExpectedResultsComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    TestModuleTempComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
   imports: [

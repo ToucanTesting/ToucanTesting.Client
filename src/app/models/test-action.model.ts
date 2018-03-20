@@ -6,5 +6,5 @@ export class TestAction extends Base {
     testCaseId?: number;
     description: string;
     sequence: number;
-    isEditing: boolean = false;
+    isEditing?: boolean;
 }

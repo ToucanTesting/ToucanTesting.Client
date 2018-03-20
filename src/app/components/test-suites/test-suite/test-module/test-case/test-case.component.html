@@ -2,7 +2,7 @@
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">{{truncateDescription(testCase.description)}}</h5>
+      <h5 class="modal-title" id="testCaseModal">{{truncateDescription(testCase.description)}}</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -24,13 +24,13 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="expected-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'expected-tab-' + testIndex">
-          <tt-expected-results [testCase]="testCase"></tt-expected-results>
+          <tt-expected-results [testCase]="testCase" [isTestRun]="isTestRun"></tt-expected-results>
         </div>
         <div class="tab-pane fade" id="pre-conditions-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'pre-conditions-' + testIndex">
-          <tt-pre-conditions [testCase]="testCase"></tt-pre-conditions>
+          <tt-pre-conditions [testCase]="testCase" [isTestRun]="isTestRun"></tt-pre-conditions>
         </div>
         <div class="tab-pane fade" id="test-actions-{{testIndex}}" role="tabpanel" [attr.aria-labelledby]="'test-actions-' + testIndex">
-          <tt-test-actions [testCase]="testCase"></tt-test-actions>
+          <tt-test-actions [testCase]="testCase" [isTestRun]="isTestRun"></tt-test-actions>
         </div>
       </div>
     </div>

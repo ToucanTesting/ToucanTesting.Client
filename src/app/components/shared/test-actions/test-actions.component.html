@@ -1,34 +1,15 @@
-<!-- <div *ngIf="testCase.testActions.length > 0">
-  <br>
-  <ng-container *ngFor="let testAction of testCase.testActions">
-    <mat-card *ngIf="!testAction.isEditing" class="flex-card">
-          <span (click)="blurOthers();testAction.isEditing = true"><strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}</span>
-          <span class="pull-right">
-            <button *ngIf="testCase.testActions.indexOf(testAction) > 0" class="result-button" mat-button (click)="moveUp(testAction)"><mat-icon>vertical_align_top</mat-icon></button>
-            <button *ngIf="testCase.testActions.indexOf(testAction) < testCase.testActions.length - 1" class="result-button" mat-button (click)="moveDown(testAction)"><mat-icon>vertical_align_bottom</mat-icon></button>
-            <button mat-button (click)="deleteTestAction(testAction)"><mat-icon>delete</mat-icon></button>
-          </span>
-    </mat-card>
-    <mat-form-field style="width:400px" *ngIf="testAction.isEditing">
-      <input value="{{testAction.description}}" matInput (blur)="testAction.isEditing = false;" (keyup.enter)="testAction.description=value.value;updateTestAction(testAction); testAction.isEditing = false"
-        #value>
-    </mat-form-field>
-  </ng-container>
-</div>
-<div *ngIf="!(testCase.testActions.length > 0)">
-  <p>No actions defined</p>
-</div> -->
 <br>
 <ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
   <div class="card" *ngIf="testCase.testActions.length > 0">
     <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
-      <span *ngIf="!testAction.isEditing" (click)="testAction.isEditing = true">
+      <span *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction)">
         <strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}
-        <mat-icon class="edit-icon" *ngIf="hoverIndex === i">edit</mat-icon>
+        <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
       </span>
-      <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="testAction.isEditing = false" (keyup.escape)="testAction.isEditing = false"
-        (keyup.enter)="renameTestAction(testAction); testAction.isEditing = false" [(ngModel)]="testAction.description" />
-      <span *ngIf="hoverIndex === i && !testAction.isEditing" class="toolbar">
+      <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="toggleIsEditing(testAction)" (keyup.escape)="toggleIsEditing(testAction)"
+        (keyup.enter)="renameTestAction(testAction); toggleIsEditing(testAction.isEditing)" [(ngModel)]="testAction.description"
+      />
+      <span *ngIf="hoverIndex === i && !testAction.isEditing && !isTestRun" class="toolbar">
         <mat-icon *ngIf="i !== 0" (click)="moveUp(testAction)">file_upload</mat-icon>
         <mat-icon *ngIf="i !== testCase.testActions.length - 1" (click)="moveDown(testAction)">file_download</mat-icon>
         <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
@@ -42,7 +23,7 @@
   </div>
 </ng-container>
 <br>
-<div class="input-group mb-3">
+<div class="input-group mb-3" *ngIf="!isTestRun">
   <input #action type="text" class="form-control" placeholder="Add an action" (keyup.enter)="createTestAction(action.value);action.value=''">
   <div class="input-group-append">
     <button class="btn btn-outline-primary" type="button" (click)="createTestAction(action.value);action.value=''">Save</button>
