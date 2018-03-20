@@ -1,18 +1,22 @@
-<div *ngFor="let testRun of testRuns">
-    <br>
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title *ngIf="!isEditing">{{testRun.name}}</mat-card-title>
-            <mat-form-field *ngIf="isEditing">
-                <input matInput [(ngModel)]="testRun.name">
-            </mat-form-field>
-        </mat-card-header>
-        <mat-action-row>
-            <button mat-button [routerLink]="['/test-runs', testRun.id]">VIEW</button>
-            <button mat-button *ngIf="!isEditing" (click)="isEditing = !isEditing">EDIT</button>
-            <button mat-button *ngIf="isEditing" (click)="renameTestRun(testRun); isEditing = !isEditing">SAVE</button>
-            <button mat-button color="warn" (click)="openDeleteDialog(testRun)">DELETE TEST RUN</button>
-        </mat-action-row>
-    </mat-card>
+<div>
+  <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns; let i = index">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span (mouseover)="hoverIndex = i" (click)="testRun.isEditing = true" *ngIf="!testRun.isEditing" class="clickable-text">{{testRun.name}}
+        <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
+      </span>
+      <input autofocus class="form-control" *ngIf="testRun.isEditing" matInput (blur)="renameTestRun(testRun); testRun.isEditing = false"
+        (keyup.escape)="testRun.isEditing = false" (keyup.enter)="renameTestRun(testRun); testRun.isEditing = false; testRun.name = testRun.name"
+        [(ngModel)]="testRun.name" />
+      <div class="dropdown">
+        <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <mat-icon>more_vert</mat-icon>
+        </span>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <span class="dropdown-item" href [routerLink]="['/test-runs', testRun.id]">View</span>
+          <span class="dropdown-item" (click)="openDeleteDialog(testRun)">Delete</span>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>
 <tt-buttons (click)="openCreateDialog()"></tt-buttons>

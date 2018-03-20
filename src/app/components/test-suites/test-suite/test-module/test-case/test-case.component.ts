@@ -2,7 +2,7 @@ import { TestModule, TestCase, TestAction } from '@models';
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService } from '@services';
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatGridList } from '@angular/material';
-import { DeleteDialog } from '../../../../shared/dialogs/delete/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../../shared/dialogs/delete/delete-dialog.component';
 import { Priority } from '../../../../../enums';
 
 @Component({
@@ -38,7 +38,7 @@ export class TestCaseComponent {
     }
 
     openDeleteDialog(testCase: TestCase): void {
-        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testCase.description } });
+        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.description } });
 
         dialogRef.afterClosed().subscribe(res => {
             res ? this.deleteTestCase(testCase) : false;

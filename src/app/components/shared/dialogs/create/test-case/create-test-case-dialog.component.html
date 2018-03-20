@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{title}}</h1>
+
+<!-- Test Suite/Component/Run -->
+<!-- <div mat-dialog-content *ngIf="type === 'test-suite' || type === 'test-module'">
+  <mat-form-field>
+    <input placeholder="Name" matInput tabindex="1" [(ngModel)]="payload.name">
+  </mat-form-field>
+</div> -->
+
+<form mat-dialog-content [formGroup]="testCaseForm">
+  <mat-form-field>
+    <input placeholder="Description" matInput formControlName="description">
+  </mat-form-field>
+  <p>
+    <mat-checkbox formControlName="isAutomated">Automated</mat-checkbox>
+  </p>
+  <mat-form-field>
+    <mat-select placeholder="Priority" formControlName="priority">
+      <mat-option [value]="priorityOptions.Low">Low</mat-option>
+      <mat-option [value]="priorityOptions.Medium">Medium</mat-option>
+      <mat-option [value]="priorityOptions.High">High</mat-option>
+      <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input placeholder="Bug ID" matInput formControlName="bugId">
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="testCaseForm.value">Ok</button>
+</div>

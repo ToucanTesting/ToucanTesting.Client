@@ -20,7 +20,7 @@
           <td>{{testCase.bugId}}</td>
           <td>{{testCase.description}}</td>
           <td>
-            <div class="dropdown">
+            <div *ngIf="!testRun" class="dropdown">
               <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <mat-icon>more_vert</mat-icon>
               </span>
@@ -33,8 +33,8 @@
           </td>
         </tr>
 
-        <div test-case class="modal fade" id="test-case-modal-{{testIndex}}" tabindex="-1" role="dialog" [attr.aria-labelledby]="'test-case-modal-' + testIndex" aria-hidden="true"
-          [testCase]="testCase" [testModule]="testModule" [testIndex]="testIndex"></div>
+        <div test-case class="modal fade" id="test-case-modal-{{testIndex}}" tabindex="-1" role="dialog" [attr.aria-labelledby]="'test-case-modal-' + testIndex"
+          aria-hidden="true" [testCase]="testCase" [testModule]="testModule" [testIndex]="testIndex"></div>
       </tbody>
     </table>
   </div>

@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<form mat-dialog-content [formGroup]="testRunForm">
+  <div>
+  <mat-form-field>
+    <input placeholder="Name" matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Test Suite" formControlName="testSuiteId">
+      <mat-option [value]="testSuite.id" *ngFor="let testSuite of testSuites">{{testSuite.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="testRunForm.value">Ok</button>
+</div>
+</form>

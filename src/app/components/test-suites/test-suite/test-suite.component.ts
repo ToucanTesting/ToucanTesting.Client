@@ -1,11 +1,11 @@
 import { TestSuite, TestModule, TestCase } from '@models';
 import { TestSuitesService, TestModulesService, TestCasesService } from '@services';
 import { DialogType } from '../../../enums';
-import { CreateDialog } from '../../shared/dialogs/create/create-dialog.component';
+import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DeleteDialog } from '../../shared/dialogs/delete/delete-dialog.component';
+import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog.component';
 
 @Component({
     selector: 'test-suite',
@@ -26,7 +26,7 @@ export class TestSuiteComponent {
     ngOnInit() {
         this.route.paramMap
             .subscribe(params => {
-                this.testSuiteId = +params.get('id')!;
+                this.testSuiteId = this.route.snapshot.params['id'];
                 this.testModulesService.getTestModules(this.testSuiteId)
                     .subscribe(testModules => {
                         this.testModules = testModules;
@@ -44,7 +44,7 @@ export class TestSuiteComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
 
         dialogRef.afterClosed().subscribe(testModule => {
             testModule ? this.createTestModule(testModule) : false;
@@ -68,7 +68,7 @@ export class TestSuiteComponent {
 
     openModuleDeleteDialog(testModule: TestModule): void {
 
-        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testModule.name } });
+        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testModule.name } });
 
         dialogRef.afterClosed().subscribe(res => {
             res ? this.deleteTestModule(testModule) : false;
@@ -86,17 +86,18 @@ export class TestSuiteComponent {
     }
 
     openCreateTestCaseDialog(testModule: TestModule): void {
-        const dialogRef = this.dialog.open(CreateDialog, { data: { title: 'Add a Test Case', type: DialogType.TestCase } });
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Test Case', type: DialogType.TestCase } });
 
         dialogRef.afterClosed().subscribe(testCase => {
-            testCase ? this.createTestCase(testCase, testModule) : false;
+            if (testCase) {
+                testCase.testModuleId = testModule.id;
+                testCase.isEnabled = true;
+                this.createTestCase(testCase, testModule);
+            }
         });
     }
 
     createTestCase(testCase: TestCase, testModule: TestModule): void {
-        testCase.testModuleId = testModule.id;
-        testCase.isEnabled = true;
-        testCase.lastTested = null;
         this.testCasesService.createTestCase(testCase)
             .subscribe(result => {
                 if (testModule.testCases) {

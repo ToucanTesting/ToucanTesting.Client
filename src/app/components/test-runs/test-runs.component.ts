@@ -2,8 +2,8 @@ import { TestRunsService } from '@services';
 import { Component } from '@angular/core';
 import { TestRun } from '@models';
 import { DialogType } from './../../enums';
-import { CreateDialog } from '@components/shared/dialogs/create/create-dialog.component';
-import { DeleteDialog } from '@components/shared/dialogs/delete/delete-dialog.component';
+import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
+import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -29,7 +29,7 @@ export class TestRunsComponent {
     }
 
     openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateDialog, {
+        const dialogRef = this.dialog.open(CreateTestRunDialogComponent, {
             data: {
                 title: 'Start a New Test Run',
                 type: DialogType.TestRun
@@ -37,7 +37,9 @@ export class TestRunsComponent {
         });
 
         dialogRef.afterClosed().subscribe(testRun => {
-            testRun ? this.createTestRun(testRun) : false;
+            if (testRun) {
+                this.createTestRun(testRun)
+            }
         });
     }
 
@@ -49,7 +51,7 @@ export class TestRunsComponent {
     }
 
     openDeleteDialog(testRun: TestRun): void {
-        const dialogRef = this.dialog.open(DeleteDialog, { data: { title: testRun.name } });
+        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testRun.name } });
 
         dialogRef.afterClosed().subscribe(res => {
             res ? this.deleteTestRun(testRun) : false;

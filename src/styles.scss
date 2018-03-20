@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "scss/myTheme";
 @import "~bootstrap/scss/bootstrap";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 .top-buffer {
     margin-top: 10px;
@@ -36,3 +37,26 @@ body {
     color: #222;
 }
 
+.priority {
+    margin-bottom: 2px;
+    height: 100%;
+}
+
+.priority.priority-low {
+    color: green;
+    overflow: hidden; width: 0.4em;
+}
+
+.priority.priority-med {
+    color: $blue;
+    overflow: hidden; width: 0.6em;
+}
+
+.priority.priority-high {
+    color: orange;
+    overflow: hidden; width: 0.8em;
+}
+
+.priority.priority-critical {
+    color: red;
+}
