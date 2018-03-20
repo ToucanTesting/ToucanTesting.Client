@@ -60,8 +60,7 @@ import { TestRunsComponent } from './components/test-runs/test-runs.component';
 import { TestRunComponent } from './components/test-runs/test-run/test-run.component';
 import { TestSuitesComponent } from './components/test-suites/test-suites.component';
 import { TestSuiteComponent } from './components/test-suites/test-suite/test-suite.component';
-import { TestModuleComponent } from './components/test-suites/test-suite/test-module/test-module.component';
-import { TestCaseComponent } from './components/test-suites/test-suite/test-module/test-case/test-case.component';
+import { TestCaseComponent } from './components/shared/test-case/test-case.component';
 import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
@@ -85,7 +84,7 @@ import { TestConditionsService } from './services';
 import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
 import { ExpectedResultsComponent } from './components/shared/expected-results/expected-results.component';
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
-import { TestModuleTempComponent } from './components/shared/test-module-temp/test-module-temp.component';
+import { TestModuleComponent } from './components/shared/test-module/test-module.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -125,7 +124,7 @@ const jwtConf = {
     PreConditionsComponent,
     ExpectedResultsComponent,
     ToolbarComponent,
-    TestModuleTempComponent
+    TestModuleComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
   imports: [

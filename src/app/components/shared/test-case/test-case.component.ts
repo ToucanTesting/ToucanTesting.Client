@@ -2,8 +2,8 @@ import { TestModule, TestCase, TestAction } from '@models';
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService } from '@services';
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatGridList } from '@angular/material';
-import { DeleteDialogComponent } from '../../../../shared/dialogs/delete/delete-dialog.component';
-import { Priority } from '../../../../../enums';
+import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog.component';
+import { Priority } from '../../../enums';
 
 @Component({
     selector: '[test-case]',
