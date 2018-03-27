@@ -8,7 +8,7 @@ import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 
 @Component({
-  selector: 'test-module-temp',
+  selector: 'test-module',
   templateUrl: './test-module.component.html',
   styleUrls: ['./test-module.component.scss']
 })

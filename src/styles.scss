@@ -1,73 +1,105 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "scss/myTheme";
 @import "~bootstrap/scss/bootstrap";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
+$dark: #333;
+$light: #bbb;
+$active: #28a745;
+.icon-dark {
+  color: $dark;
+}
+
+.icon-light {
+  color: $light;
+}
+
+.icon-success {
+  color: $active;
+}
 
 .top-buffer {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 body {
-    background-color: #efefef;
-    height: 100%;
+  background-color: #efefef;
+  height: 100%;
 }
 
-.options-dropdown,  {
-    color: #666;
+.options-dropdown,
+  {
+  color: #666;
 }
 
-.options-dropdown, .dropdown-item, .clickable-text, .toolbar > mat-icon {
-    cursor: pointer;
+.options-dropdown,
+.dropdown-item,
+.clickable-text,
+.toolbar>mat-icon {
+  cursor: pointer;
 }
 
-.show-details,  {
-    color: #666;
-    cursor: pointer;
+.show-details,
+  {
+  color: #666;
+  cursor: pointer;
 }
 
-.test-run-item > span, .test-run-item > i {
-    padding: 0 5px;
+.test-run-item>span,
+.test-run-item>i {
+  padding: 0 5px;
 }
 
 .show-details:hover {
-    color: #222;
-
+  color: #222;
 }
 
 .expansion-button.open::before {
-    content: "keyboard_arrow_up";
+  content: "keyboard_arrow_up";
 }
 
 .expansion-button.close::before {
-    content: "keyboard_arrow_down";
+  content: "keyboard_arrow_down";
 }
 
-.toolbar > mat-icon, .edit-icon {
-    color: #666;
-    font-size: 16px !important;
+.toolbar>mat-icon,
+.edit-icon {
+  color: #666;
+  font-size: 16px !important;
 }
 
 .toolbar mat-icon:hover {
-    color: #222;
+  color: #222;
 }
 
 .priority {
-    margin-bottom: 2px;
-    height: 100%;
+  margin-bottom: 2px;
+  height: 100%;
 }
 
 .priority.priority-low {
-    color: green;
+  color: green;
 }
 
 .priority.priority-med {
-    color: $blue;
+  color: $blue;
 }
 
 .priority.priority-high {
-    color: orange;
+  color: orange;
 }
 
 .priority.priority-critical {
-    color: red;
+  color: red;
+}
+
+.mat-dialog-container {
+  max-width: none !important;
+  width: 600px !important;
+  min-height: 300px !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
 }
