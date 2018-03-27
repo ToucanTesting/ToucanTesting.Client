@@ -106,7 +106,7 @@ export class TestSuiteComponent {
     }
 
     openCreateTestCaseDialog(testModule: TestModule): void {
-        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Test Case', type: DialogType.TestCase } });
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { width: '300px', data: { title: 'Add a Test Case', type: DialogType.TestCase } });
 
         dialogRef.afterClosed().subscribe(testCase => {
             if (testCase) {

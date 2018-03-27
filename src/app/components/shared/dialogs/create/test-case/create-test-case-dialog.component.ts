@@ -42,7 +42,7 @@ export class CreateTestCaseDialogComponent {
             testModuleId: null,
             description: null,
             isAutomated: false,
-            priority: 0,
+            priority: Priority.Low,
             bugId: null
         })
     }

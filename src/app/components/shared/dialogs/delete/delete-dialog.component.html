@@ -1,5 +1,11 @@
-<h1 mat-dialog-title>Are you sure you want to delete <strong>{{title}}</strong>?</h1>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial [mat-dialog-close]="true">Confirm</button>
+<div class="card">
+  <div class="card-body" style="min-height:200px">
+    Are you sure you want to delete <strong>{{title}}?</strong>
+  </div>
+  <div class="card-footer">
+    <div class="pull-right">
+      <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="true">Save</button>
+    </div>
+  </div>
 </div>

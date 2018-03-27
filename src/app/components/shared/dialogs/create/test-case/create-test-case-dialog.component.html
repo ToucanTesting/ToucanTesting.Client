@@ -1,29 +1,43 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<form mat-dialog-content [formGroup]="testCaseForm">
-  <div *ngIf="testSuiteId">
-    <select class="form-control" formControlName="testModuleId">
-      <option [value]="testModule.id" *ngFor="let testModule of testModules">{{testModule.name}}</option>
-    </select>
+<div class="card">
+  <div class="card-header">
+    <h5>{{title}}</h5>
   </div>
-  <mat-form-field>
-    <input placeholder="Description" matInput formControlName="description">
-  </mat-form-field>
-  <p>
-    <mat-checkbox formControlName="isAutomated">Automated</mat-checkbox>
-  </p>
-  <mat-form-field>
-    <mat-select placeholder="Priority" formControlName="priority">
-      <mat-option [value]="priorityOptions.Low">Low</mat-option>
-      <mat-option [value]="priorityOptions.Medium">Medium</mat-option>
-      <mat-option [value]="priorityOptions.High">High</mat-option>
-      <mat-option [value]="priorityOptions.Critical">Critical</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <input placeholder="Bug ID" matInput formControlName="bugId">
-  </mat-form-field>
-</form>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial [mat-dialog-close]="testCaseForm.value">Ok</button>
+  <div class="card-body">
+    <form [formGroup]="testCaseForm">
+      <div class="form-group">
+        <label for="descriptionInput">User Action / Description</label>
+        <input type="text" class="form-control" id="descriptionInput" placeholder="Description" formControlName="description">
+      </div>
+      <div class="form-group" *ngIf="testSuiteId">
+        <label for="selectTestModule">Test Module</label>
+        <select class="form-control" id="selectTestModule" formControlName="testModuleId">
+          <option [value]="testModule.id" *ngFor="let testModule of testModules">{{testModule.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="selectPriority">Priority</label>
+        <select class="form-control" id="selectPriority" formControlName="priority">
+          <option [value]="priorityOptions.Low">Low</option>
+          <option [value]="priorityOptions.Low">Medium</option>
+          <option [value]="priorityOptions.Low">High</option>
+          <option [value]="priorityOptions.Low">Critical</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bugReferenceInput">Bug Reference</label>
+        <input type="text" class="form-control" id="bugReferenceInput" aria-describedby="emailHelp" placeholder="IKW-XXXX" formControlName="bugId">
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" formControlName="isAutomated"> Automated
+        </label>
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="pull-right">
+      <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="testCaseForm.value">Save</button>
+    </div>
+  </div>
 </div>

@@ -1,10 +1,19 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<form mat-dialog-content [formGroup]="testSuiteForm">
-  <mat-form-field>
-    <input placeholder="Name" matInput formControlName="name">
-  </mat-form-field>
-</form>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial [mat-dialog-close]="testSuiteForm.value">Ok</button>
+<div class="card">
+  <div class="card-header">
+    <h5>{{title}}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="testSuiteForm">
+      <div class="form-group">
+        <label for="nameInput">Test Suite Name</label>
+        <input type="text" class="form-control" id="nameInput" placeholder="Name" formControlName="name">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="pull-right">
+      <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="testSuiteForm.value">Save</button>
+    </div>
+  </div>
 </div>
