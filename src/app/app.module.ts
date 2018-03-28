@@ -33,6 +33,7 @@ import { CreateTestCaseDialogComponent } from './components/shared/dialogs/creat
 import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
 import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
+import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
 import { DeleteDialogComponent } from './components/shared/dialogs/delete/delete-dialog.component';
 import { ButtonComponent } from './components/shared/buttons/buttons.component';
 import { KeysPipe } from './pipes/keys.pipe';
@@ -54,6 +55,7 @@ import { ExpectedResultsComponent } from './components/shared/expected-results/e
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
 import { TestModuleComponent } from './components/shared/test-module/test-module.component';
 import { TestReportComponent } from './components/test-runs/test-report/test-report.component';
+import { LoaderComponent } from './components/shared/loader/loader.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -80,6 +82,7 @@ const jwtConf = {
     CreateTestSuiteDialogComponent,
     CreateTestModuleDialogComponent,
     CreateTestRunDialogComponent,
+    LogIssueDialogComponent,
     DeleteDialogComponent,
     ButtonComponent,
     KeysPipe,
@@ -93,9 +96,10 @@ const jwtConf = {
     ExpectedResultsComponent,
     ToolbarComponent,
     TestModuleComponent,
-    TestReportComponent
+    TestReportComponent,
+    LoaderComponent
   ],
-  entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
+  entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

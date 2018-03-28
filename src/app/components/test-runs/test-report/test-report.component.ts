@@ -11,6 +11,7 @@ import { TestResultStatus, Priority } from '../../../enums';
   styleUrls: ['./test-report.component.scss']
 })
 export class TestReportComponent {
+  isLoading: boolean = false;
   testRun: TestRun;
   testRunId: number;
   testResults: TestResult[] = [];
@@ -37,11 +38,12 @@ export class TestReportComponent {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.route.paramMap
       .subscribe(params => {
         this.testRunId = this.route.snapshot.params['id'];
         this.testRunsService
-          .getTestRun(this.testRunId)
+          .getTestRun(this.testRunId, true)
           .subscribe(testRun => {
             if (testRun.testResults && testRun.testResults.length > 0) {
               this.testResults = testRun.testResults;
@@ -89,6 +91,7 @@ export class TestReportComponent {
                   })
                 }));
                 this.totalPendingCount += (this.totalTestCases - (this.totalPassCount + this.totalFailCount + this.totalCntCount + this.totalNaCount))
+                this.isLoading = false;
               })
           })
 
