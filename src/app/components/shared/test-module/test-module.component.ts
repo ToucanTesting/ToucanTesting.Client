@@ -83,7 +83,6 @@ export class TestModuleComponent {
   }
 
   updateTestCase(testCase: TestCase): void {
-    console.log(testCase)
     this.testCasesService.updateTestCase(testCase)
       .subscribe(result => {
         testCase = result;

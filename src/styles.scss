@@ -7,6 +7,7 @@
 $dark: #333;
 $light: #bbb;
 $active: #28a745;
+$danger: red;
 .icon-dark {
   color: $dark;
 }
@@ -17,6 +18,10 @@ $active: #28a745;
 
 .icon-success {
   color: $active;
+}
+
+.icon-danger {
+  color: $danger;
 }
 
 .top-buffer {
