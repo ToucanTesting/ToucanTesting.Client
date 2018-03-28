@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TestSuite, TestModule, TestCase } from '@models';
 import { DialogType, Priority } from './../../../../../enums';
@@ -32,7 +32,7 @@ export class LogIssueDialogComponent {
 
     createIssueForm() {
         this.logIssueForm = this.fb.group({
-            bugId: null
+            bugId: ['', Validators.required]
         })
     }
 
