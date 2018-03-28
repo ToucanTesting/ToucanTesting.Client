@@ -3,6 +3,7 @@ import { TestCasesService, ExpectedResultsService, TestResultsService } from '@s
 import { TestModulesService } from 'app/services/test-modules.service';
 import { MatDialog } from '@angular/material';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
+import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
 import { TestCase, TestModule } from '@models';
 import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
@@ -70,7 +71,19 @@ export class TestModuleComponent {
     });
   }
 
+  openLogIssueDialog(testCase: TestCase): void {
+    const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue', payload: testCase } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        testCase.bugId = res.bugId;
+        this.updateTestCase(testCase)
+      }
+    });
+  }
+
   updateTestCase(testCase: TestCase): void {
+    console.log(testCase)
     this.testCasesService.updateTestCase(testCase)
       .subscribe(result => {
         testCase = result;
@@ -79,6 +92,10 @@ export class TestModuleComponent {
           this.testModule.testCases.splice(index, 1)
         }
       })
+  }
+
+  logIssue(testCase: TestCase): void {
+    console.log('issue logged');
   }
 
   deleteTestCase(testCase: TestCase) {

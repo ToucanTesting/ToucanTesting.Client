@@ -36,7 +36,7 @@ export class TestRunComponent {
             .subscribe(params => {
                 this.testRunId = this.route.snapshot.params['id'];
                 this.testRunsService
-                    .getTestRun(this.testRunId)
+                    .getTestRun(this.testRunId, true)
                     .subscribe(testRun => {
                         if (testRun.testResults && testRun.testResults.length > 0) {
                             this.testResults = testRun.testResults;
@@ -45,12 +45,6 @@ export class TestRunComponent {
                         this.testModulesService
                             .getTestModules(testRun.testSuiteId, testRun.createdAt)
                             .subscribe(testModules => {
-                                // testModules.forEach((testModule) => {
-                                //     this.totalAutomated = testModule.testCases.reduce((total, testCase) => {
-                                //         return (testCase.isAutomated) ? total + 1 : total;
-                                //     }, 0)
-                                //     this.totalTestCases += testModule.testCases.length;
-                                // })
                                 this.testModules = testModules.map(testModule => ({
                                     ...testModule,
                                     sort: null,

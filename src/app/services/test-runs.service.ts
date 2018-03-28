@@ -17,8 +17,8 @@ export class TestRunsService {
         return this.http.get<TestRun[]>(`test-runs`);
     }
 
-    public getTestRun(id: number): Observable<TestRun> {
-        return this.http.get<TestRun>(`test-runs/${id}`);
+    public getTestRun(id: number, results: boolean = false): Observable<TestRun> {
+        return this.http.get<TestRun>(`test-runs/${id}?results=${results}`);
     }
 
     public updateTestRun(testRun: TestRun): Observable<TestRun> {

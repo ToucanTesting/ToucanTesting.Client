@@ -13,8 +13,8 @@
             <span (click)="testModule.sort = 'isAutomated'" class="dropdown-item">Automated</span>
           </div>
         </span>
-        <span class="btn-group btn-group-toggle" data-toggle="buttons" style="z-index: 0;">
-          <label class="btn btn-secondary active" (click)="testModule.reverse = false">
+        <span *ngIf="testModule.sort" class="btn-group btn-group-toggle" data-toggle="buttons" style="z-index: 0;">
+          <label class="btn btn-secondary" (click)="testModule.reverse = false">
             <input type="radio" name="options" autocomplete="off" [checked]="!testModule.reverse"> Asc
           </label>
           <label class="btn btn-secondary" (click)="testModule.reverse = true">
@@ -61,6 +61,8 @@
                   <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.CNT)">CNT</span>
                   <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.NA)">NA</span>
                   <span class="dropdown-item" (click)="changeTestCaseStatus(testCase, testResultStatus.Pending)">PENDING</span>
+                  <div class="dropdown-divider"></div>
+                  <span class="dropdown-item" (click)="openLogIssueDialog(testCase)">LOG ISSUE</span>
                 </div>
               </div>
 

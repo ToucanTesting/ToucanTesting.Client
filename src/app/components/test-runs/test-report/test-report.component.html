@@ -1,4 +1,5 @@
-<div class="card-body">
+<tt-loader *ngIf="isLoading"></tt-loader>
+<div class="card-body" *ngIf="!isLoading">
   <h5 class="card-title">{{testRun?.name}}</h5>
   <h5>Total Test Cases: {{totalTestCases}}</h5>
   <h5>Total Automated: {{totalAutomated}}</h5>

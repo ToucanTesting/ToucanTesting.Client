@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <h5>{{title}}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="logIssueForm">
+      <div class="form-group">
+        <label for="bugReferenceInput">Bug Reference</label>
+        <input type="text" class="form-control" id="bugReferenceInput" aria-describedby="emailHelp" placeholder="IKW-XXXX" formControlName="bugId">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="pull-right">
+      <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="logIssueForm.value">Save</button>
+    </div>
+  </div>
+</div>
