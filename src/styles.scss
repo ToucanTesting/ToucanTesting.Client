@@ -3,6 +3,7 @@
 @import "scss/myTheme";
 @import "~bootstrap/scss/bootstrap";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "~ngx-toastr/toastr-bs4-alert";
 $dark: #333;
 $light: #bbb;
 $active: #28a745;

@@ -18,6 +18,10 @@ export class TestModulesService {
         return this.http.get<TestModule[]>(`test-suites/${testSuiteId}/test-modules`)
     }
 
+    public getTestReport(testSuiteId: number, beforeDate: Date, isReport = true): Observable<TestModule[]> {
+        return this.http.get<TestModule[]>(`test-suites/${testSuiteId}/test-modules?beforeDate=${beforeDate}&isReport=${isReport}`)
+    }
+
     public createTestModule(testModule: TestModule): Observable<TestModule> {
         return this.http.post<TestModule>(`test-suites/${testModule.testSuiteId}/test-modules`, testModule);
     }
