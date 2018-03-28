@@ -6,6 +6,7 @@ import { CreateTestSuiteDialogComponent } from '../shared/dialogs/create/test-su
 import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
 import { DialogType } from './../../enums';
 import { TestSuite } from '@models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'test-suites',
@@ -17,6 +18,7 @@ export class TestSuitesComponent {
     tempName: string;
 
     constructor(
+        private toastr: ToastrService,
         private fb: FormBuilder,
         private testSuitesService: TestSuitesService,
         public dialog: MatDialog
@@ -76,6 +78,9 @@ export class TestSuitesComponent {
         this.testSuitesService.createTestSuites(testSuite)
             .subscribe(res => {
                 this.testSuites.push(res);
+                this.toastr.success(res.name, 'CREATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
             })
     }
 }

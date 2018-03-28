@@ -18,6 +18,8 @@ export class TestRunComponent {
     testModules: TestModule[];
     testResultStatus = TestResultStatus;
     priority = Priority;
+    totalTestCases: number = 0;
+    totalAutomated: number = 0;
 
     constructor(
         private expectedResultsService: ExpectedResultsService,
@@ -43,6 +45,12 @@ export class TestRunComponent {
                         this.testModulesService
                             .getTestModules(testRun.testSuiteId, testRun.createdAt)
                             .subscribe(testModules => {
+                                // testModules.forEach((testModule) => {
+                                //     this.totalAutomated = testModule.testCases.reduce((total, testCase) => {
+                                //         return (testCase.isAutomated) ? total + 1 : total;
+                                //     }, 0)
+                                //     this.totalTestCases += testModule.testCases.length;
+                                // })
                                 this.testModules = testModules.map(testModule => ({
                                     ...testModule,
                                     sort: null,
@@ -61,7 +69,7 @@ export class TestRunComponent {
                                     }),
                                     na: this.testResults.filter(testResult => {
                                         return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.NA;
-                                    }),
+                                    })
                                 }));
                             })
                     })
@@ -69,7 +77,7 @@ export class TestRunComponent {
             })
     }
 
-    getTestResults(testModule: TestModule) {
+    public getTestResults(testModule: TestModule) {
         const index = this.testModules.indexOf(testModule);
         this.testCasesService
             .getTestCases(testModule, this.testRun.createdAt)
@@ -79,7 +87,7 @@ export class TestRunComponent {
             });
     }
 
-    getTestModuleTestResults(testModule: TestModule) {
+    public getTestModuleTestResults(testModule: TestModule) {
         this.testResults.forEach((testResult: TestResult) => {
             const testModuleIndex = this.testModules.indexOf(testModule);
             const testCaseIndex = this.testModules[testModuleIndex].testCases.findIndex(

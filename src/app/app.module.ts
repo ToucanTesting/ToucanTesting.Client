@@ -39,6 +39,7 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { PriorityPipe } from './pipes/priority.pipe';
 import { OrderModule } from 'ngx-order-pipe';
+import { ToastrModule } from 'ngx-toastr'
 
 import { AppComponent } from './app.component';
 import { APIInterceptor } from './services/api-interceptor';
@@ -52,6 +53,7 @@ import { PreConditionsComponent } from './components/shared/pre-conditions/pre-c
 import { ExpectedResultsComponent } from './components/shared/expected-results/expected-results.component';
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
 import { TestModuleComponent } from './components/shared/test-module/test-module.component';
+import { TestReportComponent } from './components/test-runs/test-report/test-report.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -90,7 +92,8 @@ const jwtConf = {
     PreConditionsComponent,
     ExpectedResultsComponent,
     ToolbarComponent,
-    TestModuleComponent
+    TestModuleComponent,
+    TestReportComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent],
   imports: [
@@ -104,12 +107,16 @@ const jwtConf = {
     FormsModule,
     OrderModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center'
+    }),
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
       { path: 'test-suites/:id', component: TestSuiteComponent },
       { path: 'test-suites', component: TestSuitesComponent },
       { path: 'test-runs', component: TestRunsComponent },
       { path: 'test-runs/:id', component: TestRunComponent },
+      { path: 'test-reports/:id', component: TestReportComponent },
       { path: 'issues', component: IssuesComponent },
       { path: '**', redirectTo: 'suites' }
     ])

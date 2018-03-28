@@ -1,5 +1,13 @@
 <div class="card-body">
   <h5 class="card-title">{{testRun?.name}}</h5>
+  <h5>Total Test Cases: {{totalTestCases}}</h5>
+  <h5>Total Automated: {{totalAutomated}}</h5>
+  <br>
+  <h6>Pass: {{totalPassCount}}</h6>
+  <h6>Fail: {{totalFailCount}}</h6>
+  <h6>CNT: {{totalCntCount}}</h6>
+  <h6>NA: {{totalNaCount}}</h6>
+  <h6>Pending: {{totalPendingCount}}</h6>
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">
@@ -15,10 +23,6 @@
             <i class="fa fa-square" style="color:blue"></i> {{testModule.cnt.length}} </span>
           <span class="clickable-text">
             <i class="fa fa-square" style="color:gray"></i> {{testModule.na.length}} </span>
-          <span>&nbsp;</span>
-          <mat-icon #toggle [ngClass]="{'close': !testModule.isExpanded, 'open': testModule.isExpanded}" class="expansion-button options-dropdown"
-            (click)="getTestResults(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
-            aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
         </div>
 
       </div>
