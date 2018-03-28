@@ -11,10 +11,11 @@
             <span (click)="testModule.sort = 'priority'" class="dropdown-item">Priority</span>
             <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
             <span (click)="testModule.sort = 'isAutomated'" class="dropdown-item">Automated</span>
+            <span (click)="testModule.sort = 'bugId'" class="dropdown-item">Issues</span>
           </div>
         </span>
         <span *ngIf="testModule.sort" class="btn-group btn-group-toggle" data-toggle="buttons" style="z-index: 0;">
-          <label class="btn btn-secondary" (click)="testModule.reverse = false">
+          <label class="btn btn-secondary active" (click)="testModule.reverse = false">
             <input type="radio" name="options" autocomplete="off" [checked]="!testModule.reverse"> Asc
           </label>
           <label class="btn btn-secondary" (click)="testModule.reverse = true">
@@ -34,12 +35,13 @@
               </div>
               <div>
                 <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
+                <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip" data-placement="bottom" title="{{testCase.bugId}}"></i>
                 <i class="fa fa-lg fa-signal priority" [ngClass]="{
                 'priority-low': testCase.priority === priority.Low,
                 'priority-med': testCase.priority === priority.Medium,
                 'priority-high': testCase.priority === priority.High,
                 'priority-critical': testCase.priority === priority.Critical
-              }"></i>
+              }" data-toggle="tooltip" data-placement="bottom" title="{{testCase.priority | priority}}"></i>
               </div>
             </div>
             <div>
