@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService } from '@services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'tt-pre-conditions',
@@ -13,6 +14,7 @@ export class PreConditionsComponent {
   tempDescription: string;
 
   constructor(
+    private toastr: ToastrService,
     private testConditionsService: TestConditionsService
   ) { }
 
@@ -31,11 +33,13 @@ export class PreConditionsComponent {
     const testCondition: TestCondition = new TestCondition();
     testCondition.testCaseId = this.testCase.id
     testCondition.description = description;
-    console.log(testCondition)
 
     this.testConditionsService.createTestCondition(testCondition)
       .subscribe(res => {
         this.testCase.testConditions.push(res)
+        this.toastr.success(res.description, 'CREATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -44,6 +48,9 @@ export class PreConditionsComponent {
     this.testConditionsService
       .updateTestCondition(testCondition)
       .subscribe(res => {
+        this.toastr.success(res.description, 'UPDATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -54,6 +61,9 @@ export class PreConditionsComponent {
         if (index > -1) {
           this.testCase.testConditions.splice(index, 1);
         }
+        this.toastr.success(testCondition.description, 'DELETED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 

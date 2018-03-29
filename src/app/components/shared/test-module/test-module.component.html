@@ -69,8 +69,6 @@
           <div class="card-footer d-flex justify-content-between align-items-center">
             <div>
               <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
-              <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip"
-                data-placement="bottom" title="{{testCase.bugId}}"></i>
               <span class="fa-stack fa-lg priority" data-toggle="tooltip" data-placement="bottom"
               title="{{testCase.priority | priority}}">
                 <i class="fa fa-signal fa-stack-1x priority-background"></i>
@@ -81,8 +79,10 @@
                   'priority-critical': testCase.priority === priority.Critical
                 }"></i>
               </span>
+              <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip"
+              data-placement="bottom" title="{{testCase.bugId}}"></i>
             </div>
-            <div *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</div>
+            <div *ngIf="testCase.lastTested"><small><strong>Last Tested:</strong> {{testCase.lastTested | date}}</small></div>
             <div *ngIf="!testCase.lastTested">Never Tested</div>
           </div>
         </div>

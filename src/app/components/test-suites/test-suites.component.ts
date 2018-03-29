@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './test-suites.component.html'
 })
 export class TestSuitesComponent {
+    isLoading: boolean = true;
     testSuites: TestSuite[];
     hoverIndex: number | null;
     tempName: string;
@@ -29,6 +30,7 @@ export class TestSuitesComponent {
             .getTestSuites()
             .subscribe(testSuites => {
                 this.testSuites = testSuites;
+                this.isLoading = false;
             });
     }
 
@@ -40,15 +42,18 @@ export class TestSuitesComponent {
         });
     }
 
-    deleteTestSuite(suite: TestSuite) {
+    deleteTestSuite(testSuite: TestSuite) {
         this.testSuitesService
-            .deleteTestSuite(suite.id)
-            .subscribe(success => {
-                const index = this.testSuites.indexOf(suite, 0);
+            .deleteTestSuite(testSuite.id)
+            .subscribe(res => {
+                const index = this.testSuites.indexOf(testSuite, 0);
                 if (index > -1) {
                     this.testSuites.splice(index, 1);
                 }
-            })
+                this.toastr.success(testSuite.name, 'DELETED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
+            });
     }
 
     cancelEdit(testSuite: TestSuite) {
@@ -61,7 +66,10 @@ export class TestSuitesComponent {
         this.testSuitesService
             .updateTestSuite(testSuite)
             .subscribe(res => {
-            })
+                this.toastr.success(testSuite.name, 'UPDATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
+            });
     }
 
     openCreateDialog(): void {

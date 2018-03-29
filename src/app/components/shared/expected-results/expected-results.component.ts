@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from '@models';
 import { ExpectedResultsService } from '@services';
 import { ExpectedResult } from '../../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'tt-expected-results',
@@ -14,6 +15,7 @@ export class ExpectedResultsComponent {
   tempDescription: string;
 
   constructor(
+    private toastr: ToastrService,
     private expectedResultsService: ExpectedResultsService
   ) { }
 
@@ -31,6 +33,9 @@ export class ExpectedResultsComponent {
     this.expectedResultsService.createExpectedResult(expectedResult)
       .subscribe(res => {
         this.testCase.expectedResults.push(res)
+        this.toastr.success(res.description, 'CREATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -44,6 +49,9 @@ export class ExpectedResultsComponent {
     this.expectedResultsService
       .updateExpectedResult(expectedResult)
       .subscribe(res => {
+        this.toastr.success(res.description, 'UPDATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -54,6 +62,9 @@ export class ExpectedResultsComponent {
         if (index > -1) {
           this.testCase.expectedResults.splice(index, 1);
         }
+        this.toastr.success(expectedResult.description, 'DELETED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 

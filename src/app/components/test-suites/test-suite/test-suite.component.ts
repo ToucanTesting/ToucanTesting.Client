@@ -7,17 +7,20 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'test-suite',
     templateUrl: './test-suite.component.html'
 })
 export class TestSuiteComponent {
+    isLoading: boolean = true;
     testSuiteId: number;
     testModules: TestModule[];
     tempName: string;
 
     constructor(
+        private toastr: ToastrService,
         private testSuitesService: TestSuitesService,
         private testModulesService: TestModulesService,
         private testCasesService: TestCasesService,
@@ -32,6 +35,7 @@ export class TestSuiteComponent {
                 this.testModulesService.getTestModules(this.testSuiteId)
                     .subscribe(testModules => {
                         this.testModules = testModules;
+                        this.isLoading = false;
                     })
             })
     }
@@ -60,21 +64,14 @@ export class TestSuiteComponent {
         });
     }
 
-    // openMoveTestModuleDialog(testModule: TestModule): void {
-    //     const dialogRef = this.dialog.open(MoveTestModuleDialogComponent, { data: { title: 'Move Test Module', payload: testModule } });
-
-    //     dialogRef.afterClosed().subscribe(testModuleResponse => {
-    //         if (testModuleResponse) {
-    //             this.updateTestModule(testModuleResponse)
-    //         }
-    //     });
-    // }
-
     createTestModule(testModule: TestModule) {
         testModule.testSuiteId = this.testSuiteId;
         this.testModulesService.createTestModule(testModule)
             .subscribe(res => {
                 this.testModules.push(res);
+                this.toastr.success(res.name, 'CREATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
             })
     }
 
@@ -83,7 +80,10 @@ export class TestSuiteComponent {
         this.testModulesService
             .updateTestModule(testModule)
             .subscribe(res => {
-            })
+                this.toastr.success(res.name, 'UPDATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
+            });
     }
 
     openModuleDeleteDialog(testModule: TestModule): void {
@@ -102,7 +102,10 @@ export class TestSuiteComponent {
                 if (index > -1) {
                     this.testModules.splice(index, 1);
                 }
-            })
+                this.toastr.success(testModule.name, 'DELETED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
+            });
     }
 
     openCreateTestCaseDialog(testModule: TestModule): void {
@@ -119,10 +122,13 @@ export class TestSuiteComponent {
 
     createTestCase(testCase: TestCase, testModule: TestModule): void {
         this.testCasesService.createTestCase(testCase)
-            .subscribe(result => {
+            .subscribe(res => {
                 if (testModule.testCases) {
-                    testModule.testCases.push(result);
+                    testModule.testCases.push(res);
                 }
-            })
+                this.toastr.success(res.description, 'CREATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
+            });
     }
 }

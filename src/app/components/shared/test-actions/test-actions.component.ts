@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestAction } from '@models';
 import { TestActionsService } from '@services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'tt-test-actions',
@@ -13,6 +14,7 @@ export class TestActionsComponent {
   tempDescription: string;
 
   constructor(
+    private toastr: ToastrService,
     private testActionsService: TestActionsService
   ) { }
 
@@ -61,8 +63,7 @@ export class TestActionsComponent {
     testAction.isEditing = false;
     this.testActionsService
       .updateTestAction(testAction)
-      .subscribe(res => {
-      })
+      .subscribe()
   }
 
   blurOthers() {
@@ -85,6 +86,9 @@ export class TestActionsComponent {
     this.testActionsService.createTestAction(testAction)
       .subscribe(res => {
         this.testCase.testActions.push(res)
+        this.toastr.success(res.description, 'CREATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -92,6 +96,9 @@ export class TestActionsComponent {
     this.testActionsService
       .updateTestAction(testAction)
       .subscribe(res => {
+        this.toastr.success(res.description, 'UPDATED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 
@@ -102,6 +109,9 @@ export class TestActionsComponent {
         if (index > -1) {
           this.testCase.testActions.splice(index, 1);
         }
+        this.toastr.success(testAction.description, 'DELETED');
+      }, error => {
+          this.toastr.error(error.statusText, 'ERROR');
       })
   }
 

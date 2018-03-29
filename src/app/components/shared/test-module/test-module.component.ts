@@ -7,6 +7,7 @@ import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-i
 import { TestCase, TestModule } from '@models';
 import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'test-module',
@@ -21,6 +22,7 @@ export class TestModuleComponent {
   testResultStatus = TestResultStatus;
 
   constructor(
+    private toastr: ToastrService,
     private testCasesService: TestCasesService,
     private testModulesService: TestModulesService,
     private expectedResultsService: ExpectedResultsService,
@@ -83,17 +85,16 @@ export class TestModuleComponent {
 
   updateTestCase(testCase: TestCase): void {
     this.testCasesService.updateTestCase(testCase)
-      .subscribe(result => {
-        testCase = result;
+      .subscribe(res => {
+        testCase = res;
         if (testCase.testModuleId !== this.testModule.id) {
           const index = this.testModule.testCases.findIndex(tc => tc.id === testCase.id);
           this.testModule.testCases.splice(index, 1)
         }
-      })
-  }
-
-  logIssue(testCase: TestCase): void {
-    console.log('issue logged');
+        this.toastr.success(res.description, 'UPDATED');
+      }, error => {
+        this.toastr.error(error.statusText, 'ERROR');
+      });
   }
 
   deleteTestCase(testCase: TestCase) {
@@ -103,7 +104,10 @@ export class TestModuleComponent {
         if (index > -1) {
           this.testModule.testCases.splice(index, 1);
         }
-      })
+        this.toastr.success(testCase.description, 'DELETED');
+      }, error => {
+        this.toastr.error(error.statusText, 'ERROR');
+      });
   }
 
   changeTestCaseStatus(testCase: TestCase, status: TestResultStatus) {
@@ -121,7 +125,9 @@ export class TestModuleComponent {
     this.testResultsService.upsertTestResult(testCase.testResult)
       .subscribe(testResult => {
         testCase.testResult = testResult;
-        testCase.lastTested = new Date(Date.now());
+        if (testCase.testResult.status === TestResultStatus.Pass || testCase.testResult.status === TestResultStatus.Fail) {
+          testCase.lastTested = new Date(Date.now());
+        }
         this.testCasesService.updateTestCase(testCase)
           .subscribe(testCaseResponse => {
           })
