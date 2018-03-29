@@ -79,24 +79,44 @@ body {
 }
 
 .priority {
-  margin-bottom: 2px;
-  height: 100%;
+  margin-left: -5px;
 }
 
-.priority.priority-low {
+.priority .priority-background {
+  opacity: .3;
+}
+
+.priority .priority-low {
   color: green;
+  overflow: hidden;
+  width:0.4em;
+  margin-left:0.5em;
+  
 }
 
-.priority.priority-med {
+.priority .priority-med {
   color: $blue;
+  overflow: hidden;
+  width:0.6em;
+  margin-left:0.5em;
 }
 
-.priority.priority-high {
+.priority .priority-high {
   color: orange;
+  overflow:hidden; 
+  width:0.8em;
+  margin-left:0.5em;
 }
 
-.priority.priority-critical {
-  color: red;
+.priority .priority-critical {
+  color: $danger;
+  overflow: hidden;
+  width:1em;
+  margin-left:0.5em;
+}
+
+.fa-bug {
+  margin-left: 6px;
 }
 
 .mat-dialog-container {
