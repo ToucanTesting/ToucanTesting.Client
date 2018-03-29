@@ -18,14 +18,10 @@
         <label for="selectPriority">Priority</label>
         <select class="form-control" id="selectPriority" formControlName="priority">
           <option [value]="priorityOptions.Low">Low</option>
-          <option [value]="priorityOptions.Low">Medium</option>
-          <option [value]="priorityOptions.Low">High</option>
-          <option [value]="priorityOptions.Low">Critical</option>
+          <option [value]="priorityOptions.Medium">Medium</option>
+          <option [value]="priorityOptions.High">High</option>
+          <option [value]="priorityOptions.Critical">Critical</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label for="bugReferenceInput">Bug Reference</label>
-        <input type="text" class="form-control" id="bugReferenceInput" aria-describedby="emailHelp" placeholder="IKW-XXXX" formControlName="bugId">
       </div>
       <div class="form-check">
         <label class="form-check-label">
