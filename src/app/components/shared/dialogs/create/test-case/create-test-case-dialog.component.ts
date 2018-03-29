@@ -42,8 +42,7 @@ export class CreateTestCaseDialogComponent {
             testModuleId: null,
             description: null,
             isAutomated: false,
-            priority: Priority.Low,
-            bugId: null
+            priority: Priority.Low
         })
     }
 
@@ -53,8 +52,7 @@ export class CreateTestCaseDialogComponent {
             testModuleId: values.testModuleId,
             description: values.description,
             isAutomated: values.isAutomated,
-            priority: values.priority,
-            bugId: values.bugId
+            priority: values.priority
         })
     }
 
