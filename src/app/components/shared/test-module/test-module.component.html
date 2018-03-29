@@ -71,9 +71,9 @@
               <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
               <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip"
                 data-placement="bottom" title="{{testCase.bugId}}"></i>
-              <span class="fa-stack fa-lg priority">
-                <i class="fa fa-signal fa-stack-1x priority-background" data-toggle="tooltip" data-placement="bottom"
-                  title="{{testCase.priority | priority}}"></i>
+              <span class="fa-stack fa-lg priority" data-toggle="tooltip" data-placement="bottom"
+              title="{{testCase.priority | priority}}">
+                <i class="fa fa-signal fa-stack-1x priority-background"></i>
                 <i class="fa fa-signal fa-stack-1x" [ngClass]="{
                   'priority-low': testCase.priority === priority.Low,
                   'priority-med': testCase.priority === priority.Medium,
