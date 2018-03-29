@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog, MatGridList } from '@angular/material';
 import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog.component';
 import { Priority } from '../../../enums';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: '[test-case]',
@@ -27,33 +28,11 @@ export class TestCaseComponent {
         public dialog: MatDialog
     ) { }
 
-    truncateDescription(description: string): string {
+    public truncateDescription(description: string): string {
         if (description.length > 74) {
             return description.substring(0, 75) + '...';
         }
         return description;
-    }
-
-    updateTestCase(testCase: TestCase) {
-        this.testCasesService.updateTestCase(testCase).subscribe();
-    }
-
-    openDeleteDialog(testCase: TestCase): void {
-        const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.description } });
-
-        dialogRef.afterClosed().subscribe(res => {
-            res ? this.deleteTestCase(testCase) : false;
-        });
-    }
-
-    deleteTestCase(testCase: TestCase) {
-        this.testCasesService.deleteTestCase(testCase)
-            .subscribe(success => {
-                const index = this.testModule.testCases.indexOf(testCase, 0);
-                if (index > -1) {
-                    this.testModule.testCases.splice(index, 1);
-                }
-            })
     }
 
     public getTestActions(testModule: TestModule, testCase: TestCase) {

@@ -5,6 +5,7 @@ import { DialogType } from './../../enums';
 import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'test-runs',
@@ -15,6 +16,7 @@ export class TestRunsComponent {
     panelOpenState: boolean = false;
 
     constructor(
+        private toastr: ToastrService,
         private testRunsService: TestRunsService,
         public dialog: MatDialog
     ) {
@@ -45,8 +47,11 @@ export class TestRunsComponent {
 
     createTestRun(testRun: TestRun) {
         this.testRunsService.createTestRun(testRun)
-            .subscribe(run => {
-                this.testRuns.push(run);
+            .subscribe(res => {
+                this.testRuns.push(res);
+                this.toastr.success(res.name, 'CREATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
             })
     }
 
@@ -65,6 +70,9 @@ export class TestRunsComponent {
                 if (index > -1) {
                     this.testRuns.splice(index, 1);
                 }
+                this.toastr.success(testRun.name, 'DELETED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
             })
     }
 
@@ -72,6 +80,9 @@ export class TestRunsComponent {
         this.testRunsService
             .updateTestRun(testRun)
             .subscribe(res => {
+                this.toastr.success(res.name, 'UPDATED');
+            }, error => {
+                this.toastr.error(error.statusText, 'ERROR');
             })
     }
 }
