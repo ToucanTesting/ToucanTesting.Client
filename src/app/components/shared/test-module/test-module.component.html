@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="list-group list-group-flush" style="margin: 10px;" *ngIf="testModule.testCases?.length > 0">
-    <div class="card">
-      <nav class="navbar navbar-light bg-light">
+    <div>
+      <div>
         <span class="dropdown">
           <button class="btn dropdown-toggle" id="sortByButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort By
@@ -22,31 +22,17 @@
             <input type="radio" name="options" autocomplete="off" [checked]="testModule.reverse"> Desc
           </label>
         </span>
-      </nav>
+      </div>
+      <br>
       <div *ngFor="let testCase of testModule.testCases | orderBy : testModule.sort : testModule.reverse">
         <div class="card">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div class="test-run-item">
               <div>
-                <i class="fa fa-lg fa-eye show-details" data-toggle="modal" [attr.data-target]="'#test-case-modal-' + testModule.testCases.indexOf(testCase)"
-                  (click)="getExpectedResults(testModule, testCase)"></i>
-
                 <span>{{testCase.description}}</span>
-              </div>
-              <div>
-                <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
-                <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip" data-placement="bottom" title="{{testCase.bugId}}"></i>
-                <i class="fa fa-lg fa-signal priority" [ngClass]="{
-                'priority-low': testCase.priority === priority.Low,
-                'priority-med': testCase.priority === priority.Medium,
-                'priority-high': testCase.priority === priority.High,
-                'priority-critical': testCase.priority === priority.Critical
-              }" data-toggle="tooltip" data-placement="bottom" title="{{testCase.priority | priority}}"></i>
               </div>
             </div>
             <div>
-              <div class="pull-right" *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</div>
-              <div class="pull-right" *ngIf="!testCase.lastTested">Never Tested</div>
               <div *ngIf="isTestRun" class="dropdown">
                 <span class="btn dropdown-toggle pull-right" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   [ngClass]="{
@@ -72,13 +58,35 @@
                 <span class="btn dropdown-toggle btn-secondary pull-right" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">More</span>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <span class="dropdown-item" data-toggle="modal" [attr.data-target]="'#test-case-modal-' + testModule.testCases.indexOf(testCase)"
+                    (click)="getExpectedResults(testModule, testCase)">View</span>
                   <span class="dropdown-item" (click)="openTestCaseEditDialog(testCase, testModule.testSuiteId)">Edit</span>
                   <span class="dropdown-item" (click)="openTestCaseDeleteDialog(testCase)">Delete</span>
                 </div>
               </div>
             </div>
           </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <div>
+              <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
+              <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip"
+                data-placement="bottom" title="{{testCase.bugId}}"></i>
+              <span class="fa-stack fa-lg priority">
+                <i class="fa fa-signal fa-stack-1x priority-background" data-toggle="tooltip" data-placement="bottom"
+                  title="{{testCase.priority | priority}}"></i>
+                <i class="fa fa-signal fa-stack-1x" [ngClass]="{
+                  'priority-low': testCase.priority === priority.Low,
+                  'priority-med': testCase.priority === priority.Medium,
+                  'priority-high': testCase.priority === priority.High,
+                  'priority-critical': testCase.priority === priority.Critical
+                }"></i>
+              </span>
+            </div>
+            <div *ngIf="testCase.lastTested">{{testCase.lastTested | date}}</div>
+            <div *ngIf="!testCase.lastTested">Never Tested</div>
+          </div>
         </div>
+        <br>
         <div test-case class="modal fade" id="test-case-modal-{{testModule.testCases.indexOf(testCase)}}" tabindex="-1" role="dialog"
           [attr.aria-labelledby]="'test-case-modal-' + testModule.testCases.indexOf(testCase)" aria-hidden="true" [testCase]="testCase"
           [testModule]="testModule" [testIndex]="testModule.testCases.indexOf(testCase)" [isTestRun]="isTestRun"></div>
