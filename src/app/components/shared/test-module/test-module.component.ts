@@ -64,7 +64,6 @@ export class TestModuleComponent {
         testCase.description = res.description;
         testCase.isAutomated = res.isAutomated;
         testCase.priority = res.priority;
-        testCase.bugId = res.bugId;
         testCase.testModuleId = res.testModuleId;
         this.updateTestCase(testCase)
       }
