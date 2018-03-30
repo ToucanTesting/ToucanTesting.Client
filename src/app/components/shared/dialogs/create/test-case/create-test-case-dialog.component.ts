@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TestSuitesService, TestModulesService } from '@services';
 import { TestSuite, TestModule, TestCase } from '@models';
@@ -40,7 +40,7 @@ export class CreateTestCaseDialogComponent {
     createTestCaseForm() {
         this.testCaseForm = this.fb.group({
             testModuleId: null,
-            description: null,
+            description: [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
             isAutomated: false,
             priority: Priority.Low
         })

@@ -83,7 +83,7 @@
               data-placement="bottom" title="{{testCase.bugId}}"></i>
             </div>
             <div *ngIf="testCase.lastTested"><small><strong>Last Tested:</strong> {{testCase.lastTested | date}}</small></div>
-            <div *ngIf="!testCase.lastTested">Never Tested</div>
+            <div *ngIf="!testCase.lastTested"><small>Never Tested</small></div>
           </div>
         </div>
         <br>
