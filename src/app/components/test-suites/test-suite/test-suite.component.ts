@@ -1,5 +1,5 @@
 import { TestSuite, TestModule, TestCase } from '@models';
-import { TestSuitesService, TestModulesService, TestCasesService } from '@services';
+import { TestSuitesService, TestModulesService, TestCasesService, HandleErrorService } from '@services';
 import { DialogType } from '../../../enums';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
@@ -21,6 +21,7 @@ export class TestSuiteComponent {
 
     constructor(
         private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private testSuitesService: TestSuitesService,
         private testModulesService: TestModulesService,
         private testCasesService: TestCasesService,
@@ -36,7 +37,9 @@ export class TestSuiteComponent {
                     .subscribe(testModules => {
                         this.testModules = testModules;
                         this.isLoading = false;
-                    })
+                    }, error => {
+                        this.handleErrorService.handleError(error);
+                    });
             })
     }
 
@@ -51,6 +54,8 @@ export class TestSuiteComponent {
             .getTestCases(testModule)
             .subscribe(testCases => {
                 this.testModules[index].testCases = testCases;
+            }, error => {
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -71,8 +76,8 @@ export class TestSuiteComponent {
                 this.testModules.push(res);
                 this.toastr.success(res.name, 'CREATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
-            })
+                this.handleErrorService.handleError(error);
+            });
     }
 
     updateTestModule(testModule: TestModule) {
@@ -82,7 +87,7 @@ export class TestSuiteComponent {
             .subscribe(res => {
                 this.toastr.success(res.name, 'UPDATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -104,7 +109,7 @@ export class TestSuiteComponent {
                 }
                 this.toastr.success(testModule.name, 'DELETED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -128,13 +133,7 @@ export class TestSuiteComponent {
                 }
                 this.toastr.success(res.description, 'CREATED');
             }, error => {
-                if (!error.error.Description) {
-                    this.toastr.error(error.statusText, 'ERROR');
-                } else {
-                    let errors = '';
-                    error.error.Description.forEach((err) => errors += `<small>${err}<small><br>`);
-                    this.toastr.error(errors, 'ERROR');
-                }
+                this.handleErrorService.handleError(error);
             });
     }
 }

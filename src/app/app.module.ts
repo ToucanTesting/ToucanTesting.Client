@@ -7,7 +7,8 @@ import {
   TestModulesService,
   TestCasesService,
   TestActionsService,
-  AuthService
+  AuthService,
+  HandleErrorService
 } from '@services';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -136,6 +137,7 @@ const jwtConf = {
     TestActionsService,
     ExpectedResultsService,
     TestConditionsService,
+    HandleErrorService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

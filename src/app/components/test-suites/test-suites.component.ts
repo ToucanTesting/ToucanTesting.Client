@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TestSuitesService } from '@services';
+import { TestSuitesService, HandleErrorService } from '@services';
 import { CreateTestSuiteDialogComponent } from '../shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
 import { DialogType } from './../../enums';
@@ -20,6 +20,7 @@ export class TestSuitesComponent {
 
     constructor(
         private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private fb: FormBuilder,
         private testSuitesService: TestSuitesService,
         public dialog: MatDialog
@@ -31,6 +32,8 @@ export class TestSuitesComponent {
             .subscribe(testSuites => {
                 this.testSuites = testSuites;
                 this.isLoading = false;
+            }, error => {
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -52,7 +55,7 @@ export class TestSuitesComponent {
                 }
                 this.toastr.success(testSuite.name, 'DELETED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -68,7 +71,7 @@ export class TestSuitesComponent {
             .subscribe(res => {
                 this.toastr.success(testSuite.name, 'UPDATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -88,7 +91,7 @@ export class TestSuitesComponent {
                 this.testSuites.push(res);
                 this.toastr.success(res.name, 'CREATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
-            })
+                this.handleErrorService.handleError(error);
+            });
     }
 }

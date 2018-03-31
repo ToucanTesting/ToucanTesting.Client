@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from '@models';
-import { ExpectedResultsService } from '@services';
+import { ExpectedResultsService, HandleErrorService } from '@services';
 import { ExpectedResult } from '../../../models';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,7 @@ export class ExpectedResultsComponent {
 
   constructor(
     private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
     private expectedResultsService: ExpectedResultsService
   ) { }
 
@@ -35,8 +36,8 @@ export class ExpectedResultsComponent {
         this.testCase.expectedResults.push(res)
         this.toastr.success(res.description, 'CREATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   cancelEdit(expectedResult: ExpectedResult) {
@@ -51,8 +52,8 @@ export class ExpectedResultsComponent {
       .subscribe(res => {
         this.toastr.success(res.description, 'UPDATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   deleteExpectedResult(expectedResult: ExpectedResult) {
@@ -64,8 +65,8 @@ export class ExpectedResultsComponent {
         }
         this.toastr.success(expectedResult.description, 'DELETED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
 }

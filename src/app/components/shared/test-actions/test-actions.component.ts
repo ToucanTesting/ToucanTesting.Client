@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestAction } from '@models';
-import { TestActionsService } from '@services';
+import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,6 +15,7 @@ export class TestActionsComponent {
 
   constructor(
     private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
     private testActionsService: TestActionsService
   ) { }
 
@@ -63,7 +64,10 @@ export class TestActionsComponent {
     testAction.isEditing = false;
     this.testActionsService
       .updateTestAction(testAction)
-      .subscribe()
+      .subscribe(res => {
+      }, error => {
+        this.handleErrorService.handleError(error);
+      });
   }
 
   blurOthers() {
@@ -88,8 +92,8 @@ export class TestActionsComponent {
         this.testCase.testActions.push(res)
         this.toastr.success(res.description, 'CREATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   renameTestAction(testAction: TestAction) {
@@ -98,8 +102,8 @@ export class TestActionsComponent {
       .subscribe(res => {
         this.toastr.success(res.description, 'UPDATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   deleteTestAction(testAction: TestAction) {
@@ -111,8 +115,8 @@ export class TestActionsComponent {
         }
         this.toastr.success(testAction.description, 'DELETED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
 }

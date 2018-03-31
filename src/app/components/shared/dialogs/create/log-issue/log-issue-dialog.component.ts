@@ -47,8 +47,4 @@ export class LogIssueDialogComponent {
         this.dialogRef.close();
     }
 
-    ngOnInit() {
-
-    }
-
 }

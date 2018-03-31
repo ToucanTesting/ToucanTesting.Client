@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService } from '@services';
+import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService, HandleErrorService } from '@services';
 import { TestRun, TestModule, TestCase, TestResult } from '@models';
 import { TestResultStatus, Priority } from '../../../enums';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     styleUrls: ['./test-run.component.scss'],
@@ -22,6 +23,8 @@ export class TestRunComponent {
     totalAutomated: number = 0;
 
     constructor(
+        private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private expectedResultsService: ExpectedResultsService,
         private testRunsService: TestRunsService,
         private testModulesService: TestModulesService,
@@ -78,6 +81,8 @@ export class TestRunComponent {
             .subscribe(testCases => {
                 this.testModules[index].testCases = testCases;
                 this.getTestModuleTestResults(testModule);
+            }, error => {
+                this.handleErrorService.handleError(error);
             });
     }
 
@@ -98,7 +103,9 @@ export class TestRunComponent {
             this.expectedResultsService.getTestResults(testModule, testCase)
                 .subscribe(expectedResults => {
                     testCase.expectedResults = expectedResults;
-                })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
         }
     }
 }

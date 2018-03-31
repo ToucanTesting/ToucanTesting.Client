@@ -1,5 +1,5 @@
 import { TestModule, TestCase, TestAction } from '@models';
-import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService } from '@services';
+import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService, HandleErrorService } from '@services';
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatGridList } from '@angular/material';
 import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog.component';
@@ -21,6 +21,7 @@ export class TestCaseComponent {
     priorityOptions = Priority;
 
     constructor(
+        private handleErrorService: HandleErrorService,
         private testCasesService: TestCasesService,
         private testActionsService: TestActionsService,
         private expectedResultsService: ExpectedResultsService,
@@ -40,7 +41,9 @@ export class TestCaseComponent {
             this.testActionsService.getTestActions(testModule, testCase)
                 .subscribe(testActions => {
                     this.testCase.testActions = testActions;
-                })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
         }
     }
 
@@ -50,7 +53,9 @@ export class TestCaseComponent {
                 .subscribe(expectedResults => {
                     console.log(expectedResults)
                     this.testCase.expectedResults = expectedResults;
-                })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
         }
     }
 
@@ -59,7 +64,9 @@ export class TestCaseComponent {
             this.testConditionsService.getTestConditions(testModule, testCase)
                 .subscribe(testConditions => {
                     this.testCase.testConditions = testConditions;
-                })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
         }
     }
 }
