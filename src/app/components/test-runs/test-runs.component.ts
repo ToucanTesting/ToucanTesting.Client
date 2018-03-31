@@ -1,4 +1,4 @@
-import { TestRunsService } from '@services';
+import { TestRunsService, HandleErrorService } from '@services';
 import { Component } from '@angular/core';
 import { TestRun } from '@models';
 import { DialogType } from './../../enums';
@@ -17,6 +17,7 @@ export class TestRunsComponent {
 
     constructor(
         private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private testRunsService: TestRunsService,
         public dialog: MatDialog
     ) {
@@ -51,8 +52,8 @@ export class TestRunsComponent {
                 this.testRuns.push(res);
                 this.toastr.success(res.name, 'CREATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
-            })
+                this.handleErrorService.handleError(error);
+            });
     }
 
     openDeleteDialog(testRun: TestRun): void {
@@ -72,8 +73,8 @@ export class TestRunsComponent {
                 }
                 this.toastr.success(testRun.name, 'DELETED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
-            })
+                this.handleErrorService.handleError(error);
+            });
     }
 
     renameTestRun(testRun: TestRun) {
@@ -82,7 +83,7 @@ export class TestRunsComponent {
             .subscribe(res => {
                 this.toastr.success(res.name, 'UPDATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
-            })
+                this.handleErrorService.handleError(error);
+            });
     }
 }

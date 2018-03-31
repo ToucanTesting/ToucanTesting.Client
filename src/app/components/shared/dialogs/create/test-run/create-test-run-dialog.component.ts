@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { TestSuitesService } from '@services';
+import { TestSuitesService, HandleErrorService } from '@services';
 import { TestSuite, TestRun } from '@models';
 import { DialogType } from './../../../../../enums';
+import { ToastrService } from 'ngx-toastr';
 
 interface IDialogData {
     title: string;
@@ -23,6 +24,8 @@ export class CreateTestRunDialogComponent {
     testRunForm: FormGroup;
 
     constructor(
+        private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private fb: FormBuilder,
         private testSuitesService: TestSuitesService,
         public dialogRef: MatDialogRef<CreateTestRunDialogComponent>,
@@ -37,6 +40,8 @@ export class CreateTestRunDialogComponent {
             .getTestSuites()
             .subscribe(testSuites => {
                 this.testSuites = testSuites;
+            }, error => {
+                this.handleErrorService.handleError(error);
             });
     }
 

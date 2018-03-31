@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
-import { TestConditionsService } from '@services';
+import { TestConditionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,6 +15,7 @@ export class PreConditionsComponent {
 
   constructor(
     private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
     private testConditionsService: TestConditionsService
   ) { }
 
@@ -39,8 +40,8 @@ export class PreConditionsComponent {
         this.testCase.testConditions.push(res)
         this.toastr.success(res.description, 'CREATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   updateTestCondition(testCondition: TestCondition) {
@@ -50,8 +51,8 @@ export class PreConditionsComponent {
       .subscribe(res => {
         this.toastr.success(res.description, 'UPDATED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
   deleteTestCondition(testCondition: TestCondition) {
@@ -63,8 +64,8 @@ export class PreConditionsComponent {
         }
         this.toastr.success(testCondition.description, 'DELETED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+      });
   }
 
 }

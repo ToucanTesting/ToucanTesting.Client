@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCasesService } from '@services';
+import { TestCasesService, HandleErrorService } from '@services';
 import { TestCase } from '@models';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,6 +13,7 @@ export class IssuesComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
     private testCasesService: TestCasesService
   ) { }
 
@@ -21,7 +22,9 @@ export class IssuesComponent implements OnInit {
       .getIssues()
       .subscribe(testCases => {
         this.testCases = testCases;
-      });
+      }, error => {
+        this.handleErrorService.handleError(error);
+    });
   }
 
   removeIssue(testCase: TestCase) {
@@ -34,7 +37,7 @@ export class IssuesComponent implements OnInit {
         }
         this.toastr.success(res.description, 'DELETED');
       }, error => {
-          this.toastr.error(error.statusText, 'ERROR');
-      })
+        this.handleErrorService.handleError(error);
+    });
   }
 }

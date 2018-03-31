@@ -7,3 +7,4 @@ export * from './test-results.service';
 export * from './test-runs.service';
 export * from './test-suites.service';
 export * from './auth.service';
+export * from './handle-error.service';

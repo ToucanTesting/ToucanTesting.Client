@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { TestSuitesService, TestModulesService } from '@services';
+import { TestSuitesService, TestModulesService, HandleErrorService } from '@services';
 import { TestSuite, TestModule, TestCase } from '@models';
 import { DialogType, Priority } from './../../../../../enums';
+import { ToastrService } from 'ngx-toastr';
 
 interface IDialogData {
     title: string;
@@ -25,6 +26,8 @@ export class CreateTestCaseDialogComponent {
     testCaseForm: FormGroup;
 
     constructor(
+        private toastr: ToastrService,
+        private handleErrorService: HandleErrorService,
         private fb: FormBuilder,
         private testModulesService: TestModulesService,
         public dialogRef: MatDialogRef<CreateTestCaseDialogComponent>,
@@ -66,6 +69,8 @@ export class CreateTestCaseDialogComponent {
                 .getTestModules(this.testSuiteId)
                 .subscribe(testModules => {
                     this.testModules = testModules;
+                }, error => {
+                    this.handleErrorService.handleError(error);
                 });
         }
     }
