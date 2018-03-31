@@ -128,7 +128,13 @@ export class TestSuiteComponent {
                 }
                 this.toastr.success(res.description, 'CREATED');
             }, error => {
-                this.toastr.error(error.statusText, 'ERROR');
+                if (!error.error.Description) {
+                    this.toastr.error(error.statusText, 'ERROR');
+                } else {
+                    let errors = '';
+                    error.error.Description.forEach((err) => errors += `<small>${err}<small><br>`);
+                    this.toastr.error(errors, 'ERROR');
+                }
             });
     }
 }
