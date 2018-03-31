@@ -112,7 +112,8 @@ const jwtConf = {
     OrderModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-top-center'
+      positionClass: 'toast-top-center',
+      enableHtml: true
     }),
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },

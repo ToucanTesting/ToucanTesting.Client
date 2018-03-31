@@ -31,23 +31,6 @@ export class TestModuleComponent {
   ) {
   }
 
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Add a Case', type: DialogType.TestCase } });
-
-    dialogRef.afterClosed().subscribe(testCase => {
-      testCase ? this.addTestCase(testCase) : false;
-    });
-  }
-
-  addTestCase(testCase: TestCase): void {
-    testCase.testModuleId = this.testModule.id;
-    testCase.isEnabled = true;
-    this.testCasesService.createTestCase(testCase)
-      .subscribe(result => {
-        this.testModule.testCases.push(result);
-      })
-  }
-
   openTestCaseDeleteDialog(testCase: TestCase): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.description } });
 
