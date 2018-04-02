@@ -224,8 +224,7 @@ export class TestReportComponent implements OnInit {
           yAxes: [{
             stacked: true,
             categoryPercentage: 1,
-            barThickness: 10,
-            maxBarThickness: 10,
+            maxBarThickness: 25,
             gridLines: {
               display: false
             },
