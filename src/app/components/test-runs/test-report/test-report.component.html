@@ -1,14 +1,20 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
+<div style="padding:0 35px;">
+  <div class="row">
+    <div *ngIf="resultsChart" class="col-md-6 card card-body">
+      <canvas id="resultsChart"></canvas>
+    </div>
+    <div *ngIf="totalsChart" class="col-md-6 card card-body">
+      <canvas id="totalsChart"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 card card-body">
+      <canvas id="modulesChart"></canvas>
+    </div>
+  </div>
+</div>
 <div class="card-body" *ngIf="!isLoading">
-  <h5 class="card-title">{{testRun?.name}}</h5>
-  <h5>Total Test Cases: {{totalTestCases}}</h5>
-  <h5>Total Automated: {{totalAutomated}}</h5>
-  <br>
-  <h6>Pass: {{totalPassCount}}</h6>
-  <h6>Fail: {{totalFailCount}}</h6>
-  <h6>CNT: {{totalCntCount}}</h6>
-  <h6>NA: {{totalNaCount}}</h6>
-  <h6>Pending: {{totalPendingCount}}</h6>
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">

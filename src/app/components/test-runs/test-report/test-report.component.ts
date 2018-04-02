@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService } from '@services';
 import { TestRun, TestModule, TestCase, TestResult } from '@models';
 import { TestResultStatus, Priority } from '../../../enums';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-test-report',
   templateUrl: './test-report.component.html',
   styleUrls: ['./test-report.component.scss']
 })
-export class TestReportComponent {
+export class TestReportComponent implements OnInit {
+  resultsChart = [];
+  totalsChart = [];
+  modulesChart = [];
+
   isLoading: boolean = false;
   testRun: TestRun;
   testRunId: number;
@@ -92,10 +97,129 @@ export class TestReportComponent {
                 }));
                 this.totalPendingCount += (this.totalTestCases - (this.totalPassCount + this.totalFailCount + this.totalCntCount + this.totalNaCount))
                 this.isLoading = false;
+                this.populateCharts();
               })
           })
 
       })
   }
 
+  public populateCharts() {
+    const green = '#2BB673';
+    const red = '#FE200B';
+    const blue = '#4189C7'
+    const gray = 'gray';
+
+    this.resultsChart = new Chart('resultsChart', {
+      type: 'doughnut',
+      data: {
+        labels: [
+          `Pass (${this.totalPassCount})`,
+          `Fail (${this.totalFailCount})`,
+          `Could Not Test (${this.totalCntCount})`,
+          `Did Not Test (${this.totalNaCount + this.totalPendingCount})`
+        ],
+        datasets: [{
+          label: 'Results',
+          data: [
+            this.totalPassCount,
+            this.totalFailCount,
+            this.totalCntCount,
+            this.totalNaCount + this.totalPendingCount
+          ],
+          backgroundColor: [
+            green, red, blue, gray
+          ]
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Results'
+        },
+        legend: {
+          display: true,
+          position: 'left'
+        }
+      }
+    });
+
+    this.totalsChart = new Chart('totalsChart', {
+      type: 'doughnut',
+      data: {
+        labels: [
+          `Automated (${this.totalAutomated})`,
+          `Manual (${this.totalTestCases - this.totalAutomated})`
+        ],
+        datasets: [{
+          data: [this.totalAutomated, this.totalTestCases - this.totalAutomated],
+          backgroundColor: [
+            green, blue, gray
+          ]
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: `Total Test Cases (${this.totalTestCases})`
+        },
+        legend: {
+          display: true,
+          position: 'left'
+        }
+      }
+    });
+
+
+    const testModuleLabels = [];
+    const passedTestData = [];
+    const failedTestData = [];
+    const cntTestData = [];
+
+    this.testModules.forEach(testModule => {
+      testModuleLabels.push(testModule.name);
+      passedTestData.push(testModule.passes.length);
+      failedTestData.push(testModule.failures.length);
+      cntTestData.push(testModule.cnt.length);
+    });
+
+    this.modulesChart = new Chart('modulesChart', {
+      type: 'horizontalBar',
+      data: {
+        labels: testModuleLabels,
+        datasets: [{
+          label: 'Pass',
+          data: passedTestData,
+          backgroundColor: green
+        },
+        {
+          label: 'Fail',
+          data: failedTestData,
+          backgroundColor: red
+        },
+        {
+          label: 'CNT',
+          data: cntTestData,
+          backgroundColor: blue
+        }
+        ]
+      },
+      options: {
+        legend: {
+          display: false,
+          position: 'left'
+        },
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true,
+            barThickness: 20,
+            maxBarThickness: 20
+          }]
+        }
+      }
+    });
+  }
 }
