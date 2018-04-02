@@ -1,7 +1,7 @@
 <div>
   <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns; let i = index">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <span (mouseover)="hoverIndex = i" (click)="testRun.isEditing = true" *ngIf="!testRun.isEditing" class="clickable-text">{{testRun.name}}
+      <span (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testRun.isEditing = true" *ngIf="!testRun.isEditing" class="clickable-text">{{testRun.name}}
         <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
       </span>
       <input autofocus class="form-control" *ngIf="testRun.isEditing" matInput (blur)="renameTestRun(testRun); testRun.isEditing = false"
