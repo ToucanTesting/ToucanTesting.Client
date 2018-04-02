@@ -175,12 +175,15 @@ export class TestReportComponent implements OnInit {
     const passedTestData = [];
     const failedTestData = [];
     const cntTestData = [];
+    const dntTestData = [];
 
     this.testModules.forEach(testModule => {
       testModuleLabels.push(testModule.name);
       passedTestData.push(testModule.passes.length);
       failedTestData.push(testModule.failures.length);
       cntTestData.push(testModule.cnt.length);
+      dntTestData.push(testModule.testCases.length - testModule.passes.length - testModule.failures.length - testModule.cnt.length);
+
     });
 
     this.modulesChart = new Chart('modulesChart', {
@@ -201,6 +204,11 @@ export class TestReportComponent implements OnInit {
           label: 'CNT',
           data: cntTestData,
           backgroundColor: blue
+        },
+        {
+          label: 'DNT',
+          data: dntTestData,
+          backgroundColor: gray
         }
         ]
       },
@@ -215,8 +223,15 @@ export class TestReportComponent implements OnInit {
           }],
           yAxes: [{
             stacked: true,
-            barThickness: 20,
-            maxBarThickness: 20
+            categoryPercentage: 1,
+            barThickness: 10,
+            maxBarThickness: 10,
+            gridLines: {
+              display: false
+            },
+            ticks: {
+              fontSize: 14
+            },
           }]
         }
       }
