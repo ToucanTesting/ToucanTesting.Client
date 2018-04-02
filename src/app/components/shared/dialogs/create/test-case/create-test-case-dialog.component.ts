@@ -43,7 +43,7 @@ export class CreateTestCaseDialogComponent {
     createTestCaseForm() {
         this.testCaseForm = this.fb.group({
             testModuleId: null,
-            description: [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
+            description: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])],
             isAutomated: false,
             priority: Priority.Low
         })

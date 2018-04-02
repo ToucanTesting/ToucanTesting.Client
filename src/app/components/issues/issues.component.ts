@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TestCasesService, HandleErrorService } from '@services';
 import { TestCase } from '@models';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-issues',
@@ -14,7 +16,8 @@ export class IssuesComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
-    private testCasesService: TestCasesService
+    private testCasesService: TestCasesService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -24,6 +27,16 @@ export class IssuesComponent implements OnInit {
         this.testCases = testCases;
       }, error => {
         this.handleErrorService.handleError(error);
+      });
+  }
+
+  openTestCaseDeleteDialog(testCase: TestCase): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.bugId } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.removeIssue(testCase)
+      }
     });
   }
 
@@ -38,6 +51,6 @@ export class IssuesComponent implements OnInit {
         this.toastr.success(res.description, 'DELETED');
       }, error => {
         this.handleErrorService.handleError(error);
-    });
+      });
   }
 }

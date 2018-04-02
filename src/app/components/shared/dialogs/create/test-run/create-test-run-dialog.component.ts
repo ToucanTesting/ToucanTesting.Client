@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TestSuitesService, HandleErrorService } from '@services';
 import { TestSuite, TestRun } from '@models';
@@ -47,7 +47,7 @@ export class CreateTestRunDialogComponent {
 
     createTestRunForm() {
         this.testRunForm = this.fb.group({
-            name: null,
+            name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])],
             testSuiteId: null,
         });
     }

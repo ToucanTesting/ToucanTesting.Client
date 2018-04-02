@@ -6,14 +6,17 @@
     <form [formGroup]="testModuleForm">
       <div class="form-group">
         <label for="nameInput">Test Module Name</label>
-        <input type="text" class="form-control" id="nameInput" placeholder="Name" formControlName="name">
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': !testModuleForm.controls['name'].valid && testModuleForm.controls['name'].touched}" id="nameInput" placeholder="Name" formControlName="name">
+        <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('required')">Must include a description.</small>
+        <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('minlength')">Mst be at least 3 characters long.</small>
+        <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('maxlength')">Cannot exceed 255 characters.</small>
       </div>
     </form>
   </div>
   <div class="card-footer">
     <div class="pull-right">
       <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
-      <button type="submit" class="btn btn-primary" [mat-dialog-close]="testModuleForm.value">Save</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="testModuleForm.value" [disabled]="!testModuleForm.valid">Save</button>
     </div>
   </div>
 </div>
