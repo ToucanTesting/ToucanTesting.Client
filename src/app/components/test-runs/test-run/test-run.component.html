@@ -1,4 +1,5 @@
-<div class="card-body">
+<tt-loader *ngIf="isLoading"></tt-loader>
+<div *ngIf="testModules" class="card-body">
   <h5 class="card-title">{{testRun?.name}}</h5>
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">

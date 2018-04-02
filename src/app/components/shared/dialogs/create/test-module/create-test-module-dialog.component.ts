@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TestModule } from '@models';
 import { DialogType } from './../../../../../enums';
@@ -31,7 +31,7 @@ export class CreateTestModuleDialogComponent {
 
     createTestModuleForm() {
         this.testModuleForm = this.fb.group({
-            name: null
+            name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])]
         });
     }
 

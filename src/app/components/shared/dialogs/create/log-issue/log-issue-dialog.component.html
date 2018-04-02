@@ -7,14 +7,24 @@
     <form [formGroup]="logIssueForm">
       <div class="form-group">
         <label for="bugReferenceInput">Bug Reference</label>
-        <input type="text" class="form-control" id="bugReferenceInput" aria-describedby="bugReferenceHelp" placeholder="IKW-XXXX" formControlName="bugId">
+        <input 
+        type="text" 
+        class="form-control"
+        [ngClass]="{'is-invalid': !logIssueForm.controls['bugId'].valid && logIssueForm.controls['bugId'].touched}"
+        id="bugReferenceInput" 
+        aria-describedby="bugReferenceHelp" 
+        placeholder="IKW-XXXX" 
+        formControlName="bugId">
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('required')">Must include a description.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('minlength')">Mst be at least 3 characters long.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('maxlength')">Cannot exceed 255 characters.</small>
       </div>
     </form>
   </div>
   <div class="card-footer">
     <div class="pull-right">
       <button class="btn btn-default" (click)="onNoClick()">Cancel</button>
-      <button type="submit" class="btn btn-primary" [mat-dialog-close]="logIssueForm.value" [disabled]="!logIssueForm.valid" >Save</button>
+      <button type="submit" class="btn btn-primary" [mat-dialog-close]="logIssueForm.value" [disabled]="!logIssueForm.valid">Save</button>
     </div>
   </div>
 </div>

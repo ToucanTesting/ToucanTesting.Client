@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './test-run.component.html'
 })
 export class TestRunComponent {
+    isLoading: boolean = true;
     testRun: TestRun;
     testRunId: number;
     testResults: TestResult[] = [];
@@ -68,6 +69,7 @@ export class TestRunComponent {
                                         return testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.NA;
                                     })
                                 }));
+                                this.isLoading = false;
                             })
                     })
 

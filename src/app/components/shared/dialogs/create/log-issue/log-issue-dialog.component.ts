@@ -32,7 +32,7 @@ export class LogIssueDialogComponent {
 
     createIssueForm() {
         this.logIssueForm = this.fb.group({
-            bugId: ['', Validators.required]
+            bugId: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])]
         })
     }
 
