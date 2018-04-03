@@ -100,7 +100,7 @@ const jwtConf = {
     TestReportComponent,
     LoaderComponent
   ],
-  entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent],
+  entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, TestCaseComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

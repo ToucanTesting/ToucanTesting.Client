@@ -8,6 +8,7 @@ import { TestCase, TestModule } from '@models';
 import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
 
 @Component({
   selector: 'test-module',
@@ -30,6 +31,21 @@ export class TestModuleComponent {
     private testResultsService: TestResultsService,
     public dialog: MatDialog
   ) {
+  }
+
+  openTestCaseViewDialog(testModule: TestModule, testCase: TestCase): void {
+    const dialogRef = this.dialog.open(TestCaseComponent, {
+      data: {
+        title: testCase.description,
+        testModule: testModule,
+        testCase: testCase,
+        isTestRun: this.isTestRun
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(res => {
+      });
   }
 
   openTestCaseDeleteDialog(testCase: TestCase): void {
@@ -121,17 +137,4 @@ export class TestModuleComponent {
         this.handleErrorService.handleError(error);
       });
   }
-
-  public getExpectedResults(testModule: TestModule, testCase: TestCase) {
-    if (testCase.expectedResults.length <= 0) {
-      this.expectedResultsService.getTestResults(testModule, testCase)
-        .subscribe(expectedResults => {
-          const index = this.testModule.testCases.indexOf(testCase)
-          this.testModule.testCases[index].expectedResults = expectedResults;
-        }, error => {
-          this.handleErrorService.handleError(error);
-        });
-    }
-  }
-
 }

@@ -1,33 +1,109 @@
-import { TestModule, TestCase, TestAction } from '@models';
+import { TestModule, TestCase, TestAction, ExpectedResult, TestCondition } from '@models';
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService, HandleErrorService } from '@services';
-import { Component, Input } from '@angular/core';
-import { MatDialog, MatGridList } from '@angular/material';
-import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog.component';
+import { Component, Input, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Priority } from '../../../enums';
 import { ToastrService } from 'ngx-toastr';
 
+interface IDialogData {
+    title: string;
+    testModule: TestModule;
+    testCase: TestCase;
+    isTestRun: boolean;
+}
+
 @Component({
     selector: '[test-case]',
-    templateUrl: './test-case.component.html',
-    styleUrls: ['./test-case.component.scss']
+    templateUrl: './test-case.component.html'
 })
-export class TestCaseComponent {
-    panelOpenState: boolean = false;
-    @Input() testCase: TestCase;
-    @Input() testModule: TestModule;
-    @Input() testIndex: number;
-    @Input() isTestRun: boolean = false;
+export class TestCaseComponent implements OnInit {
+    title: string;
+    type: string = 'expected';
+    testCase: TestCase;
+    testModule: TestModule;
+    isTestRun: boolean = false;
     isEditing = false;
     priorityOptions = Priority;
 
     constructor(
+        private toastr: ToastrService,
         private handleErrorService: HandleErrorService,
         private testCasesService: TestCasesService,
         private testActionsService: TestActionsService,
         private expectedResultsService: ExpectedResultsService,
         private testConditionsService: TestConditionsService,
-        public dialog: MatDialog
-    ) { }
+        public dialogRef: MatDialogRef<TestCaseComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: IDialogData
+    ) {
+        this.title = data.title;
+        this.testCase = data.testCase;
+        this.testModule = data.testModule;
+        this.isTestRun = data.isTestRun;
+    }
+
+    ngOnInit() {
+        if (this.testCase.expectedResults.length <= 0) {
+            this.expectedResultsService.getTestResults(this.testModule, this.testCase)
+                .subscribe(expectedResults => {
+                    const index = this.testModule.testCases.indexOf(this.testCase)
+                    this.testModule.testCases[index].expectedResults = expectedResults;
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
+        }
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+    addExpectedResult(description: string) {
+        const expectedResult: ExpectedResult = new ExpectedResult();
+        expectedResult.testCaseId = this.testCase.id
+        expectedResult.description = description;
+
+        this.expectedResultsService.createExpectedResult(expectedResult)
+            .subscribe(res => {
+                this.testCase.expectedResults.push(res)
+                this.toastr.success(res.description, 'CREATED');
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
+
+    addTestCondition(description: string) {
+        const testCondition: TestCondition = new TestCondition();
+        testCondition.testCaseId = this.testCase.id
+        testCondition.description = description;
+
+        this.testConditionsService.createTestCondition(testCondition)
+            .subscribe(res => {
+                this.testCase.testConditions.push(res)
+                this.toastr.success(res.description, 'CREATED');
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
+
+    addTestAction(description: string) {
+        const testAction = new TestAction();
+        testAction.description = description;
+        testAction.testCaseId = this.testCase.id;
+
+        if (this.testCase.testActions.length > 1) {
+            testAction.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+        } else {
+            testAction.sequence = 1;
+        }
+
+        this.testActionsService.createTestAction(testAction)
+            .subscribe(res => {
+                this.testCase.testActions.push(res)
+                this.toastr.success(res.description, 'CREATED');
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
 
     public truncateDescription(description: string): string {
         if (description.length > 74) {
@@ -51,7 +127,6 @@ export class TestCaseComponent {
         if (testCase.expectedResults.length <= 0) {
             this.expectedResultsService.getTestResults(testModule, testCase)
                 .subscribe(expectedResults => {
-                    console.log(expectedResults)
                     this.testCase.expectedResults = expectedResults;
                 }, error => {
                     this.handleErrorService.handleError(error);

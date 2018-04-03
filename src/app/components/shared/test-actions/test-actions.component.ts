@@ -76,27 +76,8 @@ export class TestActionsComponent {
     })
   }
 
-  createTestAction(description: string) {
-    const testAction = new TestAction();
-    testAction.description = description;
-    testAction.testCaseId = this.testCase.id;
-
-    if (this.testCase.testActions.length > 1) {
-      testAction.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
-    } else {
-      testAction.sequence = 1;
-    }
-
-    this.testActionsService.createTestAction(testAction)
-      .subscribe(res => {
-        this.testCase.testActions.push(res)
-        this.toastr.success(res.description, 'CREATED');
-      }, error => {
-        this.handleErrorService.handleError(error);
-      });
-  }
-
   renameTestAction(testAction: TestAction) {
+    testAction.isEditing = false;
     this.testActionsService
       .updateTestAction(testAction)
       .subscribe(res => {

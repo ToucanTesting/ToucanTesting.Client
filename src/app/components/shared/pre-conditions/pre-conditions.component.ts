@@ -30,20 +30,6 @@ export class PreConditionsComponent {
     testCondition.description = this.tempDescription;
   }
 
-  addTestCondition(description: string) {
-    const testCondition: TestCondition = new TestCondition();
-    testCondition.testCaseId = this.testCase.id
-    testCondition.description = description;
-
-    this.testConditionsService.createTestCondition(testCondition)
-      .subscribe(res => {
-        this.testCase.testConditions.push(res)
-        this.toastr.success(res.description, 'CREATED');
-      }, error => {
-        this.handleErrorService.handleError(error);
-      });
-  }
-
   updateTestCondition(testCondition: TestCondition) {
     testCondition.isEditing = false;
     this.testConditionsService
