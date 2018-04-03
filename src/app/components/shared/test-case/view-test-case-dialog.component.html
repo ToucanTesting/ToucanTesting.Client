@@ -12,7 +12,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" id="test-actions-tab" data-toggle="tab" href="#test-actions" role="tab" aria-controls="contact" [attr.aria-controls]="test-actions-tab"
-          aria-selecte="false" (click)="getTestActions(testModule, testCase); type = 'action'">Test Actions</a>
+          aria-selected="false" (click)="getTestActions(testModule, testCase); type = 'action'">Test Actions</a>
       </li>
       <li *ngIf="testCase.testIssues.length > 0" class="nav-item">
         <a class="nav-link" id="test-issues-tab" data-toggle="tab" href="#test-issues" role="tab" aria-controls="contact" [attr.aria-controls]="test-issues-tab"

@@ -20,7 +20,7 @@ export class TestReportComponent implements OnInit {
   testRun: TestRun;
   testRunId: number;
   testResults: TestResult[] = [];
-  failures: TestResult[];
+  failures: TestCase[] = [];
   testModules: TestModule[];
   testResultStatus = TestResultStatus;
   priority = Priority;
@@ -78,6 +78,8 @@ export class TestReportComponent implements OnInit {
                   }),
                   failures: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Fail) {
+                      const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      this.failures.push(testCase);
                       this.totalFailCount += 1;
                       return testResult;
                     }
@@ -133,10 +135,6 @@ export class TestReportComponent implements OnInit {
         }]
       },
       options: {
-        title: {
-          display: true,
-          text: 'Results'
-        },
         legend: {
           display: true,
           position: 'left'
@@ -159,10 +157,6 @@ export class TestReportComponent implements OnInit {
         }]
       },
       options: {
-        title: {
-          display: true,
-          text: `Total Test Cases (${this.totalTestCases})`
-        },
         legend: {
           display: true,
           position: 'left'
