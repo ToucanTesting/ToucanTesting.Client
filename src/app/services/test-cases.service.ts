@@ -29,6 +29,10 @@ export class TestCasesService {
     return this.http.put<TestCase>(`test-cases/${testCase.id}`, testCase)
   }
 
+  public duplicateTestCase(testCase: TestCase): Observable<TestCase> {
+    return this.http.post<TestCase>(`test-cases/${testCase.id}`, testCase);
+  }
+
   public deleteTestCase(testCase: TestCase) {
     return this.http.delete(`test-cases/${testCase.id}`);
   }

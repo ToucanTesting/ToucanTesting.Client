@@ -106,6 +106,16 @@ export class TestModuleComponent {
       });
   }
 
+  duplicateTestCase(testCase: TestCase) {
+    this.testCasesService.duplicateTestCase(testCase)
+      .subscribe((res: TestCase) => {
+        this.testModule.testCases.push(res);
+        this.toastr.success(res.description, 'COPIED');
+      }, error => {
+        this.handleErrorService.handleError(error);
+      });
+  }
+
   deleteTestCase(testCase: TestCase) {
     this.testCasesService.deleteTestCase(testCase)
       .subscribe(success => {

@@ -60,6 +60,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <span class="dropdown-item" (click)="openTestCaseViewDialog(testModule, testCase)">View</span>
                   <span class="dropdown-item" (click)="openTestCaseEditDialog(testCase, testModule.testSuiteId)">Edit</span>
+                  <span class="dropdown-item" (click)="duplicateTestCase(testCase)">Duplicate</span>
                   <span class="dropdown-item" (click)="openTestCaseDeleteDialog(testCase)">Delete</span>
                 </div>
               </div>
