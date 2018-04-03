@@ -22,10 +22,4 @@
     </div>
   </div>
 </ng-container>
-<br>
-<div class="input-group mb-3" *ngIf="!isTestRun">
-  <input #action type="text" class="form-control" placeholder="Add an action" (keyup.enter)="createTestAction(action.value);action.value=''">
-  <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="button" (click)="createTestAction(action.value);action.value=''">Save</button>
-  </div>
-</div>
+

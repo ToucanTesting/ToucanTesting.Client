@@ -26,20 +26,6 @@ export class ExpectedResultsComponent {
     }
   }
 
-  addExpectedResult(description: string) {
-    const expectedResult: ExpectedResult = new ExpectedResult();
-    expectedResult.testCaseId = this.testCase.id
-    expectedResult.description = description;
-
-    this.expectedResultsService.createExpectedResult(expectedResult)
-      .subscribe(res => {
-        this.testCase.expectedResults.push(res)
-        this.toastr.success(res.description, 'CREATED');
-      }, error => {
-        this.handleErrorService.handleError(error);
-      });
-  }
-
   cancelEdit(expectedResult: ExpectedResult) {
     expectedResult.isEditing = false;
     expectedResult.description = this.tempDescription;
