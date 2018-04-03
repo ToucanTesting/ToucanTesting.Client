@@ -1,5 +1,5 @@
 import { Priority } from '../enums';
-import { TestResult, TestAction, Base, TestCondition, ExpectedResult } from '@models';
+import { TestResult, TestAction, Base, TestCondition, ExpectedResult, TestIssue } from '@models';
 
 export class TestCase extends Base {
     id: number;
@@ -8,10 +8,10 @@ export class TestCase extends Base {
     priority: Priority;
     isAutomated: boolean;
     isEnabled: boolean;
-    bugId?: string;
     lastTested?: Date;
     testActions: TestAction[];
     testConditions: TestCondition[];
     expectedResults: ExpectedResult[];
+    testIssues: TestIssue[];
     testResult: TestResult;
 }

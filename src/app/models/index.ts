@@ -7,3 +7,4 @@ export * from './test-condition.model';
 export * from './expected-result.model';
 export * from './test-run.model';
 export * from './test-result.model';
+export * from './test-issue.model';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCasesService, HandleErrorService } from '@services';
-import { TestCase } from '@models';
+import { TestCasesService, HandleErrorService, TestIssuesService } from '@services';
+import { TestCase, TestIssue } from '@models';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { MatDialog } from '@angular/material';
@@ -11,44 +11,43 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
-  testCases: TestCase[];
+  testIssues: TestIssue[];
 
   constructor(
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
-    private testCasesService: TestCasesService,
+    private testIssuesService: TestIssuesService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.testCasesService
-      .getIssues()
-      .subscribe(testCases => {
-        this.testCases = testCases;
+    this.testIssuesService
+      .getTestIssues()
+      .subscribe(testIssues => {
+        this.testIssues = testIssues;
       }, error => {
         this.handleErrorService.handleError(error);
       });
   }
 
-  openTestCaseDeleteDialog(testCase: TestCase): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testCase.bugId } });
+  openTestIssueDeleteDialog(testIssue: TestIssue): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { title: testIssue.reference } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.removeIssue(testCase)
+        this.removeIssue(testIssue)
       }
     });
   }
 
-  removeIssue(testCase: TestCase) {
-    testCase.bugId = null;
-    this.testCasesService.updateTestCase(testCase)
+  removeIssue(testIssue: TestIssue) {
+    this.testIssuesService.deleteTestIssue(testIssue)
       .subscribe(res => {
-        const index = this.testCases.indexOf(testCase);
+        const index = this.testIssues.indexOf(testIssue);
         if (index > -1) {
-          this.testCases.splice(index, 1);
+          this.testIssues.splice(index, 1);
         }
-        this.toastr.success(res.description, 'DELETED');
+        this.toastr.success(testIssue.reference, 'DELETED');
       }, error => {
         this.handleErrorService.handleError(error);
       });

@@ -3,21 +3,20 @@
     <h5>{{title}}</h5>
   </div>
   <div class="card-body">
-    <p><strong>{{data.payload.description}}</strong></p>
     <form [formGroup]="logIssueForm">
       <div class="form-group">
-        <label for="bugReferenceInput">Bug Reference</label>
-        <input 
-        type="text" 
-        class="form-control"
-        [ngClass]="{'is-invalid': !logIssueForm.controls['bugId'].valid && logIssueForm.controls['bugId'].touched}"
-        id="bugReferenceInput" 
-        aria-describedby="bugReferenceHelp" 
-        placeholder="IKW-XXXX" 
-        formControlName="bugId">
-        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('required')">Must include a description.</small>
-        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('minlength')">Mst be at least 3 characters long.</small>
-        <small class="invalid-feedback" *ngIf="logIssueForm.controls['bugId'].hasError('maxlength')">Cannot exceed 255 characters.</small>
+        <label for="referenceInput">Bug Reference</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': !logIssueForm.controls['reference'].valid && logIssueForm.controls['reference'].touched}"
+          id="referenceInput" placeholder="IKW-XXXX" formControlName="reference">
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['reference'].hasError('required')">Must include a reference.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['reference'].hasError('minlength')">Must be at least 3 characters long.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['reference'].hasError('maxlength')">Cannot exceed 16 characters.</small>
+        <label for="descriptionInput">Description</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': !logIssueForm.controls['description'].valid && logIssueForm.controls['description'].touched}"
+          id="descriptionInput" formControlName="description">
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['description'].hasError('required')">Must include a description.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['description'].hasError('minlength')">Must be at least 3 characters long.</small>
+        <small class="invalid-feedback" *ngIf="logIssueForm.controls['description'].hasError('maxlength')">Cannot exceed 255 characters.</small>
       </div>
     </form>
   </div>
