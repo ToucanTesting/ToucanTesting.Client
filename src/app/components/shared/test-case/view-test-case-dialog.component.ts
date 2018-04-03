@@ -13,10 +13,10 @@ interface IDialogData {
 }
 
 @Component({
-    selector: '[test-case]',
-    templateUrl: './test-case.component.html'
+    selector: 'view-test-case-dialog',
+    templateUrl: './view-test-case-dialog.component.html'
 })
-export class TestCaseComponent implements OnInit {
+export class ViewTestCaseDialogComponent implements OnInit {
     title: string;
     type: string = 'expected';
     testCase: TestCase;
@@ -32,7 +32,7 @@ export class TestCaseComponent implements OnInit {
         private testActionsService: TestActionsService,
         private expectedResultsService: ExpectedResultsService,
         private testConditionsService: TestConditionsService,
-        public dialogRef: MatDialogRef<TestCaseComponent>,
+        public dialogRef: MatDialogRef<ViewTestCaseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData
     ) {
         this.title = data.title;
