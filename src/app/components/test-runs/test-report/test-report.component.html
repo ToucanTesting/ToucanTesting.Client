@@ -54,19 +54,18 @@
           <div class="tab-pane fade" id="passed" role="tabpanel" [attr.aria-labelledby]="passed-tab">
             <div *ngFor="let testCase of testCases">
               <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Pass" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
-              <br>
             </div>
           </div>
           <div class="tab-pane fade" id="failed" role="tabpanel" [attr.aria-labelledby]="failed-tab">
             <div *ngFor="let testCase of testCases">
+              <ng-container>
+              </ng-container>
               <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Fail" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
-              <br>
             </div>
           </div>
           <div class="tab-pane fade" id="cnt" role="tabpanel" [attr.aria-labelledby]="cnt-tab">
             <div *ngFor="let testCase of testCases">
               <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.CNT" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
-              <br>
             </div>
           </div>
         </div>
