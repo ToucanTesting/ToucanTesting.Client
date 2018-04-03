@@ -1,16 +1,96 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
 <div [hidden]="isLoading" style="padding:0 35px;">
   <div class="row">
-    <div *ngIf="resultsChart" class="col-md-6 card card-body">
-      <canvas id="resultsChart"></canvas>
+    <div *ngIf="resultsChart" class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Results
+        </div>
+        <div class="card-body">
+          <canvas id="resultsChart"></canvas>
+        </div>
+      </div>
     </div>
-    <div *ngIf="totalsChart" class="col-md-6 card card-body">
-      <canvas id="totalsChart"></canvas>
+    <div *ngIf="totalsChart" class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Total Test Cases
+          <small>({{totalTestCases}})</small>
+        </div>
+        <div class="card-body">
+          <canvas id="totalsChart"></canvas>
+        </div>
+      </div>
     </div>
   </div>
+  <br>
   <div class="row">
-    <div class="col-md-12 card card-body">
-      <canvas id="modulesChart"></canvas>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a #reportTab class="nav-link active" id="report-tab" data-toggle="tab" href="#report" role="tab" [attr.aria-controls]="report-tab"
+                aria-selected="true">Report</a>
+            </li>
+            <li class="nav-item">
+              <a #failuresTab class="nav-link" id="failures-tab" data-toggle="tab" href="#failures" role="tab" [attr.aria-controls]="failures-tab"
+                aria-selected="false">Failures</a>
+            </li>
+          </ul>
+        </div>
+        <div id="tabContent" class="card-body tab-content">
+          <div class="tab-pane fade show active" id="report" role="tabpanel" [attr.aria-labelledby]="report-tab">
+            <canvas id="modulesChart"></canvas>
+          </div>
+          <div class="tab-pane fade" id="failures" role="tabpanel" [attr.aria-labelledby]="failures-tab">
+            <div *ngFor="let testCase of failures">
+              <div class="card">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <div class="test-run-item">
+                    <div>
+                      <span>{{testCase.description}}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="dropdown">
+                      <span class="btn dropdown-toggle btn-secondary pull-right" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">More</span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <span class="dropdown-item" (click)="openLogIssueDialog(testCase)">LOG ISSUE</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
+                    <span class="fa-stack fa-lg priority" data-toggle="tooltip" data-placement="bottom" title="{{testCase.priority | priority}}">
+                      <i class="fa fa-signal fa-stack-1x priority-background"></i>
+                      <i class="fa fa-signal fa-stack-1x" [ngClass]="{
+                            'priority-low': testCase.priority === priority.Low,
+                            'priority-med': testCase.priority === priority.Medium,
+                            'priority-high': testCase.priority === priority.High,
+                            'priority-critical': testCase.priority === priority.Critical
+                          }"></i>
+                    </span>
+                    <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.testIssues.length > 0, 'icon-light': testCase.testIssues.length <= 0}"
+                      data-toggle="tooltip" data-placement="bottom"></i>
+                    {{testCase.testIssues.length}}
+                  </div>
+                  <div *ngIf="testCase.lastTested">
+                    <small>
+                      <strong>Last Tested:</strong> {{testCase.lastTested | date}}</small>
+                  </div>
+                  <div *ngIf="!testCase.lastTested">
+                    <small>Never Tested</small>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
