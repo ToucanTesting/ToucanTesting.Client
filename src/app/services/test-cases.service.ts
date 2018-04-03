@@ -20,6 +20,8 @@ export class TestCasesService {
     return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
   }
 
+  getTestCasesByStatus
+
   public getIssues(): Observable<TestCase[]> {
     return this.http.get<TestCase[]>(`test-cases?issuesOnly=true`)
   }

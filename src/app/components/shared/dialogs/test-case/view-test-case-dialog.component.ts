@@ -2,7 +2,7 @@ import { TestModule, TestCase, TestAction, ExpectedResult, TestCondition } from 
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService, HandleErrorService } from '@services';
 import { Component, Input, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Priority } from '../../../enums';
+import { Priority } from '../../../../enums';
 import { ToastrService } from 'ngx-toastr';
 
 interface IDialogData {
