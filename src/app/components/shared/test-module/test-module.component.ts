@@ -8,7 +8,7 @@ import { TestCase, TestModule } from '@models';
 import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
+import { ViewTestCaseDialogComponent } from '@components/shared/test-case/view-test-case-dialog.component';
 
 @Component({
   selector: 'test-module',
@@ -34,7 +34,7 @@ export class TestModuleComponent {
   }
 
   openTestCaseViewDialog(testModule: TestModule, testCase: TestCase): void {
-    const dialogRef = this.dialog.open(TestCaseComponent, {
+    const dialogRef = this.dialog.open(ViewTestCaseDialogComponent, {
       data: {
         title: testCase.description,
         testModule: testModule,
