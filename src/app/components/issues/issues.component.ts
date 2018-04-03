@@ -41,7 +41,7 @@ export class IssuesComponent implements OnInit {
   }
 
   removeIssue(testIssue: TestIssue) {
-    this.testIssuesService.deleteTestIssue(testIssue)
+    this.testIssuesService.deleteTestIssue(testIssue.id)
       .subscribe(res => {
         const index = this.testIssues.indexOf(testIssue);
         if (index > -1) {

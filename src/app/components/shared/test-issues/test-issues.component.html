@@ -1,0 +1,13 @@
+<ng-container *ngFor="let testIssue of testIssues">
+  <div class="card">
+    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
+      <span>
+        <strong>{{testIssue.reference}}</strong> {{testIssue.description}}
+      </span>
+      <span *ngIf="hoverIndex === i" class="toolbar">
+        <mat-icon (click)="deleteTestIssue(testIssue)">delete</mat-icon>
+      </span>
+    </div>
+  </div>
+</ng-container>
+

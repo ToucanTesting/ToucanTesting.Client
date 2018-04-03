@@ -30,6 +30,7 @@ import { TestRunsComponent } from './components/test-runs/test-runs.component';
 import { TestRunComponent } from './components/test-runs/test-run/test-run.component';
 import { TestSuitesComponent } from './components/test-suites/test-suites.component';
 import { TestSuiteComponent } from './components/test-suites/test-suite/test-suite.component';
+import { TestIssuesComponent } from '@components/shared/test-issues/test-issues.component';
 import { ViewTestCaseDialogComponent } from './components/shared/test-case/view-test-case-dialog.component';
 import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
@@ -79,6 +80,7 @@ const jwtConf = {
     TestRunComponent,
     TestSuiteComponent,
     TestModuleComponent,
+    TestIssuesComponent,
     ViewTestCaseDialogComponent,
     CreateTestCaseDialogComponent,
     CreateTestSuiteDialogComponent,

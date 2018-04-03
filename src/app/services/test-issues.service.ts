@@ -18,7 +18,7 @@ export class TestIssuesService {
     return this.http.get<TestIssue[]>(`test-issues`);
   }
 
-  public deleteTestIssue(testIssue: TestIssue) {
-    return this.http.delete(`test-issues/${testIssue.id}`);
+  public deleteTestIssue(testIssueId: number) {
+    return this.http.delete(`test-issues/${testIssueId}`);
   }
 }
