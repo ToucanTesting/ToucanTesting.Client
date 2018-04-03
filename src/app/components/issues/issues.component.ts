@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
+  isLoading: boolean = true;
   testIssues: TestIssue[];
 
   constructor(
@@ -25,6 +26,7 @@ export class IssuesComponent implements OnInit {
       .getTestIssues()
       .subscribe(testIssues => {
         this.testIssues = testIssues;
+        this.isLoading = false;
       }, error => {
         this.handleErrorService.handleError(error);
       });

@@ -1,8 +1,14 @@
-<br>
+<tt-loader *ngIf="isLoading"></tt-loader>
+<div [hidden]="isLoading" *ngIf="testIssues?.length <= 0" class="card">
+  <div class="card-body">
+    <span>No Issues</span>
+  </div>
+</div>
 <ng-container *ngFor="let testIssue of testIssues; let i = index">
-  <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card">
+  <div [hidden]="isLoading" (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card">
     <div class="card-body d-flex justify-content-between">
-      <span><strong>{{testIssue.reference}}</strong> {{testIssue.description}}</span>
+      <span>
+        <strong>{{testIssue.reference}}</strong> {{testIssue.description}}</span>
       <tt-toolbar class="toolbar" *ngIf="hoverIndex === i" [delete]=true (click)="openTestIssueDeleteDialog(testIssue)"></tt-toolbar>
     </div>
   </div>
