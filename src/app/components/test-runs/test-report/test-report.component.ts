@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService } from '@services';
-import { TestRun, TestModule, TestCase, TestResult } from '@models';
+import { TestModulesService, TestRunsService, TestResultsService, TestCasesService, ExpectedResultsService, TestIssuesService, HandleErrorService } from '@services';
+import { TestRun, TestModule, TestCase, TestResult, TestIssue } from '@models';
 import { TestResultStatus, Priority } from '../../../enums';
 import { Chart } from 'chart.js';
 
@@ -12,6 +12,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./test-report.component.scss']
 })
 export class TestReportComponent implements OnInit {
+  hasIssues: boolean = false;
   resultsChart = [];
   totalsChart = [];
   modulesChart = [];
@@ -20,7 +21,7 @@ export class TestReportComponent implements OnInit {
   testRun: TestRun;
   testRunId: number;
   testResults: TestResult[] = [];
-  failures: TestCase[] = [];
+  testCases: TestCase[] = [];
   testModules: TestModule[];
   testResultStatus = TestResultStatus;
   priority = Priority;
@@ -33,7 +34,9 @@ export class TestReportComponent implements OnInit {
   totalPendingCount: number = 0;
 
   constructor(
+    private handleErrorService: HandleErrorService,
     private expectedResultsService: ExpectedResultsService,
+    private testIssuesService: TestIssuesService,
     private testRunsService: TestRunsService,
     private testModulesService: TestModulesService,
     private testCasesService: TestCasesService,
@@ -72,6 +75,9 @@ export class TestReportComponent implements OnInit {
                   }),
                   passes: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Pass) {
+                      const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      testCase.testResult = testResult;
+                      this.testCases.push(testCase);
                       this.totalPassCount += 1;
                       return testResult;
                     }
@@ -79,13 +85,17 @@ export class TestReportComponent implements OnInit {
                   failures: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Fail) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
-                      this.failures.push(testCase);
+                      testCase.testResult = testResult;
+                      this.testCases.push(testCase);
                       this.totalFailCount += 1;
                       return testResult;
                     }
                   }),
                   cnt: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.CNT) {
+                      const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      testCase.testResult = testResult;
+                      this.testCases.push(testCase);
                       this.totalCntCount += 1;
                       return testResult;
                     }
@@ -229,5 +239,22 @@ export class TestReportComponent implements OnInit {
         }
       }
     });
+  }
+
+  getTestIssues() {
+    if (!this.hasIssues) {
+      this.testIssuesService.getTestIssues()
+        .subscribe(testIssues => {
+          testIssues.forEach((testIssue: TestIssue) => {
+            const testCase = this.testCases.find(tc => tc.id === testIssue.testCaseId);
+            if (testCase) {
+              testCase.testIssues.push(testIssue);
+            }
+          })
+          this.hasIssues = true;
+        }, error => {
+          this.handleErrorService.handleError(error);
+        });
+    }
   }
 }

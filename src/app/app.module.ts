@@ -31,7 +31,7 @@ import { TestRunComponent } from './components/test-runs/test-run/test-run.compo
 import { TestSuitesComponent } from './components/test-suites/test-suites.component';
 import { TestSuiteComponent } from './components/test-suites/test-suite/test-suite.component';
 import { TestIssuesComponent } from '@components/shared/test-issues/test-issues.component';
-import { ViewTestCaseDialogComponent } from './components/shared/test-case/view-test-case-dialog.component';
+import { ViewTestCaseDialogComponent } from './components/shared/dialogs/test-case/view-test-case-dialog.component';
 import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
@@ -59,6 +59,7 @@ import { ToolbarComponent } from './components/shared/toolbar/toolbar.component'
 import { TestModuleComponent } from './components/shared/test-module/test-module.component';
 import { TestReportComponent } from './components/test-runs/test-report/test-report.component';
 import { LoaderComponent } from './components/shared/loader/loader.component';
+import { TestCaseComponent } from './components/shared/test-case/test-case.component';
 
 export function gettoken() {
   return localStorage.getItem('access_token');
@@ -101,7 +102,8 @@ const jwtConf = {
     ToolbarComponent,
     TestModuleComponent,
     TestReportComponent,
-    LoaderComponent
+    LoaderComponent,
+    TestCaseComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [
