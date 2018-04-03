@@ -1,5 +1,5 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
-<div style="padding:0 35px;">
+<div [hidden]="isLoading" style="padding:0 35px;">
   <div class="row">
     <div *ngIf="resultsChart" class="col-md-6 card card-body">
       <canvas id="resultsChart"></canvas>
