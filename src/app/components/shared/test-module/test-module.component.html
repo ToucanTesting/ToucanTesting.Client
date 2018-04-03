@@ -26,7 +26,6 @@
       <br>
       <div *ngFor="let testCase of testModule.testCases | orderBy : testModule.sort : testModule.reverse">
         <tt-test-case [testModule]="testModule" [testCase]="testCase" [isTestRun]="isTestRun" [testRunId]="testRunId"></tt-test-case>
-        <br>
       </div>
     </div>
   </div>
