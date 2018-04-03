@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestCasesService, ExpectedResultsService, TestResultsService, HandleErrorService } from '@services';
+import { TestCasesService, ExpectedResultsService, TestResultsService, HandleErrorService, TestIssuesService } from '@services';
 import { TestModulesService } from 'app/services/test-modules.service';
 import { MatDialog } from '@angular/material';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
-import { TestCase, TestModule } from '@models';
+import { TestCase, TestModule, TestIssue } from '@models';
 import { DialogType, Priority, TestResultStatus } from '../../../enums';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
@@ -26,6 +26,7 @@ export class TestModuleComponent {
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
     private testCasesService: TestCasesService,
+    private testIssuesService: TestIssuesService,
     private testModulesService: TestModulesService,
     private expectedResultsService: ExpectedResultsService,
     private testResultsService: TestResultsService,
@@ -73,14 +74,22 @@ export class TestModuleComponent {
   }
 
   openLogIssueDialog(testCase: TestCase): void {
-    const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue', payload: testCase } });
+    const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue' } });
 
-    dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        testCase.bugId = res.bugId;
-        this.updateTestCase(testCase)
+    dialogRef.afterClosed().subscribe(testIssue => {
+      if (testIssue) {
+        testIssue.testCaseId = testCase.id
+        this.addTestIssue(testIssue)
       }
     });
+  }
+
+  addTestIssue(testIssue: TestIssue) {
+    this.testIssuesService.createTestIssue(testIssue)
+      .subscribe((res: TestIssue) => {
+        const testCase = this.testModule.testCases.find(tc => tc.id === res.testCaseId);
+        testCase.testIssues.push(testIssue);
+      })
   }
 
   updateTestCase(testCase: TestCase): void {

@@ -8,7 +8,7 @@
         <label for="nameInput">Test Module Name</label>
         <input type="text" class="form-control" [ngClass]="{'is-invalid': !testModuleForm.controls['name'].valid && testModuleForm.controls['name'].touched}" id="nameInput" placeholder="Name" formControlName="name">
         <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('required')">Must include a description.</small>
-        <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('minlength')">Mst be at least 3 characters long.</small>
+        <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('minlength')">Must be at least 3 characters long.</small>
         <small class="invalid-feedback" *ngIf="testModuleForm.controls['name'].hasError('maxlength')">Cannot exceed 255 characters.</small>
       </div>
     </form>

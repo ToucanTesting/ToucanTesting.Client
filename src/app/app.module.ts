@@ -8,7 +8,8 @@ import {
   TestCasesService,
   TestActionsService,
   AuthService,
-  HandleErrorService
+  HandleErrorService,
+  TestIssuesService
 } from '@services';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -135,6 +136,7 @@ const jwtConf = {
     TestModulesService,
     TestCasesService,
     TestActionsService,
+    TestIssuesService,
     ExpectedResultsService,
     TestConditionsService,
     HandleErrorService,

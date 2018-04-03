@@ -11,7 +11,7 @@
             <span (click)="testModule.sort = 'priority'" class="dropdown-item">Priority</span>
             <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
             <span (click)="testModule.sort = 'isAutomated'" class="dropdown-item">Automated</span>
-            <span (click)="testModule.sort = 'bugId'" class="dropdown-item">Issues</span>
+            <span (click)="testModule.sort = 'testIssues'" class="dropdown-item">Issues</span>
           </div>
         </span>
         <span *ngIf="testModule.sort" class="btn-group btn-group-toggle" data-toggle="buttons" style="z-index: 0;">
@@ -78,8 +78,9 @@
                   'priority-critical': testCase.priority === priority.Critical
                 }"></i>
               </span>
-              <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.bugId, 'icon-light': !testCase.bugId}" data-toggle="tooltip"
-              data-placement="bottom" title="{{testCase.bugId}}"></i>
+              <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.testIssues.length > 0, 'icon-light': testCase.testIssues.length <= 0}" data-toggle="tooltip"
+              data-placement="bottom"></i>
+              {{testCase.testIssues.length}}
             </div>
             <div *ngIf="testCase.lastTested"><small><strong>Last Tested:</strong> {{testCase.lastTested | date}}</small></div>
             <div *ngIf="!testCase.lastTested"><small>Never Tested</small></div>
