@@ -44,6 +44,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.type);
         if (this.testCase.expectedResults.length <= 0 && this.type !== 'issue') {
             this.expectedResultsService.getTestResults(this.testModule, this.testCase)
                 .subscribe((expectedResults: ExpectedResult[]) => {

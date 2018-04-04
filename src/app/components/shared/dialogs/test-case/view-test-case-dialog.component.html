@@ -41,7 +41,7 @@
   <div class="card-footer">
     <div class="row">
       <!-- Expected Result -->
-      <div *ngIf="type === 'expected' && !isTestRun" class="input-group mb-3">
+      <div *ngIf="(type === 'expected' || !type) && !isTestRun" class="input-group mb-3">
         <input #expectedResult type="text" class="form-control" placeholder="Add an expected result" (keyup.enter)="addExpectedResult(expectedResult.value);expectedResult.value=''">
         <div class="input-group-append">
           <button class="btn btn-outline-primary" type="button" (click)="addExpectedResult(expectedResult.value);expectedResult.value=''">Save</button>
