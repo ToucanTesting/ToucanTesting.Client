@@ -1,4 +1,4 @@
-import { TestModule, TestCase, TestAction, ExpectedResult, TestCondition } from '@models';
+import { TestModule, TestCase, TestAction, ExpectedResult, TestCondition, TestIssue } from '@models';
 import { TestCasesService, TestActionsService, ExpectedResultsService, TestConditionsService, HandleErrorService } from '@services';
 import { Component, Input, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -10,6 +10,7 @@ interface IDialogData {
     testModule: TestModule;
     testCase: TestCase;
     isTestRun: boolean;
+    type: string;
 }
 
 @Component({
@@ -36,15 +37,16 @@ export class ViewTestCaseDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: IDialogData
     ) {
         this.title = data.title;
+        this.type = data.type;
         this.testCase = data.testCase;
         this.testModule = data.testModule;
         this.isTestRun = data.isTestRun;
     }
 
     ngOnInit() {
-        if (this.testCase.expectedResults.length <= 0) {
+        if (this.testCase.expectedResults.length <= 0 && this.type !== 'issue') {
             this.expectedResultsService.getTestResults(this.testModule, this.testCase)
-                .subscribe(expectedResults => {
+                .subscribe((expectedResults: ExpectedResult[]) => {
                     const index = this.testModule.testCases.indexOf(this.testCase)
                     this.testModule.testCases[index].expectedResults = expectedResults;
                 }, error => {
