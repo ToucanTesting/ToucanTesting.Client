@@ -1,4 +1,4 @@
-import { TestCase, TestModule } from '@models';
+import { TestCase, TestModule, TestIssue } from '@models';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -20,12 +20,9 @@ export class TestCasesService {
     return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
   }
 
-  getTestCasesByStatus
-
-  public getIssues(): Observable<TestCase[]> {
-    return this.http.get<TestCase[]>(`test-cases?issuesOnly=true`)
+  public getIssues(testCaseId: number): Observable<TestIssue[]> {
+    return this.http.get<TestIssue[]>(`test-cases/${testCaseId}/test-issues`)
   }
-
 
   public updateTestCase(testCase: TestCase): Observable<TestCase> {
     return this.http.put<TestCase>(`test-cases/${testCase.id}`, testCase)

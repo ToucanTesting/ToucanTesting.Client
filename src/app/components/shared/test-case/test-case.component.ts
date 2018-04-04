@@ -34,13 +34,14 @@ export class TestCaseComponent {
   ) {
   }
 
-  openTestCaseViewDialog(testModule: TestModule, testCase: TestCase): void {
+  openTestCaseViewDialog(testModule: TestModule, testCase: TestCase, type?: string): void {
     const dialogRef = this.dialog.open(ViewTestCaseDialogComponent, {
       data: {
         title: testCase.description,
         testModule: testModule,
         testCase: testCase,
-        isTestRun: this.isTestRun
+        isTestRun: this.isTestRun,
+        type: type
       }
     });
 

@@ -1,4 +1,4 @@
-<ng-container *ngFor="let testIssue of testIssues">
+<ng-container *ngFor="let testIssue of testIssues; let i = index;">
   <div class="card">
     <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
       <span>
@@ -10,4 +10,3 @@
     </div>
   </div>
 </ng-container>
-
