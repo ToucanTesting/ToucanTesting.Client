@@ -21,8 +21,8 @@ export class TestModuleComponent {
   priority = Priority;
   testResultStatus = TestResultStatus;
 
-  neverTested: boolean = false;
 
+  // Filters
   statusFilters = {
     showAll: true,
     showPass: true,
