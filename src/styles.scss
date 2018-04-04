@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "scss/myTheme";
+@import "scss/modal";
 @import "~bootstrap/scss/bootstrap";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import "~ngx-toastr/toastr-bs4-alert";
@@ -8,6 +9,11 @@ $dark: #333;
 $light: #bbb;
 $active: #28a745;
 $danger: red;
+
+.ghost, .ghost > mat-icon {
+  color: rgba(0,0,0,0) !important;
+}
+
 .icon-dark {
   color: $dark;
 }

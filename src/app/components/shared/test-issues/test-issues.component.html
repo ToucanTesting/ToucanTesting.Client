@@ -1,10 +1,10 @@
 <ng-container *ngFor="let testIssue of testIssues; let i = index;">
-  <div class="card">
+  <div class="card modal-item">
     <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
       <span>
         <strong>{{testIssue.reference}}</strong> {{testIssue.description}}
       </span>
-      <span *ngIf="hoverIndex === i" class="toolbar">
+      <span [ngClass]="{'ghost':!(hoverIndex === i)}" class="toolbar">
         <mat-icon (click)="deleteTestIssue(testIssue)">delete</mat-icon>
       </span>
     </div>
