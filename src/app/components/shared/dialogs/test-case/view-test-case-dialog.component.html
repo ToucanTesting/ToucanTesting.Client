@@ -2,20 +2,18 @@
   <div class="card-header">
     <h5>{{truncateDescription(testCase.description)}}</h5>
     <ul class="nav nav-tabs card-header-tabs" role="tablist">
-      <ng-container *ngIf="type !== 'issue'">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
           <a #expectedTab class="nav-link active" id="expected-tab" data-toggle="tab" href="#expected" role="tab" [attr.aria-controls]="expected-tab"
             aria-selected="true" (click)="getTestResults(testModule, testCase); type = 'expected'">Expected Results</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
           <a class="nav-link" id="pre-conditions-tab" data-toggle="tab" href="#pre-conditions" role="tab" [attr.aria-controls]="pre-conditions-tab"
             aria-selected="false" (click)="getTestConditions(testModule, testCase); type = 'condition'">Pre-Conditions</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
           <a class="nav-link" id="test-actions-tab" data-toggle="tab" href="#test-actions" role="tab" aria-controls="contact" [attr.aria-controls]="test-actions-tab"
             aria-selected="false" (click)="getTestActions(testModule, testCase); type = 'action'">Test Actions</a>
         </li>
-      </ng-container>
       <li *ngIf="testCase.testIssues.length > 0" class="nav-item">
         <a class="nav-link" id="test-issues-tab" [ngClass]="{'active': type === 'issue'}" data-toggle="tab" href="#test-issues" role="tab" [attr.aria-controls]="test-issues-tab"
           aria-selecte="false" (click)="type = 'issue'">Issues

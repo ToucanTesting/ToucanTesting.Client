@@ -1,5 +1,5 @@
 <ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
-  <div class="card" *ngIf="testCase.testActions.length > 0">
+  <div class="card modal-item" *ngIf="testCase.testActions.length > 0">
     <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
       <span *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
         <strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}
@@ -8,7 +8,7 @@
       <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="cancelEdit(testAction)" (keyup.escape)="cancelEdit(testAction)"
         (keyup.enter)="renameTestAction(testAction)" [(ngModel)]="testAction.description"
       />
-      <span *ngIf="hoverIndex === i && !testAction.isEditing && !isTestRun" class="toolbar">
+      <span [ngClass]="{'ghost':!(hoverIndex === i || testAction.isEditing || isTestRun)}" class="toolbar">
         <mat-icon *ngIf="i !== 0" (click)="moveUp(testAction)">file_upload</mat-icon>
         <mat-icon *ngIf="i !== testCase.testActions.length - 1" (click)="moveDown(testAction)">file_download</mat-icon>
         <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
