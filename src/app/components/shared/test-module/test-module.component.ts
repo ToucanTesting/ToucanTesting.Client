@@ -94,10 +94,18 @@ export class TestModuleComponent {
     return results;
   }
 
-  toggleStatusFilters() {
+  selectAllStatusFilters() {
     for (const prop in this.statusFilters) {
       if (this.statusFilters.hasOwnProperty(prop)) {
-        this.statusFilters[prop] = !this.statusFilters[prop];
+        this.statusFilters[prop] = true;
+      }
+    }
+  }
+
+  clearStatusFilters() {
+    for (const prop in this.statusFilters) {
+      if (this.statusFilters.hasOwnProperty(prop)) {
+        this.statusFilters[prop] = false;
       }
     }
   }
