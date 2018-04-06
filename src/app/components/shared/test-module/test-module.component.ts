@@ -24,7 +24,6 @@ export class TestModuleComponent {
 
   // Filters
   statusFilters = {
-    showAll: true,
     showPass: true,
     showFail: true,
     showCnt: true,
@@ -51,7 +50,7 @@ export class TestModuleComponent {
       }
     }
 
-    if (!this.statusFilters.showPass && !this.statusFilters.showAll) {
+    if (!this.statusFilters.showPass) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].testResult && results[i].testResult.status === TestResultStatus.Pass) {
           results.splice(results.indexOf(results[i]), 1)
@@ -59,7 +58,7 @@ export class TestModuleComponent {
       }
     }
 
-    if (!this.statusFilters.showFail && !this.statusFilters.showAll) {
+    if (!this.statusFilters.showFail) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].testResult && results[i].testResult.status === TestResultStatus.Fail) {
           results.splice(results.indexOf(results[i]), 1)
@@ -67,7 +66,7 @@ export class TestModuleComponent {
       }
     }
 
-    if (!this.statusFilters.showCnt && !this.statusFilters.showAll) {
+    if (!this.statusFilters.showCnt) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].testResult && results[i].testResult.status === TestResultStatus.CNT) {
           results.splice(results.indexOf(results[i]), 1)
@@ -75,7 +74,7 @@ export class TestModuleComponent {
       }
     }
 
-    if (!this.statusFilters.showNa && !this.statusFilters.showAll) {
+    if (!this.statusFilters.showNa) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].testResult && results[i].testResult.status === TestResultStatus.NA) {
           results.splice(results.indexOf(results[i]), 1)
@@ -83,7 +82,7 @@ export class TestModuleComponent {
       }
     }
 
-    if (!this.statusFilters.showPending && !this.statusFilters.showAll) {
+    if (!this.statusFilters.showPending) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (!results[i].testResult || results[i].testResult.status === TestResultStatus.Pending) {
           results.splice(results.indexOf(results[i]), 1)
