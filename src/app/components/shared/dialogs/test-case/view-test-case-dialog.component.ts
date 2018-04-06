@@ -9,7 +9,7 @@ interface IDialogData {
     title: string;
     testModule: TestModule;
     testCase: TestCase;
-    isTestRun: boolean;
+    isTestReport: boolean;
     type: string;
 }
 
@@ -22,7 +22,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
     type: string = 'expected';
     testCase: TestCase;
     testModule: TestModule;
-    isTestRun: boolean = false;
+    isTestReport: boolean = false;
     isEditing = false;
     priorityOptions = Priority;
 
@@ -36,15 +36,16 @@ export class ViewTestCaseDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<ViewTestCaseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData
     ) {
+        console.log(data);
         this.title = data.title;
         this.type = data.type;
         this.testCase = data.testCase;
         this.testModule = data.testModule;
-        this.isTestRun = data.isTestRun;
+        this.isTestReport = data.isTestReport;
     }
 
     ngOnInit() {
-        console.log(this.type);
+        console.log(this.type, this.isTestReport);
         if (this.testCase.expectedResults.length <= 0 && this.type !== 'issue') {
             this.expectedResultsService.getTestResults(this.testModule, this.testCase)
                 .subscribe((expectedResults: ExpectedResult[]) => {

@@ -40,7 +40,7 @@ export class TestCaseComponent {
         title: testCase.description,
         testModule: testModule,
         testCase: testCase,
-        isTestRun: this.isTestRun,
+        isTestReport: this.isTestReport,
         type: type
       }
     });

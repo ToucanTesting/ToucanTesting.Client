@@ -2,15 +2,15 @@
   <div class="card-header">
     <h5>{{truncateDescription(testCase.description)}}</h5>
     <ul class="nav nav-tabs card-header-tabs" role="tablist">
-        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestReport">
           <a #expectedTab class="nav-link active" id="expected-tab" data-toggle="tab" href="#expected" role="tab" [attr.aria-controls]="expected-tab"
             aria-selected="true" (click)="getTestResults(testModule, testCase); type = 'expected'">Expected Results</a>
         </li>
-        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestReport">
           <a class="nav-link" id="pre-conditions-tab" data-toggle="tab" href="#pre-conditions" role="tab" [attr.aria-controls]="pre-conditions-tab"
             aria-selected="false" (click)="getTestConditions(testModule, testCase); type = 'condition'">Pre-Conditions</a>
         </li>
-        <li class="nav-item" *ngIf="type !== 'issue' || !isTestRun">
+        <li class="nav-item" *ngIf="type !== 'issue' || !isTestReport">
           <a class="nav-link" id="test-actions-tab" data-toggle="tab" href="#test-actions" role="tab" aria-controls="contact" [attr.aria-controls]="test-actions-tab"
             aria-selected="false" (click)="getTestActions(testModule, testCase); type = 'action'">Test Actions</a>
         </li>
@@ -41,7 +41,7 @@
   <div class="card-footer">
     <div class="row">
       <!-- Expected Result -->
-      <div *ngIf="(type === 'expected' || !type) && !isTestRun" class="input-group mb-3">
+      <div *ngIf="(type === 'expected' || !type) && !isTestReport" class="input-group mb-3">
         <input #expectedResult type="text" class="form-control" placeholder="Add an expected result" (keyup.enter)="addExpectedResult(expectedResult.value);expectedResult.value=''">
         <div class="input-group-append">
           <button class="btn btn-outline-primary" type="button" (click)="addExpectedResult(expectedResult.value);expectedResult.value=''">Save</button>
@@ -49,7 +49,7 @@
       </div>
 
       <!-- Pre-Condition -->
-      <div *ngIf="type === 'condition' && !isTestRun" class="input-group mb-3">
+      <div *ngIf="type === 'condition' && !isTestReport" class="input-group mb-3">
         <input #condition type="text" class="form-control" placeholder="Add a condition" (keyup.enter)="addTestCondition(condition.value);condition.value=''">
         <div class="input-group-append">
           <button class="btn btn-outline-primary" type="button" (click)="addTestCondition(condition.value);condition.value=''">Save</button>
@@ -57,7 +57,7 @@
       </div>
 
       <!-- Test Action -->
-      <div *ngIf="type === 'action' && !isTestRun" class="input-group mb-3">
+      <div *ngIf="type === 'action' && !isTestReport" class="input-group mb-3">
         <input #action type="text" class="form-control" placeholder="Add an action" (keyup.enter)="addTestAction(action.value);action.value=''">
         <div class="input-group-append">
           <button class="btn btn-outline-primary" type="button" (click)="addTestAction(action.value);action.value=''">Save</button>
