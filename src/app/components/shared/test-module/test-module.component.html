@@ -7,14 +7,9 @@
             Status
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByButton">
-            <span class="dropdown-item" *ngIf="!statusFilters.showAll" (click)="toggleStatusFilters()">Select All</span>
-            <span class="dropdown-item" *ngIf="statusFilters.showAll" (click)="toggleStatusFilters()">Clear</span>
+            <span class="dropdown-item" *ngIf="!statusFilters.showAll" (click)="selectAllStatusFilters()">Select All</span>
+            <span class="dropdown-item" *ngIf="statusFilters.showAll" (click)="clearStatusFilters()">Clear</span>
             <div class="dropdown-divider"></div>
-            <span class="dropdown-item">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="statusFilters.showAll" (click)="filterTestCases()">Select All
-              </label>
-            </span>
             <span class="dropdown-item">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" [disabled]="statusFilters.showAll" [(ngModel)]="statusFilters.showPass" (click)="filterTestCases()"> Pass
