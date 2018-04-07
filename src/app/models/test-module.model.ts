@@ -12,5 +12,4 @@ export class TestModule extends Base {
     na: TestResult[];
     sort: string;
     reverse: boolean;
-    isEditing?: boolean;
 };

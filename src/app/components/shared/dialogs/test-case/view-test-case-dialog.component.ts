@@ -23,7 +23,6 @@ export class ViewTestCaseDialogComponent implements OnInit {
     testCase: TestCase;
     testModule: TestModule;
     isTestReport: boolean = false;
-    isEditing = false;
     priorityOptions = Priority;
 
     constructor(

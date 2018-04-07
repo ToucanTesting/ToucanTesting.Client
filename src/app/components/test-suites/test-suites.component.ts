@@ -60,12 +60,10 @@ export class TestSuitesComponent {
     }
 
     cancelEdit(testSuite: TestSuite) {
-        testSuite.isEditing = false;
         testSuite.name = this.tempName;
     }
 
-    renameTestSuite(testSuite: TestSuite, name: string) {
-        testSuite.isEditing = false;
+    renameTestSuite(testSuite: TestSuite) {
         this.testSuitesService
             .updateTestSuite(testSuite)
             .subscribe(res => {
@@ -75,12 +73,21 @@ export class TestSuitesComponent {
             });
     }
 
-    openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateTestSuiteDialogComponent, { data: { title: 'Create a New Test Suite', type: DialogType.TestSuite } });
+    openUpsertDialog(testSuite: TestSuite): void {
+        const dialogRef = this.dialog.open(CreateTestSuiteDialogComponent, {
+            data: {
+                title: 'Create a New Test Suite',
+                type: DialogType.TestSuite,
+                testSuite: testSuite
+            }
+        });
 
-        dialogRef.afterClosed().subscribe(testSuite => {
-            if (testSuite) {
-                this.createTestSuite(testSuite)
+        dialogRef.afterClosed().subscribe(res => {
+            if (testSuite && res) {
+                testSuite.name = res.name;
+                this.renameTestSuite(testSuite);
+            } else if (!testSuite && res) {
+                this.createTestSuite(res)
             }
         });
     }

@@ -1,23 +1,18 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
 <div *ngIf="!isLoading">
-  <ul class="list-group list-group-flush" *ngFor="let testSuite of testSuites; let i = index">
+  <ul class="list-group list-group-flush" *ngFor="let testSuite of testSuites">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <span (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testSuite.isEditing = true; tempName = testSuite.name"
-        *ngIf="!testSuite.isEditing" class="clickable-text">{{testSuite.name}}
-        <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
-      </span>
-      <input autofocus class="form-control" *ngIf="testSuite.isEditing" matInput (blur)="cancelEdit(testSuite)" (keyup.escape)="cancelEdit(testSuite)" (keyup.enter)="renameTestSuite(testSuite)"
-        [(ngModel)]="testSuite.name" />
+      <span class="clickable-text" href [routerLink]="['/test-suites', testSuite.id]">{{testSuite.name}}</span>
       <div class="dropdown">
         <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <mat-icon>more_vert</mat-icon>
         </span>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-          <span class="dropdown-item" href [routerLink]="['/test-suites', testSuite.id]">View</span>
+          <span class="dropdown-item" (click)="openUpsertDialog(testSuite)">Edit</span>
           <span class="dropdown-item" (click)="openDeleteDialog(testSuite)">Delete</span>
         </div>
       </div>
     </li>
   </ul>
 </div>
-<tt-buttons (click)="openCreateDialog()"></tt-buttons>
+<tt-buttons (click)="openUpsertDialog()"></tt-buttons>

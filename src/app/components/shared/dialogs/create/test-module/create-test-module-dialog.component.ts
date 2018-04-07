@@ -8,7 +8,7 @@ import { DialogType } from './../../../../../enums';
 interface IDialogData {
     title: string;
     type: DialogType;
-    payload?: TestModule;
+    testModule?: TestModule;
 }
 
 @Component({
@@ -18,6 +18,7 @@ interface IDialogData {
 export class CreateTestModuleDialogComponent {
     title: string;
     type: DialogType;
+    testModule: TestModule;
     testModuleForm: FormGroup;
 
     constructor(
@@ -27,12 +28,23 @@ export class CreateTestModuleDialogComponent {
         this.title = data.title;
         this.type = data.type;
         this.createTestModuleForm();
+        if (data.testModule) {
+            this.testModule = data.testModule;
+            this.setTestModuleForm(data.testModule);
+        }
+
     }
 
     createTestModuleForm() {
         this.testModuleForm = this.fb.group({
             name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])]
         });
+    }
+
+    setTestModuleForm(values) {
+        this.testModuleForm.setValue({
+            name: values.name
+        })
     }
 
     onNoClick(): void {
