@@ -5,14 +5,12 @@
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">
         <div>
-          <span class="clickable-text">{{testModule.name}}</span>
+          <span #toggle class="clickable-text" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
+          aria-expanded="false" [attr.aria-controls]="'collapse-' + i" (click)="getTestResults(testModule)">{{testModule.name}}</span>
         </div>
         <div>
-          <mat-icon #toggle [ngClass]="{'close': !testModule.isExpanded, 'open': testModule.isExpanded}" class="expansion-button options-dropdown"
-            (click)="getTestResults(testModule); testModule.isExpanded = !testModule.isExpanded" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
-            aria-expanded="false" [attr.aria-controls]="'collapse-' + i"></mat-icon>
+          <!-- Placeholder -->
         </div>
-
       </div>
       <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
         <div class="card-body">

@@ -43,11 +43,6 @@ export class TestSuiteComponent {
             })
     }
 
-    cancelEdit(testModule: TestModule) {
-        testModule.isEditing = false;
-        testModule.name = this.tempName;
-    }
-
     getTestCases(testModule: TestModule) {
         const index = this.testModules.indexOf(testModule);
         this.testCasesService
@@ -59,12 +54,22 @@ export class TestSuiteComponent {
             });
     }
 
-    openCreateDialog(): void {
-        const dialogRef = this.dialog.open(CreateTestModuleDialogComponent, { data: { title: 'Add a Test Module', type: DialogType.TestModule } });
+    openUpsertDialog(testModule?): void {
+        const dialogRef = this.dialog.open(CreateTestModuleDialogComponent, {
+            data: {
+                title: 'Add a Test Module',
+                type: DialogType.TestModule,
+                testModule: testModule || null
+            }
+        });
 
-        dialogRef.afterClosed().subscribe(testModule => {
-            if (testModule) {
-                this.createTestModule(testModule)
+        dialogRef.afterClosed().subscribe(res => {
+            if (res && testModule) {
+                testModule.name = res.name;
+                this.updateTestModule(testModule);
+            }
+            if (res && !testModule) {
+                this.createTestModule(res)
             }
         });
     }
@@ -81,7 +86,6 @@ export class TestSuiteComponent {
     }
 
     updateTestModule(testModule: TestModule) {
-        testModule.isEditing = false;
         this.testModulesService
             .updateTestModule(testModule)
             .subscribe(res => {

@@ -3,26 +3,18 @@
   <div id="accordion" *ngFor="let testModule of testModules; let i = index">
     <div class="card list-group list-group-flush">
       <div class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="clickable-text" (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" (click)="testModule.isEditing = true; tempName = testModule.name"
-          *ngIf="!testModule.isEditing">{{testModule.name}}
-          <tt-toolbar *ngIf="hoverIndex === i" [edit]=true></tt-toolbar>
+        <span #toggle (click)="getTestCases(testModule)" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
+          aria-expanded="false" [attr.aria-controls]="'collapse-' + i" class="clickable-text">{{testModule.name}}
         </span>
-        <input autofocus class="form-control" *ngIf="testModule.isEditing" matInput (blur)="cancelEdit(testModule)" (keyup.escape)="cancelEdit(testModule)"
-          (keyup.enter)="updateTestModule(testModule)" [(ngModel)]="testModule.name" />
-        <span>
-          <span class="dropdown">
-            <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <mat-icon>more_vert</mat-icon>
-            </span>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <span class="dropdown-item" (click)="openCreateTestCaseDialog(testModule)">Add Test Case</span>
-              <span class="dropdown-item" (click)="openModuleDeleteDialog(testModule)">Delete</span>
-            </div>
+        <span class="dropdown">
+          <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <mat-icon>more_vert</mat-icon>
           </span>
-          <span class="options-dropdown" #toggle (click)="getTestCases(testModule); testModule.isExpanded = !testModule.isExpanded"
-            data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i">
-            <mat-icon>{{(testModule.isExpanded) ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
-          </span>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <span class="dropdown-item" (click)="openCreateTestCaseDialog(testModule)">Add Test Case</span>
+            <span class="dropdown-item" (click)="openUpsertDialog(testModule)">Edit</span>
+            <span class="dropdown-item" (click)="openModuleDeleteDialog(testModule)">Delete</span>
+          </div>
         </span>
       </div>
       <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
