@@ -77,9 +77,11 @@ export class TestCaseComponent {
   openLogIssueDialog(testCase: TestCase): void {
     const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue' } });
 
-    dialogRef.afterClosed().subscribe(testIssue => {
+    dialogRef.afterClosed().subscribe((testIssue: TestIssue) => {
       if (testIssue) {
-        testIssue.testCaseId = testCase.id
+        testIssue.testCaseId = testCase.id;
+        testIssue.testModuleName = this.testModule.name;
+        testIssue.testCaseDescription = testCase.description;
         this.addTestIssue(testCase, testIssue)
       }
     });

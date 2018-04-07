@@ -31,17 +31,21 @@ export class TestRunsComponent {
             })
     }
 
-    openCreateDialog(): void {
+    openUpsertDialog(testRun?: TestRun): void {
         const dialogRef = this.dialog.open(CreateTestRunDialogComponent, {
             data: {
                 title: 'Start a New Test Run',
-                type: DialogType.TestRun
+                type: DialogType.TestRun,
+                testRun: testRun || null
             }
         });
 
-        dialogRef.afterClosed().subscribe(testRun => {
-            if (testRun) {
-                this.createTestRun(testRun)
+        dialogRef.afterClosed().subscribe(res => {
+            if (testRun && res) {
+                testRun.name = res.name;
+                this.renameTestRun(testRun);
+            } else if (!testRun && res) {
+                this.createTestRun(res);
             }
         });
     }

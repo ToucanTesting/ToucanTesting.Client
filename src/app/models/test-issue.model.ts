@@ -7,4 +7,7 @@ export class TestIssue extends Base {
     testCase: TestCase;
     reference: string;
     description: string;
+    testRunName?: string;
+    testModuleName: string;
+    testCaseDescription: string;
 }

@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 interface IDialogData {
     title: string;
     type: DialogType;
-    payload?: TestRun;
+    testRun?: TestRun;
 }
 
 @Component({
@@ -20,6 +20,7 @@ interface IDialogData {
 export class CreateTestRunDialogComponent {
     title: string;
     type: DialogType;
+    testRun: TestRun;
     testSuites: TestSuite[];
     testRunForm: FormGroup;
 
@@ -33,6 +34,10 @@ export class CreateTestRunDialogComponent {
         this.title = data.title;
         this.type = data.type;
         this.createTestRunForm();
+        if (data.testRun) {
+            this.testRun = data.testRun;
+            this.setTestRunForm(data.testRun);
+        }
     }
 
     ngOnInit() {
@@ -50,6 +55,13 @@ export class CreateTestRunDialogComponent {
             name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])],
             testSuiteId: null,
         });
+    }
+
+    setTestRunForm(values) {
+        this.testRunForm.setValue({
+            name: values.name,
+            testSuiteId: values.testSuiteId
+        })
     }
 
     onNoClick(): void {
