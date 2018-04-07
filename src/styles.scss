@@ -10,6 +10,10 @@ $light: #bbb;
 $active: #28a745;
 $danger: red;
 
+.spacer {
+  padding: 0 8px;
+}
+
 .ghost, .ghost > mat-icon {
   color: rgba(0,0,0,0) !important;
 }
