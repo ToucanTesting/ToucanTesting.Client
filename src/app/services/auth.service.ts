@@ -9,9 +9,9 @@ export class AuthService {
 
   auth0 = new auth0.WebAuth({
     clientID: 'vJP5mgf5wTdsRCfmfxwjpYsxqswwIJdT',
-    domain: 'tucantesting.auth0.com',
+    domain: 'toucantesting.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://api.tucantesting.com',
+    audience: 'https://api.toucantesting.com',
     redirectUri: environment.baseUrl,
     scope: 'openid'
   });

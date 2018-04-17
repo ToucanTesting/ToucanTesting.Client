@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('tucan-testing App', () => {
+describe('toucan-testing App', () => {
   let page: AppPage;
 
   beforeEach(() => {
