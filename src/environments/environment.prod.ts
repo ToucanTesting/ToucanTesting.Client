@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   envName: 'prod',
-  baseUrl: 'http://tucantesting.com/',
-  apiUrl: '//api.tucantesting.com/'
+  baseUrl: 'http://toucantesting.com/',
+  apiUrl: '//api.toucantesting.com/'
 };
