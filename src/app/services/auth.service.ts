@@ -11,7 +11,7 @@ export class AuthService {
     clientID: 'Gvtq7P3PbQni1DmV7RMbqhmuEDSNWmyU',
     domain: 'toucantesting.auth0.com',
     responseType: 'token id_token',
-    audience: '//api.toucantesting.com',
+    audience: 'https://api.toucantesting.com',
     redirectUri: environment.baseUrl,
     scope: 'openid'
   });
