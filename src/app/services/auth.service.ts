@@ -12,7 +12,7 @@ export class AuthService {
     domain: 'toucantesting.auth0.com',
     responseType: 'token id_token',
     audience: 'https://api.toucantesting.com',
-    redirectUri: 'yahoo.com',
+    redirectUri: `https://yahoo.com`,
     scope: 'openid profile'
   });
 
