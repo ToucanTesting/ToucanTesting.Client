@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
 export class AuthService {
 
   auth0 = new auth0.WebAuth({
-    clientID: 'Gvtq7P3PbQni1DmV7RMbqhmuEDSNWmyU',
+    clientID: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
     domain: 'toucantesting.auth0.com',
     responseType: 'token id_token',
     audience: 'http://api.toucantesting.com',

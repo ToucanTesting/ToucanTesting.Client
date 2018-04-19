@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TestSuitesService, HandleErrorService } from '@services';
+import { TestSuitesService, HandleErrorService, AuthService } from '@services';
 import { CreateTestSuiteDialogComponent } from '../shared/dialogs/create/test-suite/create-test-suite-dialog.component';
 import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.component';
 import { DialogType } from './../../enums';
@@ -19,12 +19,15 @@ export class TestSuitesComponent {
     tempName: string;
 
     constructor(
+        public auth: AuthService,
         private toastr: ToastrService,
         private handleErrorService: HandleErrorService,
         private fb: FormBuilder,
         private testSuitesService: TestSuitesService,
         public dialog: MatDialog
-    ) { }
+    ) {
+        auth.handleAuthentication();
+    }
 
     ngOnInit() {
         this.testSuitesService
