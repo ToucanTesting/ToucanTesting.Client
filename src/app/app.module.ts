@@ -61,18 +61,17 @@ import { TestReportComponent } from './components/test-runs/test-report/test-rep
 import { LoaderComponent } from './components/shared/loader/loader.component';
 import { TestCaseComponent } from './components/shared/test-case/test-case.component';
 
-export function gettoken() {
+export function tokenGetter() {
   return localStorage.getItem('access_token');
 };
 
 const jwtConf = {
   config: {
-    tokenGetter: gettoken,
+    tokenGetter: tokenGetter,
     whitelistedDomains: [
-      'localhost:5000',
-      'app.toucantesting.com',
-      'api.toucantesting.com'
-    ]
+      /^null$/
+    ],
+    throwNoTokenError: true
   }
 };
 
