@@ -68,7 +68,11 @@ export function gettoken() {
 const jwtConf = {
   config: {
     tokenGetter: gettoken,
-    whitelistedDomains: ['localhost:5000']
+    whitelistedDomains: [
+      'localhost:5000',
+      'app.toucantesting.com',
+      'api.toucantesting.com'
+    ]
   }
 };
 
