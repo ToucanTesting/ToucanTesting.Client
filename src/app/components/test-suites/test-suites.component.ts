@@ -76,7 +76,7 @@ export class TestSuitesComponent {
             });
     }
 
-    openUpsertDialog(testSuite: TestSuite): void {
+    openUpsertDialog(testSuite?: TestSuite): void {
         const dialogRef = this.dialog.open(CreateTestSuiteDialogComponent, {
             data: {
                 title: 'Create a New Test Suite',
