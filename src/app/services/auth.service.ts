@@ -12,8 +12,8 @@ export class AuthService {
     domain: 'toucantesting.auth0.com',
     responseType: 'token id_token',
     audience: 'https://api.toucantesting.com',
-    redirectUri: environment.baseUrl,
-    scope: 'openid'
+    redirectUri: 'yahoo.com',
+    scope: 'openid profile'
   });
 
   constructor(public router: Router) {}
