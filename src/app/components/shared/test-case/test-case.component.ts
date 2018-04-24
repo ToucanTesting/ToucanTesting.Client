@@ -149,11 +149,6 @@ export class TestCaseComponent {
         if (testCase.testResult.status === TestResultStatus.Pass || testCase.testResult.status === TestResultStatus.Fail) {
           testCase.lastTested = new Date(Date.now());
         }
-        this.testCasesService.updateTestCase(testCase)
-          .subscribe(testCaseResponse => {
-          }, error => {
-            this.handleErrorService.handleError(error);
-          });
       }, error => {
         this.handleErrorService.handleError(error);
       });
