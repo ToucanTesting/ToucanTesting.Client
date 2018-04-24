@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestCase, TestModule, TestIssue } from '@models';
+import { TestCase, TestModule, TestIssue, TestRun } from '@models';
 import { ToastrService } from 'ngx-toastr';
-import { HandleErrorService, TestCasesService, TestIssuesService, TestModulesService, ExpectedResultsService, TestResultsService } from '@services';
+import { HandleErrorService, TestCasesService, TestIssuesService, TestModulesService, ExpectedResultsService, TestResultsService, TestRunsService } from '@services';
 import { MatDialog } from '@angular/material';
 import { ViewTestCaseDialogComponent } from '@components/shared/dialogs/test-case/view-test-case-dialog.component';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
@@ -30,6 +30,7 @@ export class TestCaseComponent {
     private testModulesService: TestModulesService,
     private expectedResultsService: ExpectedResultsService,
     private testResultsService: TestResultsService,
+    private testRunsService: TestRunsService,
     public dialog: MatDialog
   ) {
   }
@@ -144,6 +145,7 @@ export class TestCaseComponent {
       };
       this.createTestResult(testCase);
     }
+    this.updateTestRun(testCase.testResult.testRunId)
   }
 
   updateTestResult(testCase: TestCase) {
@@ -171,4 +173,15 @@ export class TestCaseComponent {
         this.handleErrorService.handleError(error);
       });
   }
+
+  updateTestRun(testRunId: number) {
+    this.testRunsService.getTestRun(testRunId)
+      .subscribe((testRun: TestRun) => {
+        this.testRunsService.updateTestRun(testRun)
+          .subscribe(res => {
+            console.log('success');
+          })
+      })
+  }
+
 }
