@@ -134,6 +134,7 @@ export class TestCaseComponent {
   changeTestCaseStatus(testCase: TestCase, status: TestResultStatus) {
     if (testCase.testResult && testCase.testResult.testRunId === this.testRunId) {
       testCase.testResult.status = status;
+      this.updateTestResult(testCase);
     } else {
       testCase.testResult = {
         testCaseId: testCase.id,
@@ -141,13 +142,30 @@ export class TestCaseComponent {
         testModuleId: testCase.testModuleId,
         status: status
       };
+      this.createTestResult(testCase);
     }
+  }
 
-    this.testResultsService.upsertTestResult(testCase.testResult)
-      .subscribe(testResult => {
-        testCase.testResult = testResult;
+  updateTestResult(testCase: TestCase) {
+    this.testResultsService.updateTestResult(testCase.testResult)
+      .subscribe(res => {
+        testCase.testResult = res;
         if (testCase.testResult.status === TestResultStatus.Pass || testCase.testResult.status === TestResultStatus.Fail) {
           testCase.lastTested = new Date(Date.now());
+          this.updateTestCase(testCase);
+        }
+      }, error => {
+        this.handleErrorService.handleError(error);
+      });
+  }
+
+  createTestResult(testCase: TestCase) {
+    this.testResultsService.createTestResult(testCase.testResult)
+      .subscribe(res => {
+        testCase.testResult = res;
+        if (testCase.testResult.status === TestResultStatus.Pass || testCase.testResult.status === TestResultStatus.Fail) {
+          testCase.lastTested = new Date(Date.now());
+          this.updateTestCase(testCase);
         }
       }, error => {
         this.handleErrorService.handleError(error);
