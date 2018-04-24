@@ -17,6 +17,8 @@
         <i class="fa fa-lg fa-bug" [ngClass]="{'icon-danger': testCase.testIssues.length > 0, 'icon-light': testCase.testIssues.length <= 0}"
           data-toggle="tooltip" data-placement="bottom"></i>
         <small>{{testCase.testIssues.length}}</small>
+        <i class="fa fa-lg fa-barcode identifier"></i>
+        <small>{{testCase.id}}</small>
         <span class="spacer"></span>
         <span class="clickable-text" (click)="openTestCaseViewDialog(testModule, testCase)">{{testCase.description}}</span>
       </div>
