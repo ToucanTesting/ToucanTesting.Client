@@ -179,7 +179,6 @@ export class TestCaseComponent {
       .subscribe((testRun: TestRun) => {
         this.testRunsService.updateTestRun(testRun)
           .subscribe(res => {
-            console.log('success');
           })
       })
   }
