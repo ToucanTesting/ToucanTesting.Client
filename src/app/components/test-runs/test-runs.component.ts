@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './test-runs.component.html'
 })
 export class TestRunsComponent {
+    isLoading: boolean = true;
     testRuns: TestRun[];
     panelOpenState: boolean = false;
 
@@ -28,7 +29,10 @@ export class TestRunsComponent {
             .getTestRuns()
             .subscribe(testRuns => {
                 this.testRuns = testRuns;
-            })
+                this.isLoading = false;
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
     }
 
     openUpsertDialog(testRun?: TestRun): void {
