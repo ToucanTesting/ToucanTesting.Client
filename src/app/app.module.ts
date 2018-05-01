@@ -1,4 +1,3 @@
-
 import {
   ExpectedResultsService,
   TestSuitesService,
@@ -9,8 +8,9 @@ import {
   TestActionsService,
   AuthService,
   HandleErrorService,
-  TestIssuesService
+  TestIssuesService,
 } from '@services';
+import { APIInterceptor } from './services/api-interceptor';
 
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -25,41 +25,45 @@ import {
   MatDialogModule,
 } from '@angular/material';
 
-import { SideNavComponent } from './components/sidenav/sidenav.component';
-import { TestRunsComponent } from './components/test-runs/test-runs.component';
-import { TestRunComponent } from './components/test-runs/test-run/test-run.component';
-import { TestSuitesComponent } from './components/test-suites/test-suites.component';
-import { TestSuiteComponent } from './components/test-suites/test-suite/test-suite.component';
-import { TestIssuesComponent } from '@components/shared/test-issues/test-issues.component';
-import { ViewTestCaseDialogComponent } from './components/shared/dialogs/test-case/view-test-case-dialog.component';
-import { CreateTestCaseDialogComponent } from './components/shared/dialogs/create/test-case/create-test-case-dialog.component';
-import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
-import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
-import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
-import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
-import { DeleteDialogComponent } from './components/shared/dialogs/delete/delete-dialog.component';
-import { ButtonComponent } from './components/shared/buttons/buttons.component';
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { PriorityPipe } from './pipes/priority.pipe';
 import { OrderModule } from 'ngx-order-pipe';
-import { ToastrModule } from 'ngx-toastr'
+
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { APIInterceptor } from './services/api-interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TopnavComponent } from './components/topnav/topnav.component';
-import { LoginComponent } from './components/login/login.component';
-import { TestActionsComponent } from './components/shared/test-actions/test-actions.component';
-import { IssuesComponent } from './components/issues/issues.component';
 import { TestConditionsService } from './services';
-import { PreConditionsComponent } from './components/shared/pre-conditions/pre-conditions.component';
-import { ExpectedResultsComponent } from './components/shared/expected-results/expected-results.component';
-import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
-import { TestModuleComponent } from './components/shared/test-module/test-module.component';
-import { TestReportComponent } from './components/test-runs/test-report/test-report.component';
-import { LoaderComponent } from './components/shared/loader/loader.component';
-import { TestCaseComponent } from './components/shared/test-case/test-case.component';
+
+import { SideNavComponent } from '@components/sidenav/sidenav.component';
+import { TestRunsComponent } from '@components/test-runs/test-runs.component';
+import { TestRunComponent } from '@components/test-runs/test-run/test-run.component';
+import { TestSuitesComponent } from '@components/test-suites/test-suites.component';
+import { TestSuiteComponent } from '@components/test-suites/test-suite/test-suite.component';
+import { TestIssuesComponent } from '@components/shared/test-issues/test-issues.component';
+import { ViewTestCaseDialogComponent } from '@components/shared/dialogs/test-case/view-test-case-dialog.component';
+import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
+import { CreateTestSuiteDialogComponent } from '@components/shared/dialogs/create/test-suite/create-test-suite-dialog.component';
+import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
+import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
+import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
+import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
+import { ButtonComponent } from '@components/shared/buttons/buttons.component';
+import { TopnavComponent } from '@components/topnav/topnav.component';
+import { LoginComponent } from '@components/login/login.component';
+import { TestActionsComponent } from '@components/shared/test-actions/test-actions.component';
+import { IssuesComponent } from '@components/issues/issues.component';
+import { PreConditionsComponent } from '@components/shared/pre-conditions/pre-conditions.component';
+import { ExpectedResultsComponent } from '@components/shared/expected-results/expected-results.component';
+import { ToolbarComponent } from '@components/shared/toolbar/toolbar.component';
+import { TestModuleComponent } from '@components/shared/test-module/test-module.component';
+import { TestReportComponent } from '@components/test-runs/test-report/test-report.component';
+import { LoaderComponent } from '@components/shared/loader/loader.component';
+import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
+import { NoContentComponent } from '@components/shared/no-content/no-content.component';
+
+import { ToastrModule } from 'ngx-toastr'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -106,7 +110,8 @@ const jwtConf = {
     TestModuleComponent,
     TestReportComponent,
     LoaderComponent,
-    TestCaseComponent
+    TestCaseComponent,
+    NoContentComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [
