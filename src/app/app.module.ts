@@ -72,9 +72,7 @@ export function tokenGetter() {
 const jwtConf = {
   config: {
     tokenGetter: tokenGetter,
-    whitelistedDomains: [
-      /^null$/
-    ],
+    whitelistedDomains: new Array(new RegExp('^null$')),
     throwNoTokenError: true
   }
 };
