@@ -7,6 +7,7 @@ export class TestCase extends Base {
     description: string;
     priority: Priority;
     isAutomated: boolean;
+    automationId: string;
     isEnabled: boolean;
     lastTested?: Date;
     testActions: TestAction[];
