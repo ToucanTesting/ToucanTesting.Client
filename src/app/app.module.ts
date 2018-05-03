@@ -1,5 +1,3 @@
-import { environment } from 'environments/environment';
-
 import {
   ExpectedResultsService,
   TestSuitesService,
@@ -71,18 +69,6 @@ export function tokenGetter() {
   return localStorage.getItem('access_token');
 };
 
-export const jwtConf = {
-  config: {
-    tokenGetter: tokenGetter,
-    whitelistedDomains: [
-      'api.toucantesting.com',
-      'as-kno2toucanapi-dev.azurewebsites.net',
-      'localhost:5000'
-    ],
-    throwNoTokenError: true
-  }
-};
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +111,13 @@ export const jwtConf = {
     MatDialogModule,
     CommonModule,
     HttpClientModule,
-    JwtModule.forRoot(jwtConf),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [new RegExp('^null$')],
+        throwNoTokenError: true
+      }
+    }),
     FormsModule,
     OrderModule,
     ReactiveFormsModule,
