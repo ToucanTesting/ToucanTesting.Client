@@ -10,7 +10,6 @@ import {
   HandleErrorService,
   TestIssuesService,
 } from '@services';
-import { APIInterceptor } from './services/api-interceptor';
 
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -114,7 +113,11 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: [new RegExp('^null$')],
+        whitelistedDomains: [
+          'localhost:5000',
+          'api.toucantesting.com',
+          'as-kno2toucanapi-dev.azurewebsites.net'
+        ],
         throwNoTokenError: true
       }
     }),
@@ -148,12 +151,7 @@ export function tokenGetter() {
     ExpectedResultsService,
     TestConditionsService,
     HandleErrorService,
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: APIInterceptor,
-      multi: true
-    }
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

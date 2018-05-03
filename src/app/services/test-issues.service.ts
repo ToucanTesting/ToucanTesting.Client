@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { TestIssue } from '@models';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class TestIssuesService {
@@ -11,14 +12,14 @@ export class TestIssuesService {
   ) { }
 
   public createTestIssue(testIssue: TestIssue): Observable<TestIssue> {
-    return this.http.post<TestIssue>(`test-issues`, testIssue);
+    return this.http.post<TestIssue>(`${environment.apiUrl}test-issues`, testIssue);
 }
 
   public getTestIssues(): Observable<TestIssue[]> {
-    return this.http.get<TestIssue[]>(`test-issues`);
+    return this.http.get<TestIssue[]>(`${environment.apiUrl}test-issues`);
   }
 
   public deleteTestIssue(testIssueId: number) {
-    return this.http.delete(`test-issues/${testIssueId}`);
+    return this.http.delete(`${environment.apiUrl}test-issues/${testIssueId}`);
   }
 }

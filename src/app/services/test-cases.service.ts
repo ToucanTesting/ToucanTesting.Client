@@ -2,6 +2,7 @@ import { TestCase, TestModule, TestIssue } from '@models';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class TestCasesService {
@@ -10,29 +11,29 @@ export class TestCasesService {
   }
 
   public createTestCase(testCase: TestCase): Observable<TestCase> {
-    return this.http.post<TestCase>(`test-cases`, testCase);
+    return this.http.post<TestCase>(`${environment.apiUrl}test-cases`, testCase);
   }
 
   public getTestCases(testModule: TestModule, beforeDate?: Date): Observable<TestCase[]> {
     if (beforeDate) {
-      return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases?beforeDate=${beforeDate}`)
+      return this.http.get<TestCase[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases?beforeDate=${beforeDate}`)
     }
-    return this.http.get<TestCase[]>(`test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
+    return this.http.get<TestCase[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
   }
 
   public getIssues(testCaseId: number): Observable<TestIssue[]> {
-    return this.http.get<TestIssue[]>(`test-cases/${testCaseId}/test-issues`)
+    return this.http.get<TestIssue[]>(`${environment.apiUrl}test-cases/${testCaseId}/test-issues`)
   }
 
   public updateTestCase(testCase: TestCase): Observable<TestCase> {
-    return this.http.put<TestCase>(`test-cases/${testCase.id}`, testCase)
+    return this.http.put<TestCase>(`${environment.apiUrl}test-cases/${testCase.id}`, testCase)
   }
 
   public duplicateTestCase(testCase: TestCase): Observable<TestCase> {
-    return this.http.post<TestCase>(`test-cases/${testCase.id}`, testCase);
+    return this.http.post<TestCase>(`${environment.apiUrl}test-cases/${testCase.id}`, testCase);
   }
 
   public deleteTestCase(testCase: TestCase) {
-    return this.http.delete(`test-cases/${testCase.id}`);
+    return this.http.delete(`${environment.apiUrl}test-cases/${testCase.id}`);
   }
 }
