@@ -1,3 +1,5 @@
+import { environment } from 'environments/environment';
+
 import {
   ExpectedResultsService,
   TestSuitesService,
@@ -72,7 +74,7 @@ export function tokenGetter() {
 const jwtConf = {
   config: {
     tokenGetter: tokenGetter,
-    whitelistedDomains: new Array(new RegExp('^null$')),
+    whitelistedDomains: [environment.whitelist],
     throwNoTokenError: true
   }
 };

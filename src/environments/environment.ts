@@ -7,5 +7,6 @@ export const environment = {
   production: false,
   envName: 'dev',
   baseUrl: 'http://localhost:4200/',
-  apiUrl: 'http://localhost:5000/'
+  apiUrl: 'http://localhost:5000/',
+  whitelist: /^null$'/
 };
