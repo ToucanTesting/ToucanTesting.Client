@@ -71,12 +71,13 @@ export function tokenGetter() {
   return localStorage.getItem('access_token');
 };
 
-const jwtConf = {
+export const jwtConf = {
   config: {
     tokenGetter: tokenGetter,
     whitelistedDomains: [
-      'app.toucantesting.com',
-      'as-kno2toucanweb-dev.azurewebsites.net'
+      'api.toucantesting.com',
+      'as-kno2toucanapi-dev.azurewebsites.net',
+      'localhost:5000'
     ],
     throwNoTokenError: true
   }
