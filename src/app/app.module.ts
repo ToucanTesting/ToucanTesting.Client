@@ -74,7 +74,10 @@ export function tokenGetter() {
 const jwtConf = {
   config: {
     tokenGetter: tokenGetter,
-    whitelistedDomains: [environment.whitelist],
+    whitelistedDomains: [
+      'app.toucantesting.com',
+      'as-kno2toucanweb-dev.azurewebsites.net'
+    ],
     throwNoTokenError: true
   }
 };
