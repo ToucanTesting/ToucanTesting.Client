@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --env=kno2",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -14,7 +14,6 @@
   "dependencies": {
     "@angular/animations": "^5.2.7",
     "@angular/cdk": "^5.2.3",
-    "@angular/cli": "~1.7.2",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
     "@angular/compiler-cli": "^5.2.0",
@@ -42,6 +41,7 @@
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
+    "@angular/cli": "^1.7.4",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
