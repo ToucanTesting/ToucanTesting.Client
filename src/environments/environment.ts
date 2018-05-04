@@ -7,5 +7,8 @@ export const environment = {
   production: false,
   envName: 'dev',
   baseUrl: 'http://localhost:4200/',
-  apiUrl: 'http://localhost:5000/'
+  apiUrl: 'http://localhost:5000/',
+  clientId: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
+  authDomain: 'toucantesting.auth0.com',
+  audience: 'http://api.toucantesting.com/'
 };
