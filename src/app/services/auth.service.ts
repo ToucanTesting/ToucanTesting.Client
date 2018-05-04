@@ -7,16 +7,14 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class AuthService {
 
-  auth0 = new auth0.WebAuth({
-    clientID: environment.clientId,
-    domain: environment.authDomain,
-    responseType: 'token id_token',
-    audience: environment.audience,
-    redirectUri: environment.baseUrl,
-    scope: 'openid profile'
-  });
+  auth0 = new auth0.WebAuth(
+    environment.auth0Config
+  );
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+
+    console.log(environment.auth0Config);
+  }
 
   public login(): void {
     this.auth0.authorize();

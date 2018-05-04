@@ -3,7 +3,12 @@ export const environment = {
   envName: 'prod',
   baseUrl: 'http://app.toucantesting.com/',
   apiUrl: 'http://api.toucantesting.com/',
-  clientId: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
-  authDomain: 'toucantesting.auth0.com',
-  audience: 'http://api.toucantesting.com/'
+  auth0Config: {
+    clientID: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
+    domain: 'toucantesting.auth0.com',
+    responseType: 'token id_token',
+    audience: 'http://api.toucantesting.com',
+    redirectUri: 'http://app.toucantesting.com/',
+    scope: 'openid profile'
+  }
 };

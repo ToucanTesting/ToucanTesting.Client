@@ -1,14 +1,14 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-
 export const environment = {
   production: false,
   envName: 'dev',
   baseUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:5000/',
-  clientId: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
-  authDomain: 'toucantesting.auth0.com',
-  audience: 'http://api.toucantesting.com/'
+  auth0Config: {
+    clientID: 'wlV8bhQ158TpK45z8b4Fv94znnQYill6',
+    domain: 'toucantesting.auth0.com',
+    responseType: 'token id_token',
+    audience: 'http://api.toucantesting.com',
+    redirectUri: 'http://localhost:4200/',
+    scope: 'openid profile'
+  }
 };
