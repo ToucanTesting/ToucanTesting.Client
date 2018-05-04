@@ -12,8 +12,6 @@ export class AuthService {
   );
 
   constructor(public router: Router) {
-
-    console.log(environment.auth0Config);
   }
 
   public login(): void {
