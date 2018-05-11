@@ -61,7 +61,6 @@ export class TestReportComponent implements OnInit {
               .getTestReport(testRun.testSuiteId, testRun.createdAt)
               .subscribe(testModules => {
                 testModules.forEach((testModule) => {
-                  testModules.forEach(m => console.log(m.testCases));
                   this.totalAutomated = testModule.testCases.reduce((total, testCase) => {
                     return (testCase.isAutomated) ? total += 1 : total;
                   }, this.totalAutomated)
@@ -77,6 +76,7 @@ export class TestReportComponent implements OnInit {
                   passes: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Pass) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
                       this.totalPassCount += 1;
@@ -86,6 +86,7 @@ export class TestReportComponent implements OnInit {
                   failures: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Fail) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
                       this.totalFailCount += 1;
@@ -95,6 +96,7 @@ export class TestReportComponent implements OnInit {
                   cnt: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.CNT) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
                       this.totalCntCount += 1;
