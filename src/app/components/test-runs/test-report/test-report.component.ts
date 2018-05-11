@@ -61,6 +61,7 @@ export class TestReportComponent implements OnInit {
               .getTestReport(testRun.testSuiteId, testRun.createdAt)
               .subscribe(testModules => {
                 testModules.forEach((testModule) => {
+                  testModules.forEach(m => console.log(m.testCases));
                   this.totalAutomated = testModule.testCases.reduce((total, testCase) => {
                     return (testCase.isAutomated) ? total += 1 : total;
                   }, this.totalAutomated)
