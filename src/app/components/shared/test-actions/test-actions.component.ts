@@ -33,10 +33,10 @@ export class TestActionsComponent {
   moveUp(testAction: TestAction) {
     const index = this.testCase.testActions.indexOf(testAction);
     const prev = this.testCase.testActions[index - 1];
-    const temp = prev.sequence;
+    const temp = testAction.sequence;
 
     testAction.sequence = prev.sequence;
-    prev.sequence = index;
+    prev.sequence = temp;
 
     this.testCase.testActions.splice(index, 1);
     this.testCase.testActions.splice(index - 1, 0, testAction);
