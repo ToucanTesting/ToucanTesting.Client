@@ -36,7 +36,7 @@ export class TestActionsComponent {
     const temp = prev.sequence;
 
     testAction.sequence = prev.sequence;
-    prev.sequence = temp;
+    prev.sequence = index;
 
     this.testCase.testActions.splice(index, 1);
     this.testCase.testActions.splice(index - 1, 0, testAction);
