@@ -72,7 +72,7 @@
         </span>
       </div>
       <br>
-      <div *ngFor="let testCase of filterTestCases() | orderBy : testModule.sort : testModule.reverse">
+      <div *ngFor="let testCase of filterTestCases() | orderBy : testModule.sort || id : testModule.reverse">
         <tt-test-case [testModule]="testModule" [testCase]="testCase" [isTestRun]="isTestRun" [testRunId]="testRunId"></tt-test-case>
       </div>
     </div>
