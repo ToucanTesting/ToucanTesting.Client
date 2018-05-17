@@ -108,4 +108,31 @@ export class TestModuleComponent {
       }
     }
   }
+
+  displayFriendly(ugly: string) {
+    let friendly = '';
+    switch (ugly) {
+      case 'id':
+        friendly = 'Id';
+        break;
+      case 'description':
+        friendly = 'Description';
+        break;
+      case 'priority':
+        friendly = 'Priority';
+        break;
+      case 'lastTested':
+        friendly = 'Last Tested';
+        break;
+      case 'isAutomated':
+        friendly = 'Automated';
+        break;
+      case 'testIssues':
+        friendly = 'Issues';
+        break;
+      default:
+        break;
+    }
+    return friendly;
+  }
 }
