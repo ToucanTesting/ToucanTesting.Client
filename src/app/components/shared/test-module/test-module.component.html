@@ -53,9 +53,11 @@
         <span class="dropdown">
           <button class="btn dropdown-toggle" id="sortByButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort By
-            <strong>{{testModule.sort}}</strong>
+            <strong>{{displayFriendly(testModule.sort)}}</strong>
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByButton">
+            <span (click)="testModule.sort = 'id'" class="dropdown-item">Id</span>
+            <span (click)="testModule.sort = 'description'" class="dropdown-item">Description</span>
             <span (click)="testModule.sort = 'priority'" class="dropdown-item">Priority</span>
             <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
             <span (click)="testModule.sort = 'isAutomated'" class="dropdown-item">Automated</span>
