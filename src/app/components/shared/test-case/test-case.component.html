@@ -2,7 +2,7 @@
   <div class="test-run-item">
     <div>
       <div>
-        <span *ngIf="testCase.lastTested" style="width:120px; margin-right: 5px;" class="badge badge-primary">{{testCase.lastTested | date [ : format [ : timezone [ : locale ] ] ]}}</span>
+        <span *ngIf="testCase.lastTested" style="width:120px; margin-right: 5px;" class="badge badge-primary">{{testCase.lastTested | date : locale }}</span>
         <span *ngIf="!testCase.lastTested" style="width:120px; margin-right: 5px;" class="badge badge-secondary">Never Tested</span>
         <i class="fa fa-lg fa-android" [ngClass]="{'icon-success': testCase.isAutomated, 'icon-light': !testCase.isAutomated}"></i>
         <span class="fa-stack fa-lg priority" data-toggle="tooltip" data-placement="bottom" title="{{testCase.priority | priority}}">
