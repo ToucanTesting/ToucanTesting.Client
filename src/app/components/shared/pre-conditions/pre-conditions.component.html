@@ -5,11 +5,11 @@
         {{testCondition.description}}
         <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
       </span>
-      <input autofocus class="form-control" *ngIf="testCondition.isEditing" matInput (blur)="cancelEdit(testCondition)" (keyup.escape)="cancelEdit(testCondition)"
+      <input autofocus class="form-control" *ngIf="testCondition.isEditing" matInput (blur)="updateTestCondition(testCondition)" (keyup.escape)="cancelEdit(testCondition)"
         (keyup.enter)="updateTestCondition(testCondition)" [(ngModel)]="testCondition.description"
       />
-      <span [ngClass]="{'ghost':!(hoverIndex === i || testCondition.isEditing || isTestRun)}" class="toolbar">
-        <mat-icon (click)="deleteTestCondition(testCondition)">delete</mat-icon>
+      <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" class="toolbar">
+        <mat-icon (click)="deleteTestCondition(testCondition)" *ngIf="!testCondition.isEditing">delete</mat-icon>
       </span>
     </div>
   </div>

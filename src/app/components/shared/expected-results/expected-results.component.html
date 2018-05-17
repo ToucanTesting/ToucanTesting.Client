@@ -5,10 +5,10 @@
         {{expectedResult.description}}
         <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
       </span>
-      <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="cancelEdit(expectedResult)" (keyup.escape)="cancelEdit(expectedResult)"
+      <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="updateExpectedResult(expectedResult)" (keyup.escape)="cancelEdit(expectedResult)"
         (keyup.enter)="updateExpectedResult(expectedResult)" [(ngModel)]="expectedResult.description" />
-      <span [ngClass]="{'ghost':!(hoverIndex === i || expectedResult.isEditing || isTestRun)}" class="toolbar">
-        <mat-icon (click)="deleteExpectedResult(expectedResult)">delete</mat-icon>
+      <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" class="toolbar">
+        <mat-icon (click)="deleteExpectedResult(expectedResult)" *ngIf="!expectedResult.isEditing">delete</mat-icon>
       </span>
     </div>
   </div>
