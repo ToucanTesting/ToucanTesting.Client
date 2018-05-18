@@ -9,6 +9,7 @@ export class TestCase extends Base {
     isAutomated: boolean;
     automationId: string;
     isEnabled: boolean;
+    hasCriteria: boolean;
     lastTested?: Date;
     testActions: TestAction[];
     testConditions: TestCondition[];

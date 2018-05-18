@@ -45,6 +45,7 @@ export class CreateTestCaseDialogComponent {
             testModuleId: null,
             description: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])],
             isAutomated: false,
+            hasCriteria: false,
             priority: Priority.Low
         })
     }
@@ -55,6 +56,7 @@ export class CreateTestCaseDialogComponent {
             testModuleId: values.testModuleId,
             description: values.description,
             isAutomated: values.isAutomated,
+            hasCriteria: values.hasCriteria,
             priority: values.priority
         })
     }

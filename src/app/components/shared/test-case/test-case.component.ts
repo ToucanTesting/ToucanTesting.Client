@@ -11,6 +11,7 @@ import { TestResultStatus, Priority } from '../../../enums';
 
 @Component({
   selector: 'tt-test-case',
+  styleUrls: ['test-case.component.scss'],
   templateUrl: './test-case.component.html'
 })
 export class TestCaseComponent {
@@ -68,6 +69,7 @@ export class TestCaseComponent {
       if (res) {
         testCase.description = res.description;
         testCase.isAutomated = res.isAutomated;
+        testCase.hasCriteria = res.hasCriteria;
         testCase.priority = res.priority;
         testCase.testModuleId = res.testModuleId;
         this.updateTestCase(testCase)
