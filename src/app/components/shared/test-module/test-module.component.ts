@@ -32,8 +32,9 @@ export class TestModuleComponent {
   };
 
   filters = {
-    onlyNeverTested: false
-  }
+    onlyNeverTested: false,
+    needsCriteria: false
+  };
 
   constructor(
   ) {
@@ -45,6 +46,14 @@ export class TestModuleComponent {
     if (this.filters.onlyNeverTested) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].lastTested) {
+          results.splice(results.indexOf(results[i]), 1)
+        }
+      }
+    }
+
+    if (this.filters.needsCriteria) {
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (results[i].hasCriteria) {
           results.splice(results.indexOf(results[i]), 1)
         }
       }
@@ -129,6 +138,9 @@ export class TestModuleComponent {
         break;
       case 'testIssues':
         friendly = 'Issues';
+        break;
+      case 'hasCriteria':
+        friendly = 'Needs Criteria';
         break;
       default:
         break;
