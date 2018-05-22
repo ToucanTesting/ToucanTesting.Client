@@ -62,7 +62,10 @@ import { LoaderComponent } from '@components/shared/loader/loader.component';
 import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
 import { NoContentComponent } from '@components/shared/no-content/no-content.component';
 
-import { ToastrModule } from 'ngx-toastr'
+import { ToastrModule } from 'ngx-toastr';
+import { ManualChartComponent } from '@components/test-runs/test-report/manual-chart/manual-chart.component';
+import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
+import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -100,7 +103,10 @@ export function tokenGetter() {
     TestReportComponent,
     LoaderComponent,
     TestCaseComponent,
-    NoContentComponent
+    NoContentComponent,
+    ManualChartComponent,
+    TotalsChartComponent,
+    AutoChartComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [

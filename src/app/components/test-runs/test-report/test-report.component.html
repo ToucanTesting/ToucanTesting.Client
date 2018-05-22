@@ -1,27 +1,9 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
 <div [hidden]="isLoading" style="padding:0 35px;">
   <div class="row">
-    <div *ngIf="resultsChart" class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Results
-        </div>
-        <div class="card-body">
-          <canvas id="resultsChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="totalsChart" class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Total Test Cases
-          <small>({{totalTestCases}})</small>
-        </div>
-        <div class="card-body">
-          <canvas id="totalsChart"></canvas>
-        </div>
-      </div>
-    </div>
+    <tt-manual-chart *ngIf="manualTestCases.isReady" [manualTestCases]="manualTestCases" class="col-md-4"></tt-manual-chart>
+    <tt-totals-chart *ngIf="totalTestCases.isReady" [totalTestCases]="totalTestCases" class="col-md-4"></tt-totals-chart>
+    <tt-auto-chart *ngIf="autoTestCases.isReady" [autoTestCases]="autoTestCases" class="col-md-4"></tt-auto-chart>
   </div>
   <br>
   <div class="row">
