@@ -13,7 +13,6 @@ import { Chart } from 'chart.js';
 })
 export class TestReportComponent implements OnInit {
   hasIssues: boolean = false;
-  resultsChart = [];
   totalsChart = [];
   modulesChart = [];
 
@@ -25,13 +24,30 @@ export class TestReportComponent implements OnInit {
   testModules: TestModule[];
   testResultStatus = TestResultStatus;
   priority = Priority;
-  totalTestCases: number = 0;
-  totalAutomated: number = 0;
-  totalPassCount: number = 0;
-  totalFailCount: number = 0;
-  totalCntCount: number = 0;
-  totalNaCount: number = 0;
-  totalPendingCount: number = 0;
+
+  totalTestCases = {
+    isReady: false,
+    all: 0,
+    auto: 0
+  };
+
+  manualTestCases = {
+    isReady: false,
+    total: 0,
+    pass: 0,
+    fail: 0,
+    cnt: 0,
+    na: 0
+  };
+
+  autoTestCases = {
+    isReady: false,
+    total: 0,
+    pass: 0,
+    fail: 0,
+    cnt: 0,
+    na: 0
+  };
 
   constructor(
     private handleErrorService: HandleErrorService,
@@ -61,10 +77,11 @@ export class TestReportComponent implements OnInit {
               .getTestReport(testRun.testSuiteId, testRun.createdAt)
               .subscribe(testModules => {
                 testModules.forEach((testModule) => {
-                  this.totalAutomated = testModule.testCases.reduce((total, testCase) => {
+                  this.totalTestCases.auto = testModule.testCases.reduce((total, testCase) => {
                     return (testCase.isAutomated) ? total += 1 : total;
-                  }, this.totalAutomated)
-                  this.totalTestCases += testModule.testCases.length;
+                  }, this.totalTestCases.auto)
+                  this.totalTestCases.all += testModule.testCases.length;
+
                 })
                 this.testModules = testModules.map(testModule => ({
                   ...testModule,
@@ -76,107 +93,71 @@ export class TestReportComponent implements OnInit {
                   passes: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Pass) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
-                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
-                      this.totalPassCount += 1;
+                      if (testCase.isAutomated) {
+                        this.autoTestCases.pass += 1;
+                      } else {
+                        this.manualTestCases.pass += 1;
+                      }
                       return testResult;
                     }
                   }),
                   failures: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.Fail) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
-                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
-                      this.totalFailCount += 1;
+                      if (testCase.isAutomated) {
+                        this.autoTestCases.fail += 1;
+                      } else {
+                        this.manualTestCases.fail += 1;
+                      }
                       return testResult;
                     }
                   }),
                   cnt: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.CNT) {
                       const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
-                      console.log(testCase);
                       testCase.testResult = testResult;
                       this.testCases.push(testCase);
-                      this.totalCntCount += 1;
+                      if (testCase.isAutomated) {
+                        this.autoTestCases.cnt += 1;
+                      } else {
+                        this.manualTestCases.cnt += 1;
+                      }
                       return testResult;
                     }
                   }),
                   na: this.testResults.filter(testResult => {
                     if (testResult.testModuleId === testModule.id && testResult.status === this.testResultStatus.NA) {
-                      this.totalNaCount += 1;
+                      const testCase = testModule.testCases.find(tc => tc.id === testResult.testCaseId);
+                      if (testCase.isAutomated) {
+                        this.autoTestCases.na += 1;
+                      } else {
+                        this.manualTestCases.na += 1;
+                      }
                       return testResult;
                     }
                   })
                 }));
-                this.totalPendingCount += (this.totalTestCases - (this.totalPassCount + this.totalFailCount + this.totalCntCount + this.totalNaCount))
+
                 this.isLoading = false;
-                this.populateCharts();
+                this.manualTestCases.isReady = true;
+                this.totalTestCases.isReady = true;
+                this.autoTestCases.isReady = true;
+                this.populateChart();
               })
           })
 
       })
   }
 
-  public populateCharts() {
+  public populateChart() {
     const green = '#2BB673';
     const red = '#FE200B';
     const blue = '#4189C7'
     const gray = 'gray';
-
-    this.resultsChart = new Chart('resultsChart', {
-      type: 'doughnut',
-      data: {
-        labels: [
-          `Pass (${this.totalPassCount})`,
-          `Fail (${this.totalFailCount})`,
-          `Could Not Test (${this.totalCntCount})`,
-          `Did Not Test (${this.totalNaCount + this.totalPendingCount})`
-        ],
-        datasets: [{
-          label: 'Results',
-          data: [
-            this.totalPassCount,
-            this.totalFailCount,
-            this.totalCntCount,
-            this.totalNaCount + this.totalPendingCount
-          ],
-          backgroundColor: [
-            green, red, blue, gray
-          ]
-        }]
-      },
-      options: {
-        legend: {
-          display: true,
-          position: 'left'
-        }
-      }
-    });
-
-    this.totalsChart = new Chart('totalsChart', {
-      type: 'doughnut',
-      data: {
-        labels: [
-          `Automated (${this.totalAutomated})`,
-          `Manual (${this.totalTestCases - this.totalAutomated})`
-        ],
-        datasets: [{
-          data: [this.totalAutomated, this.totalTestCases - this.totalAutomated],
-          backgroundColor: [
-            green, blue, gray
-          ]
-        }]
-      },
-      options: {
-        legend: {
-          display: true,
-          position: 'left'
-        }
-      }
-    });
-
 
     const testModuleLabels = [];
     const passedTestData = [];
@@ -244,7 +225,7 @@ export class TestReportComponent implements OnInit {
     });
   }
 
-  getTestIssues() {
+  public getTestIssues() {
     if (!this.hasIssues) {
       this.testIssuesService.getTestIssues()
         .subscribe(testIssues => {

@@ -1,27 +1,9 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
 <div [hidden]="isLoading" style="padding:0 35px;">
   <div class="row">
-    <div *ngIf="resultsChart" class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Results
-        </div>
-        <div class="card-body">
-          <canvas id="resultsChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="totalsChart" class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Total Test Cases
-          <small>({{totalTestCases}})</small>
-        </div>
-        <div class="card-body">
-          <canvas id="totalsChart"></canvas>
-        </div>
-      </div>
-    </div>
+    <tt-manual-chart *ngIf="manualTestCases.isReady" [manualTestCases]="manualTestCases" class="col-md-4"></tt-manual-chart>
+    <tt-totals-chart *ngIf="totalTestCases.isReady" [totalTestCases]="totalTestCases" class="col-md-4"></tt-totals-chart>
+    <tt-auto-chart *ngIf="autoTestCases.isReady" [autoTestCases]="autoTestCases" class="col-md-4"></tt-auto-chart>
   </div>
   <br>
   <div class="row">
@@ -34,10 +16,6 @@
                 aria-selected="true">Overview</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="passed-tab" data-toggle="tab" href="#passed" role="tab" attr.aria-controls="passed-tab" aria-selected="false"
-                (click)="getTestIssues()">Passed</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" id="failed-tab" data-toggle="tab" href="#failed" role="tab" attr.aria-controls="failed-tab" aria-selected="false"
                 (click)="getTestIssues()">Failed</a>
             </li>
@@ -45,27 +23,29 @@
               <a class="nav-link" id="cnt-tab" data-toggle="tab" href="#cnt" role="tab" attr.aria-controls="cnt-tab" aria-selected="false"
                 (click)="getTestIssues()">Could Not Test</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="passed-tab" data-toggle="tab" href="#passed" role="tab" attr.aria-controls="passed-tab" aria-selected="false"
+                (click)="getTestIssues()">Passed</a>
+            </li>
           </ul>
         </div>
         <div class="card-body tab-content">
           <div class="tab-pane fade show active" id="overview" role="tabpanel" attr.aria-labelledby="overview-tab">
             <canvas id="modulesChart"></canvas>
           </div>
-          <div class="tab-pane fade" id="passed" role="tabpanel" attr.aria-labelledby="passed-tab">
-            <div *ngFor="let testCase of testCases">
-              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Pass" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
-            </div>
-          </div>
           <div class="tab-pane fade" id="failed" role="tabpanel" attr.aria-labelledby="failed-tab">
             <div *ngFor="let testCase of testCases">
-              <ng-container>
-              </ng-container>
               <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Fail" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
             </div>
           </div>
           <div class="tab-pane fade" id="cnt" role="tabpanel" attr.aria-labelledby="cnt-tab">
             <div *ngFor="let testCase of testCases">
               <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.CNT" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="passed" role="tabpanel" attr.aria-labelledby="passed-tab">
+            <div *ngFor="let testCase of testCases">
+              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Pass" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
             </div>
           </div>
         </div>
