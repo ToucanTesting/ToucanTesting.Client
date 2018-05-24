@@ -17,6 +17,8 @@ export class ManualChartComponent implements OnInit {
   }
 
   public populateChart() {
+    const notTested = this.manualTestCases.total - this.manualTestCases.pass - this.manualTestCases.fail - this.manualTestCases.cnt;
+
     const green = '#2BB673';
     const red = '#FE200B';
     const blue = '#4189C7'
@@ -29,15 +31,15 @@ export class ManualChartComponent implements OnInit {
           `Pass (${this.manualTestCases.pass})`,
           `Fail (${this.manualTestCases.fail})`,
           `Could Not Test (${this.manualTestCases.cnt})`,
-          `NA (${this.manualTestCases.na})`
+          `Not Tested (${notTested})`
         ],
         datasets: [{
           label: 'Results',
           data: [
             this.manualTestCases.pass,
             this.manualTestCases.fail,
-            this.manualTestCases.pass,
-            this.manualTestCases.na
+            this.manualTestCases.cnt,
+            notTested
           ],
           backgroundColor: [
             green, red, blue, gray
