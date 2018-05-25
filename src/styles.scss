@@ -10,6 +10,10 @@ $light: #bbb;
 $active: #28a745;
 $danger: red;
 
+.toolbar > span {
+  padding: 0 8px;
+}
+
 .spacer {
   padding: 0 8px;
 }
