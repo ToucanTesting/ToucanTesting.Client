@@ -7,6 +7,7 @@
     "start": "ng serve",
     "build": "ng build --prod --configuration=kno2",
     "test": "ng test",
+    "karma-tests": "karma start --reporters teamcity --single-run --browsers PhantomJS --colors false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
