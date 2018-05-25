@@ -65,7 +65,8 @@ import { NoContentComponent } from '@components/shared/no-content/no-content.com
 import { ToastrModule } from 'ngx-toastr';
 import { ManualChartComponent } from '@components/test-runs/test-report/manual-chart/manual-chart.component';
 import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
-import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component'
+import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component';
+import { FilterPipe } from './pipes/filter.pipe'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -106,7 +107,8 @@ export function tokenGetter() {
     NoContentComponent,
     ManualChartComponent,
     TotalsChartComponent,
-    AutoChartComponent
+    AutoChartComponent,
+    FilterPipe
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [

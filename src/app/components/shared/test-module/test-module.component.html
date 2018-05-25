@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="list-group list-group-flush" style="margin: 10px;" *ngIf="testModule.testCases?.length > 0">
     <div>
-      <div>
+      <div class="toolbar">
         <span *ngIf="isTestRun" class="dropdown">
           <button class="btn dropdown-toggle" id="sortByButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Status
@@ -78,9 +78,12 @@
             <input type="radio" name="options" autocomplete="off" [checked]="testModule.reverse"> Desc
           </label>
         </span>
+        <span class="btn-group btn-group-toggle" data-toggle="buttons">
+          <input [(ngModel)]="searchText" type="text" class="form-control" placeholder="Search">
+        </span>
       </div>
       <br>
-      <div *ngFor="let testCase of filterTestCases() | orderBy : testModule.sort || id : testModule.reverse">
+      <div *ngFor="let testCase of filterTestCases() | filter : searchText | orderBy : testModule.sort || id : testModule.reverse">
         <tt-test-case [testModule]="testModule" [testCase]="testCase" [isTestRun]="isTestRun" [testRunId]="testRunId"></tt-test-case>
       </div>
     </div>
