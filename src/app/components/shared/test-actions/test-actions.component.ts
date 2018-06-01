@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestAction } from '@models';
 import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
+import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
 
 @Component({
   selector: 'tt-test-actions',
@@ -98,6 +99,10 @@ export class TestActionsComponent {
       }, error => {
         this.handleErrorService.handleError(error);
       });
+  }
+
+  sortedTestActions(testCase: TestCase) {
+    return testCase.testActions.sort((a, b) => a.sequence - b.sequence)
   }
 
 }
