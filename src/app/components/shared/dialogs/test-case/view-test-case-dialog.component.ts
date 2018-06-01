@@ -35,7 +35,6 @@ export class ViewTestCaseDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<ViewTestCaseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData
     ) {
-        console.log(data);
         this.title = data.title;
         this.type = data.type;
         this.testCase = data.testCase;
@@ -44,7 +43,6 @@ export class ViewTestCaseDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.type, this.isTestReport);
         if (this.testCase.expectedResults.length <= 0 && this.type !== 'issue') {
             this.expectedResultsService.getTestResults(this.testModule, this.testCase)
                 .subscribe((expectedResults: ExpectedResult[]) => {
