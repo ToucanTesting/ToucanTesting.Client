@@ -1,4 +1,4 @@
-<ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
+<ng-container *ngFor="let testAction of sortedTestActions(testCase); let i = index;">
   <div class="card modal-item" *ngIf="testCase.testActions.length > 0">
     <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
       <span *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
