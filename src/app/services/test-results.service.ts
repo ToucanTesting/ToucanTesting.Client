@@ -18,6 +18,10 @@ export class TestResultsService {
         return this.http.get<TestResult[]>(`${environment.apiUrl}test-results?testRunId=${testRunId}`);
     }
 
+    public getModuleTestResults(testRunId: number, testModuleId: number): Observable<TestResult[]> {
+        return this.http.get<TestResult[]>(`${environment.apiUrl}test-results?testRunId=${testRunId}&testModuleId=${testModuleId}`);
+    }
+
     public updateTestResult(testResult: TestResult): Observable<TestResult> {
         return this.http.put<TestResult>(`${environment.apiUrl}test-results/${testResult.id}`, testResult);
     }

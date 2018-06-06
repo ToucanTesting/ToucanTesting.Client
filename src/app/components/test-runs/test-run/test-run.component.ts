@@ -89,15 +89,18 @@ export class TestRunComponent {
     }
 
     public getTestModuleTestResults(testModule: TestModule) {
-        this.testResults.forEach((testResult: TestResult) => {
-            const testModuleIndex = this.testModules.indexOf(testModule);
-            const testCaseIndex = this.testModules[testModuleIndex].testCases.findIndex(
-                (c: TestCase) => c.id === testResult.testCaseId
-            );
-            if (testCaseIndex > -1) {
-                this.testModules[testModuleIndex].testCases[testCaseIndex].testResult = testResult
-            }
-        })
+        this.testResultsService.getModuleTestResults(this.testRunId, testModule.id)
+            .subscribe(testResults => {
+                testResults.forEach((testResult: TestResult) => {
+                    const testModuleIndex = this.testModules.indexOf(testModule);
+                    const testCaseIndex = this.testModules[testModuleIndex].testCases.findIndex(
+                        (c: TestCase) => c.id === testResult.testCaseId
+                    );
+                    if (testCaseIndex > -1) {
+                        this.testModules[testModuleIndex].testCases[testCaseIndex].testResult = testResult
+                    }
+                })
+            })
     }
 
     public getExpectedResults(testModule: TestModule, testCase: TestCase) {
