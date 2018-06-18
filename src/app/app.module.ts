@@ -23,6 +23,7 @@ import {
   MatIconModule,
   MatDialogModule,
 } from '@angular/material';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
@@ -66,7 +67,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ManualChartComponent } from '@components/test-runs/test-report/manual-chart/manual-chart.component';
 import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
 import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component';
-import { FilterPipe } from './pipes/filter.pipe'
+import { FilterPipe } from './pipes/filter.pipe';
+import { DeletemeComponent } from './components/deleteme/deleteme.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -108,7 +110,8 @@ export function tokenGetter() {
     ManualChartComponent,
     TotalsChartComponent,
     AutoChartComponent,
-    FilterPipe
+    FilterPipe,
+    DeletemeComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [
@@ -118,6 +121,7 @@ export function tokenGetter() {
     MatDialogModule,
     CommonModule,
     HttpClientModule,
+    SortablejsModule.forRoot({ animation: 150 }),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -139,6 +143,7 @@ export function tokenGetter() {
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
       { path: 'test-suites/:id', component: TestSuiteComponent },
+      { path: 'deleteme', component: DeletemeComponent },
       { path: 'test-suites', component: TestSuitesComponent },
       { path: 'test-runs', component: TestRunsComponent },
       { path: 'test-runs/:id', component: TestRunComponent },
