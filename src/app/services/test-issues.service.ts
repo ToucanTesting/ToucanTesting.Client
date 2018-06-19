@@ -19,6 +19,10 @@ export class TestIssuesService {
     return this.http.get<TestIssue[]>(`${environment.apiUrl}test-issues`);
   }
 
+  public updateTestIssue(testIssueId: number, testIssue: TestIssue): Observable<TestIssue> {
+    return this.http.put<TestIssue>(`${environment.apiUrl}test-issues/${testIssueId}`, testIssue);
+  }
+
   public deleteTestIssue(testIssueId: number) {
     return this.http.delete(`${environment.apiUrl}test-issues/${testIssueId}`);
   }

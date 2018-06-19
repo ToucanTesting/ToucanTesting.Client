@@ -3,6 +3,7 @@ import { TestCasesService, HandleErrorService, TestIssuesService } from '@servic
 import { TestCase, TestIssue } from '@models';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
+import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -40,6 +41,30 @@ export class IssuesComponent implements OnInit {
         this.removeIssue(testIssue)
       }
     });
+  }
+
+  openTestCaseEditDialog(testIssue: TestIssue): void {
+    console.log('hit')
+    const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue', payload: testIssue } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        testIssue.description = res.description;
+        testIssue.reference = res.reference;
+        this.updateTestIssue(testIssue)
+      }
+    });
+  }
+
+  updateTestIssue(testIssue: TestIssue) {
+    this.testIssuesService
+      .updateTestIssue(testIssue.id, testIssue)
+      .subscribe((res: TestIssue) => {
+        this.toastr.success(testIssue.reference, 'UPDATED');
+      }, error => {
+        console.log(error)
+        this.handleErrorService.handleError(error);
+      });
   }
 
   removeIssue(testIssue: TestIssue) {
