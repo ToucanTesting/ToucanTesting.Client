@@ -1,20 +1,23 @@
-<ng-container *ngFor="let expectedResult of testCase.expectedResults; let i = index;">
-  <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card modal-item" *ngIf="testCase.expectedResults.length > 0">
-    <div class="card-body d-flex justify-content-between">
-      <span *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
-        {{expectedResult.description}}
-        <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
-      </span>
-      <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="updateExpectedResult(expectedResult)" (keyup.escape)="cancelEdit(expectedResult)"
-        (keyup.enter)="updateExpectedResult(expectedResult)" [(ngModel)]="expectedResult.description" />
-      <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" class="toolbar">
-        <mat-icon (click)="deleteExpectedResult(expectedResult)" *ngIf="!expectedResult.isEditing">delete</mat-icon>
-      </span>
+<div [sortablejs]="testCase.expectedResults" [sortablejsOptions]="eventOptions">
+  <ng-container *ngFor="let expectedResult of testCase.expectedResults; let i = index;">
+    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card modal-item" *ngIf="testCase.expectedResults.length > 0">
+      <div class="card-body d-flex justify-content-between">
+        <span *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
+          {{expectedResult.description}}
+          <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
+        </span>
+        <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="updateExpectedResult(expectedResult)"
+          (keyup.escape)="cancelEdit(expectedResult)" (keyup.enter)="updateExpectedResult(expectedResult)" [(ngModel)]="expectedResult.description"
+        />
+        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" class="toolbar">
+          <mat-icon (click)="deleteExpectedResult(expectedResult)" *ngIf="!expectedResult.isEditing">delete</mat-icon>
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="card" *ngIf="!testCase.expectedResults.length > 0">
-    <div class="card-body">
-      No expected results defined
+    <div class="card" *ngIf="!testCase.expectedResults.length > 0">
+      <div class="card-body">
+        No expected results defined
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+</div>

@@ -22,6 +22,10 @@ export class TestConditionsService {
         return this.http.put<TestCondition>(`${environment.apiUrl}test-conditions/${testCondition.id}`, testCondition)
     }
 
+    public sortTestConditions(origin: TestCondition, targetId: number): Observable<TestCondition[]> {
+        return this.http.put<TestCondition[]>(`${environment.apiUrl}test-conditions/${targetId}/sort`, origin)
+    }
+
     public deleteTestCondition(id: number) {
         return this.http.delete(`${environment.apiUrl}test-conditions/${id}`);
     }

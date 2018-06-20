@@ -22,6 +22,10 @@ export class TestActionsService {
         return this.http.put<TestAction>(`${environment.apiUrl}test-actions/${testAction.id}`, testAction)
     }
 
+    public sortTestActions(fromAction: TestAction, targetActionId: number): Observable<TestAction[]> {
+        return this.http.put<TestAction[]>(`${environment.apiUrl}test-actions/${targetActionId}/sort`, fromAction)
+    }
+
     public deleteTestAction(id: number) {
         return this.http.delete(`${environment.apiUrl}test-actions/${id}`);
     }

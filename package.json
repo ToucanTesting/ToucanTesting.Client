@@ -27,6 +27,7 @@
     "@auth0/angular-jwt": "^2.0.0",
     "@types/chartjs": "^0.0.31",
     "@types/lodash": "^4.14.110",
+    "angular-sortablejs": "^2.5.2",
     "auth0-js": "^9.3.2",
     "bootstrap": "^4.0.0",
     "chart.js": "^2.7.2",
@@ -40,6 +41,7 @@
     "ngx-pagination": "^3.1.1",
     "ngx-toastr": "^8.3.0",
     "rxjs": "^6.1.0",
+    "sortablejs": "^1.7.0",
     "typescript": "2.7.2",
     "zone.js": "^0.8.26"
   },
