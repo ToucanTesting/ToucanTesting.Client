@@ -23,6 +23,7 @@ import {
   MatIconModule,
   MatDialogModule,
 } from '@angular/material';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
@@ -66,7 +67,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ManualChartComponent } from '@components/test-runs/test-report/manual-chart/manual-chart.component';
 import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
 import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component';
-import { FilterPipe } from './pipes/filter.pipe'
+import { FilterPipe } from './pipes/filter.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -118,6 +119,7 @@ export function tokenGetter() {
     MatDialogModule,
     CommonModule,
     HttpClientModule,
+    SortablejsModule.forRoot({ animation: 150 }),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

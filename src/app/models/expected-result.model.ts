@@ -5,5 +5,6 @@ export class ExpectedResult extends Base {
     id: number;
     testCaseId?: number;
     description: string;
+    sequence: number;
     isEditing?: boolean;
 }

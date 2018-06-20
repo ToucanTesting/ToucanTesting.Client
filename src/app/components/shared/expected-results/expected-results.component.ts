@@ -3,6 +3,7 @@ import { TestCase } from '@models';
 import { ExpectedResultsService, HandleErrorService } from '@services';
 import { ExpectedResult } from '../../../models';
 import { ToastrService } from 'ngx-toastr';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
   selector: 'tt-expected-results',
@@ -19,6 +20,20 @@ export class ExpectedResultsComponent {
     private handleErrorService: HandleErrorService,
     private expectedResultsService: ExpectedResultsService
   ) { }
+
+  eventOptions: SortablejsOptions = {
+    onUpdate: (event) => {
+      const origin = this.testCase.expectedResults[event.oldIndex];
+      const targetId = this.testCase.expectedResults[event.newIndex].id;
+      this.expectedResultsService
+        .sortExpectedResults(origin, targetId)
+        .subscribe(res => {
+          this.testCase.expectedResults = res;
+        }, error => {
+          this.handleErrorService.handleError(error);
+        });
+    }
+};
 
   toggleIsEditing(expectedResult: ExpectedResult) {
     if (!this.isTestRun) {

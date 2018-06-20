@@ -3,6 +3,7 @@ import { TestCase, TestAction } from '@models';
 import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
 import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
   selector: 'tt-test-actions',
@@ -20,6 +21,20 @@ export class TestActionsComponent {
     private testActionsService: TestActionsService
   ) { }
 
+  eventOptions: SortablejsOptions = {
+    onUpdate: (event) => {
+      const fromAction = this.testCase.testActions[event.oldIndex];
+      const targetActionId = this.testCase.testActions[event.newIndex].id;
+      this.testActionsService
+        .sortTestActions(fromAction, targetActionId)
+        .subscribe(res => {
+          this.testCase.testActions = res;
+        }, error => {
+          this.handleErrorService.handleError(error);
+        });
+    }
+  };
+
   toggleIsEditing(testAction: TestAction) {
     if (!this.isTestRun) {
       testAction.isEditing = !testAction.isEditing;
@@ -29,36 +44,6 @@ export class TestActionsComponent {
   cancelEdit(testAction: TestAction) {
     testAction.isEditing = false;
     testAction.description = this.tempDescription;
-  }
-
-  moveUp(testAction: TestAction) {
-    const index = this.testCase.testActions.indexOf(testAction);
-    const prev = this.testCase.testActions[index - 1];
-    const temp = testAction.sequence;
-
-    testAction.sequence = prev.sequence;
-    prev.sequence = temp;
-
-    this.testCase.testActions.splice(index, 1);
-    this.testCase.testActions.splice(index - 1, 0, testAction);
-
-    this.updateTestAction(testAction);
-    this.updateTestAction(prev);
-  }
-
-  moveDown(testAction: TestAction) {
-    const index = this.testCase.testActions.indexOf(testAction);
-    const next = this.testCase.testActions[index + 1];
-    const temp = next.sequence;
-
-    next.sequence = testAction.sequence;
-    testAction.sequence = temp;
-
-    this.testCase.testActions.splice(index, 1);
-    this.testCase.testActions.splice(index + 1, 0, testAction);
-
-    this.updateTestAction(testAction);
-    this.updateTestAction(next);
   }
 
   updateTestAction(testAction: TestAction) {

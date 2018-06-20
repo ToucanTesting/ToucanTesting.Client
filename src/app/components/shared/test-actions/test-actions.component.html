@@ -1,24 +1,22 @@
-<ng-container *ngFor="let testAction of sortedTestActions(testCase); let i = index;">
-  <div class="card modal-item" *ngIf="testCase.testActions.length > 0">
-    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
-      <span *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
-        <strong>{{testCase.testActions.indexOf(testAction) + 1}}.</strong> {{testAction.description}}
-        <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
-      </span>
-      <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="renameTestAction(testAction)" (keyup.escape)="cancelEdit(testAction)"
-        (keyup.enter)="renameTestAction(testAction)" [(ngModel)]="testAction.description"
-      />
-      <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" *ngIf="!testAction.isEditing" class="toolbar">
-        <mat-icon *ngIf="i !== 0" (click)="moveUp(testAction)">file_upload</mat-icon>
-        <mat-icon *ngIf="i !== testCase.testActions.length - 1" (click)="moveDown(testAction)">file_download</mat-icon>
-        <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
-      </span>
+<div [sortablejs]="testCase.testActions" [sortablejsOptions]="eventOptions">
+  <ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
+    <div class="card modal-item" *ngIf="testCase.testActions.length > 0">
+      <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
+        <span class="editable" *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
+          <strong>{{i + 1}}.</strong> {{testAction.description}}
+          <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
+        </span>
+        <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="renameTestAction(testAction)" (keyup.escape)="cancelEdit(testAction)"
+          (keyup.enter)="renameTestAction(testAction)" [(ngModel)]="testAction.description" />
+        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" *ngIf="!testAction.isEditing" class="toolbar">
+          <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="card" *ngIf="!testCase.testActions.length > 0">
-    <div class="card-body">
-      No actions defined
+    <div class="card" *ngIf="!testCase.testActions.length > 0">
+      <div class="card-body">
+        No actions defined
+      </div>
     </div>
-  </div>
-</ng-container>
-
+  </ng-container>
+</div>
