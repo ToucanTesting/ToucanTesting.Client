@@ -65,7 +65,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
         expectedResult.description = description;
 
         if (this.testCase.testActions.length > 0) {
-            expectedResult.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+            expectedResult.sequence = this.testCase.expectedResults[this.testCase.expectedResults.length - 1].sequence + 1;
         } else {
             expectedResult.sequence = 1;
         }
@@ -85,7 +85,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
         testCondition.description = description;
 
         if (this.testCase.testActions.length > 0) {
-            testCondition.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+            testCondition.sequence = this.testCase.testConditions[this.testCase.testConditions.length - 1].sequence + 1;
         } else {
             testCondition.sequence = 1;
         }
