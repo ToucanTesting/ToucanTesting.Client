@@ -68,7 +68,6 @@ import { ManualChartComponent } from '@components/test-runs/test-report/manual-c
 import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
 import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component';
 import { FilterPipe } from './pipes/filter.pipe';
-import { DeletemeComponent } from './components/deleteme/deleteme.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -110,8 +109,7 @@ export function tokenGetter() {
     ManualChartComponent,
     TotalsChartComponent,
     AutoChartComponent,
-    FilterPipe,
-    DeletemeComponent
+    FilterPipe
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [
@@ -143,7 +141,6 @@ export function tokenGetter() {
     RouterModule.forRoot([
       { path: '', redirectTo: 'test-suites', pathMatch: 'full' },
       { path: 'test-suites/:id', component: TestSuiteComponent },
-      { path: 'deleteme', component: DeletemeComponent },
       { path: 'test-suites', component: TestSuitesComponent },
       { path: 'test-runs', component: TestRunsComponent },
       { path: 'test-runs/:id', component: TestRunComponent },
