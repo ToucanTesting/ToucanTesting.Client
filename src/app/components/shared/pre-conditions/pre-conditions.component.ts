@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
   selector: 'tt-pre-conditions',
@@ -18,6 +19,20 @@ export class PreConditionsComponent {
     private handleErrorService: HandleErrorService,
     private testConditionsService: TestConditionsService
   ) { }
+
+  eventOptions: SortablejsOptions = {
+    onUpdate: (event) => {
+      const origin = this.testCase.testConditions[event.oldIndex];
+      const targetId = this.testCase.testConditions[event.newIndex].id;
+      this.testConditionsService
+        .sortTestConditions(origin, targetId)
+        .subscribe(res => {
+          this.testCase.testConditions = res;
+        }, error => {
+          this.handleErrorService.handleError(error);
+        });
+    }
+  };
 
   toggleIsEditing(testCondition: TestCondition) {
     if (!this.isTestRun) {

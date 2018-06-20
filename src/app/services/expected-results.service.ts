@@ -22,6 +22,10 @@ export class ExpectedResultsService {
         return this.http.put<ExpectedResult>(`${environment.apiUrl}expected-results/${expectedResult.id}`, expectedResult)
     }
 
+    public sortExpectedResults(origin: ExpectedResult, targetId: number): Observable<ExpectedResult[]> {
+        return this.http.put<ExpectedResult[]>(`${environment.apiUrl}expected-results/${targetId}/sort`, origin)
+    }
+
     public deleteExpectedResult(id: number) {
         return this.http.delete(`${environment.apiUrl}expected-results/${id}`);
     }

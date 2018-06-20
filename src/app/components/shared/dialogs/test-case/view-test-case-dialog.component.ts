@@ -4,6 +4,7 @@ import { Component, Input, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Priority } from '../../../../enums';
 import { ToastrService } from 'ngx-toastr';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 interface IDialogData {
     title: string;
@@ -63,6 +64,12 @@ export class ViewTestCaseDialogComponent implements OnInit {
         expectedResult.testCaseId = this.testCase.id
         expectedResult.description = description;
 
+        if (this.testCase.testActions.length > 0) {
+            expectedResult.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+        } else {
+            expectedResult.sequence = 1;
+        }
+
         this.expectedResultsService.createExpectedResult(expectedResult)
             .subscribe(res => {
                 this.testCase.expectedResults.push(res)
@@ -76,6 +83,12 @@ export class ViewTestCaseDialogComponent implements OnInit {
         const testCondition: TestCondition = new TestCondition();
         testCondition.testCaseId = this.testCase.id
         testCondition.description = description;
+
+        if (this.testCase.testActions.length > 0) {
+            testCondition.sequence = this.testCase.testActions[this.testCase.testActions.length - 1].sequence + 1;
+        } else {
+            testCondition.sequence = 1;
+        }
 
         this.testConditionsService.createTestCondition(testCondition)
             .subscribe(res => {

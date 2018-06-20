@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 @Injectable()
 export class HandleErrorService {
@@ -8,11 +9,11 @@ export class HandleErrorService {
     ) { }
 
     public handleError(error: any): void {
-        if (error.error.Description) {
+        if (_.has(error, error.Description)) {
             let errors = '';
             error.error.Description.forEach((err) => errors += `<small>${err}<small><br>`);
             this.toastr.error(errors, 'ERROR');
-        } else if (error.error.Name) {
+        } else if (_.has(error, error.Name)) {
             let errors = '';
             error.error.Name.forEach((err) => errors += `<small>${err}<small><br>`);
             this.toastr.error(errors, 'ERROR');
