@@ -64,11 +64,12 @@ export class ViewTestCaseDialogComponent implements OnInit {
         expectedResult.testCaseId = this.testCase.id
         expectedResult.description = description;
 
-        if (this.testCase.testActions.length > 0) {
+        if (this.testCase.expectedResults.length > 0) {
             expectedResult.sequence = this.testCase.expectedResults[this.testCase.expectedResults.length - 1].sequence + 1;
         } else {
             expectedResult.sequence = 1;
         }
+        console.log(expectedResult.sequence);
 
         this.expectedResultsService.createExpectedResult(expectedResult)
             .subscribe(res => {
@@ -84,7 +85,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
         testCondition.testCaseId = this.testCase.id
         testCondition.description = description;
 
-        if (this.testCase.testActions.length > 0) {
+        if (this.testCase.expectedResults.length > 0) {
             testCondition.sequence = this.testCase.testConditions[this.testCase.testConditions.length - 1].sequence + 1;
         } else {
             testCondition.sequence = 1;
