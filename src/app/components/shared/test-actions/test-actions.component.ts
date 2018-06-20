@@ -86,4 +86,8 @@ export class TestActionsComponent {
       });
   }
 
+  sortedTestActions(testCase: TestCase) {
+    return testCase.testActions.sort((a, b) => a.sequence - b.sequence)
+  }
+
 }
