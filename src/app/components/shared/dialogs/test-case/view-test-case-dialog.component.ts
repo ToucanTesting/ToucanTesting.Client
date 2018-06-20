@@ -69,7 +69,6 @@ export class ViewTestCaseDialogComponent implements OnInit {
         } else {
             expectedResult.sequence = 1;
         }
-        console.log(expectedResult.sequence);
 
         this.expectedResultsService.createExpectedResult(expectedResult)
             .subscribe(res => {
