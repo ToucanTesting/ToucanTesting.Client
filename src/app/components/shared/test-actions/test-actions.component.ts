@@ -27,10 +27,10 @@ export class TestActionsComponent {
       this.tempTestActions = this.testCase.testActions.slice();
     },
     onUpdate: (event) => {
-      const fromAction = this.tempTestActions[event.oldIndex];
-      const targetActionId = this.tempTestActions[event.newIndex].id;
+      const origin = this.tempTestActions[event.oldIndex];
+      const targetId = this.tempTestActions[event.newIndex].id;
       this.testActionsService
-        .sortTestActions(fromAction, targetActionId)
+        .sortTestActions(origin, targetId)
         .subscribe(res => {
           this.testCase.testActions = res;
         }, error => {

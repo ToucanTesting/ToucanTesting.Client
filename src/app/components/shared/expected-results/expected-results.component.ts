@@ -13,6 +13,7 @@ import { SortablejsOptions } from 'angular-sortablejs';
 export class ExpectedResultsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  tempExpectedResults: ExpectedResult[];
   tempDescription: string;
 
   constructor(
@@ -22,9 +23,12 @@ export class ExpectedResultsComponent {
   ) { }
 
   eventOptions: SortablejsOptions = {
+    onChoose: () => {
+      this.tempExpectedResults = this.testCase.expectedResults.slice();
+    },
     onUpdate: (event) => {
-      const origin = this.testCase.expectedResults[event.oldIndex];
-      const targetId = this.testCase.expectedResults[event.newIndex].id;
+      const origin = this.tempExpectedResults[event.oldIndex];
+      const targetId = this.tempExpectedResults[event.newIndex].id;
       this.expectedResultsService
         .sortExpectedResults(origin, targetId)
         .subscribe(res => {
