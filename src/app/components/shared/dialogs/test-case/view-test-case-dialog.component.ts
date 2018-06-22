@@ -84,7 +84,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
         testCondition.testCaseId = this.testCase.id
         testCondition.description = description;
 
-        if (this.testCase.expectedResults.length > 0) {
+        if (this.testCase.testConditions.length > 0) {
             testCondition.sequence = this.testCase.testConditions[this.testCase.testConditions.length - 1].sequence + 1;
         } else {
             testCondition.sequence = 1;
