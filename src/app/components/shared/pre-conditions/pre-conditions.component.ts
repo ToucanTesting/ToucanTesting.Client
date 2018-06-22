@@ -12,6 +12,7 @@ import { SortablejsOptions } from 'angular-sortablejs';
 export class PreConditionsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  tempConditions: TestCondition[];
   tempDescription: string;
 
   constructor(
@@ -21,9 +22,12 @@ export class PreConditionsComponent {
   ) { }
 
   eventOptions: SortablejsOptions = {
+    onChoose: () => {
+      this.tempConditions = this.testCase.testConditions.slice();
+    },
     onUpdate: (event) => {
-      const origin = this.testCase.testConditions[event.oldIndex];
-      const targetId = this.testCase.testConditions[event.newIndex].id;
+      const origin = this.tempConditions[event.oldIndex];
+      const targetId = this.tempConditions[event.newIndex].id;
       this.testConditionsService
         .sortTestConditions(origin, targetId)
         .subscribe(res => {
