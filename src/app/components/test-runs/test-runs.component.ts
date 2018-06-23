@@ -7,6 +7,7 @@ import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/
 import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-dialog.component';
 import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
+import { Pagination } from '../../interfaces/pagination.interface';
 
 @Component({
     selector: 'test-runs',
@@ -16,9 +17,7 @@ export class TestRunsComponent implements OnInit {
     isLoading: boolean = true;
     testRuns: TestRun[];
     panelOpenState: boolean = false;
-    pageNumber: string;
-    pageSize: string;
-    totalPages: string;
+    pagination: Pagination;
 
     constructor(
         private route: ActivatedRoute,
@@ -31,9 +30,12 @@ export class TestRunsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.pageNumber = this.route.snapshot.queryParamMap.get('pageNumber');
-        this.pageSize = this.route.snapshot.queryParamMap.get('pageSize');
-        this.getTestRuns(this.pageNumber);
+        this.pagination = {
+            pageNumber: this.route.snapshot.queryParamMap.get('pageNumber'),
+            pageSize: this.route.snapshot.queryParamMap.get('pageSize'),
+            totalPages: "1"
+        };
+        this.getTestRuns(this.pagination);
     }
 
     openUpsertDialog(testRun?: TestRun): void {
@@ -55,12 +57,12 @@ export class TestRunsComponent implements OnInit {
         });
     }
 
-    getTestRuns(pageNumber: string) {
-        this.pageNumber = pageNumber;
+    getTestRuns(pagination: Pagination) {
+        this.pagination = pagination;
         this.testRunsService
-            .getTestRuns(this.pageNumber, this.pageSize)
+            .getTestRuns(this.pagination)
             .subscribe(res => {
-                this.totalPages = res.headers.get('totalPages');
+                this.pagination.totalPages = res.headers.get('totalPages');
                 this.testRuns = res.body;
                 this.isLoading = false;
             }, error => {
@@ -72,7 +74,7 @@ export class TestRunsComponent implements OnInit {
         this.testRunsService.createTestRun(testRun)
             .subscribe(res => {
                 this.toastr.success(res.name, 'CREATED');
-                this.getTestRuns(this.pageNumber);
+                this.getTestRuns(this.pagination);
             }, error => {
                 this.handleErrorService.handleError(error);
             });
@@ -92,7 +94,7 @@ export class TestRunsComponent implements OnInit {
                 const index = this.testRuns.indexOf(testRun, 0);
                 if (index > -1) {
                     this.testRuns.splice(index, 1);
-                    this.getTestRuns(this.pageNumber);
+                    this.getTestRuns(this.pagination);
                 }
                 this.toastr.success(testRun.name, 'DELETED');
             }, error => {
