@@ -92,6 +92,7 @@ export class TestRunsComponent implements OnInit {
                 const index = this.testRuns.indexOf(testRun, 0);
                 if (index > -1) {
                     this.testRuns.splice(index, 1);
+                    this.getTestRuns(this.pageNumber);
                 }
                 this.toastr.success(testRun.name, 'DELETED');
             }, error => {
