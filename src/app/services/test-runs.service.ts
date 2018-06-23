@@ -14,8 +14,14 @@ export class TestRunsService {
         return this.http.post<TestRun>(`${environment.apiUrl}test-runs`, testRun);
     }
 
-    public getTestRuns(): Observable<TestRun[]> {
-        return this.http.get<TestRun[]>(`${environment.apiUrl}test-runs`);
+    public getTestRuns(pageNumber: string, pageSize: string): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}test-runs`, {
+            params: {
+                pageNumber: pageNumber,
+                pageSize: pageSize
+            },
+            observe: 'response'
+        });
     }
 
     public getTestRun(id: number, results: boolean = false): Observable<TestRun> {

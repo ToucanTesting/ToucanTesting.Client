@@ -68,6 +68,7 @@ import { ManualChartComponent } from '@components/test-runs/test-report/manual-c
 import { TotalsChartComponent } from '@components/test-runs/test-report/totals-chart/totals-chart.component';
 import { AutoChartComponent } from '@components/test-runs/test-report/auto-chart/auto-chart.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -109,7 +110,8 @@ export function tokenGetter() {
     ManualChartComponent,
     TotalsChartComponent,
     AutoChartComponent,
-    FilterPipe
+    FilterPipe,
+    PaginationComponent
   ],
   entryComponents: [CreateTestCaseDialogComponent, CreateTestSuiteDialogComponent, CreateTestModuleDialogComponent, CreateTestRunDialogComponent, DeleteDialogComponent, LogIssueDialogComponent, ViewTestCaseDialogComponent],
   imports: [

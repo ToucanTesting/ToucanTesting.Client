@@ -1,5 +1,6 @@
 import { TestRunsService, HandleErrorService } from '@services';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TestRun } from '@models';
 import { DialogType } from './../../enums';
 import { CreateTestRunDialogComponent } from '@components/shared/dialogs/create/test-run/create-test-run-dialog.component';
@@ -11,12 +12,17 @@ import { ToastrService } from 'ngx-toastr';
     selector: 'test-runs',
     templateUrl: './test-runs.component.html'
 })
-export class TestRunsComponent {
+export class TestRunsComponent implements OnInit {
     isLoading: boolean = true;
     testRuns: TestRun[];
     panelOpenState: boolean = false;
+    pageNumber: string;
+    pageSize: string;
+    totalPages: string;
 
     constructor(
+        private route: ActivatedRoute,
+        private router: Router,
         private toastr: ToastrService,
         private handleErrorService: HandleErrorService,
         private testRunsService: TestRunsService,
@@ -25,14 +31,9 @@ export class TestRunsComponent {
     }
 
     ngOnInit() {
-        this.testRunsService
-            .getTestRuns()
-            .subscribe(testRuns => {
-                this.testRuns = testRuns;
-                this.isLoading = false;
-            }, error => {
-                this.handleErrorService.handleError(error);
-            });
+        this.pageNumber = this.route.snapshot.queryParamMap.get('pageNumber');
+        this.pageSize = this.route.snapshot.queryParamMap.get('pageSize');
+        this.getTestRuns(this.pageNumber);
     }
 
     openUpsertDialog(testRun?: TestRun): void {
@@ -54,11 +55,24 @@ export class TestRunsComponent {
         });
     }
 
+    getTestRuns(pageNumber: string) {
+        this.pageNumber = pageNumber;
+        this.testRunsService
+            .getTestRuns(this.pageNumber, this.pageSize)
+            .subscribe(res => {
+                this.totalPages = res.headers.get('totalPages');
+                this.testRuns = res.body;
+                this.isLoading = false;
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
+
     createTestRun(testRun: TestRun) {
         this.testRunsService.createTestRun(testRun)
             .subscribe(res => {
-                this.testRuns.push(res);
                 this.toastr.success(res.name, 'CREATED');
+                this.getTestRuns(this.pageNumber);
             }, error => {
                 this.handleErrorService.handleError(error);
             });
