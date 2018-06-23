@@ -1,10 +1,10 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
 <tt-no-content *ngIf="testRuns?.length <= 0" [hidden]="isLoading" [type]="'run'"></tt-no-content>
 <div *ngIf="!isLoading">
-  <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns | orderBy : createdAt : true">
+  <pagination [pageNumber]="pageNumber" [pageSize]="pageSize" [totalPages]="totalPages" (callback)="getTestRuns($event)"></pagination>
+  <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <div (mouseover)="hoverIndex === testRuns.indexOf(testRun)" 
-        *ngIf="!testRun.isEditing">
+      <div (mouseover)="hoverIndex === testRuns.indexOf(testRun)" *ngIf="!testRun.isEditing">
         <div class="clickable-text" href [routerLink]="['/test-runs', testRun.id]">{{testRun.name}}
         </div>
         <span>
