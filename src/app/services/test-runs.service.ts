@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TestRun } from '@models';
 import { environment } from 'environments/environment';
+import { Pagination } from '../interfaces/pagination.interface';
 
 @Injectable()
 export class TestRunsService {
@@ -14,11 +15,11 @@ export class TestRunsService {
         return this.http.post<TestRun>(`${environment.apiUrl}test-runs`, testRun);
     }
 
-    public getTestRuns(pageNumber: string, pageSize: string): Observable<any> {
+    public getTestRuns(pagination: Pagination): Observable<any> {
         return this.http.get<any>(`${environment.apiUrl}test-runs`, {
             params: {
-                pageNumber: pageNumber,
-                pageSize: pageSize
+                pageNumber: pagination.pageNumber,
+                pageSize: pagination.pageSize
             },
             observe: 'response'
         });
