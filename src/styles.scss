@@ -5,10 +5,15 @@
 @import "~bootstrap/scss/bootstrap";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import "~ngx-toastr/toastr-bs4-alert";
+@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
 $dark: #333;
 $light: #bbb;
 $active: #28a745;
 $danger: red;
+
+* {
+  font-family: 'Pontano Sans', sans-serif;
+}
 
 .toolbar > span {
   padding: 0 8px;
@@ -158,4 +163,17 @@ body {
 
 .dropdown-item .form-check-label {
   margin-left: 15px;
+}
+
+.card-header {
+  background-color: #386d9a;
+  color: white;
+}
+
+.card-body {
+  background-color: #e8e8e8;
+}
+
+a.header-button {
+  color: #e8e8e8;
 }
