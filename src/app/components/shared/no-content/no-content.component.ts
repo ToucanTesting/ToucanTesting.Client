@@ -12,13 +12,13 @@ export class NoContentComponent implements OnInit {
   ngOnInit() {
     switch (this.type) {
       case 'suite':
-        this.message = 'No Test Suites have been added yet';
+        this.message = 'No Test Suites to display';
         break;
       case 'module':
-        this.message = 'No Modules have been added yet';
+        this.message = 'No Modules to display';
         break;
       case 'run':
-        this.message = 'No Test Runs have been added yet';
+        this.message = 'No Test Runs to display';
         break;
       case 'issue':
         this.message = 'No Issues';
