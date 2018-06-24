@@ -9,7 +9,7 @@
     <div *ngIf="!isLoading">
       <pagination *ngIf="pagination.totalPages > 1" [pageData]="pagination" (callback)="getTestRuns($event)"></pagination>
       <br>
-      <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns | filter : searchText">
+      <ul class="list-group list-group-flush" *ngFor="let testRun of testRuns">
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <div (mouseover)="hoverIndex === testRuns.indexOf(testRun)" *ngIf="!testRun.isEditing">
             <div class="clickable-text" href [routerLink]="['/test-runs', testRun.id]">{{testRun.name}}

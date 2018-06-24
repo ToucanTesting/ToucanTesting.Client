@@ -21,6 +21,14 @@ export class TestCasesService {
     return this.http.get<TestCase[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases`)
   }
 
+  public searchTestCases(searchText): Observable<TestCase[]> {
+    return this.http.get<TestCase[]>(`${environment.apiUrl}test-cases`, {
+      params: {
+        searchText: searchText
+      }
+    })
+  }
+
   public getIssues(testCaseId: number): Observable<TestIssue[]> {
     return this.http.get<TestIssue[]>(`${environment.apiUrl}test-cases/${testCaseId}/test-issues`)
   }
