@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { TestCase } from '@models';
 import { ExpectedResultsService, HandleErrorService } from '@services';
 import { ExpectedResult } from '../../../models';
@@ -17,6 +17,7 @@ export class ExpectedResultsComponent {
   tempDescription: string;
 
   constructor(
+    private zone: NgZone,
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
     private expectedResultsService: ExpectedResultsService
@@ -32,12 +33,14 @@ export class ExpectedResultsComponent {
       this.expectedResultsService
         .sortExpectedResults(origin, targetId)
         .subscribe(res => {
-          this.testCase.expectedResults = res;
+          this.zone.run(() => {
+            this.testCase.expectedResults = res;
+          })
         }, error => {
           this.handleErrorService.handleError(error);
         });
     }
-};
+  };
 
   toggleIsEditing(expectedResult: ExpectedResult) {
     if (!this.isTestRun) {

@@ -4,10 +4,11 @@ import { DialogType } from '../../../enums';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
     selector: 'test-suite',
@@ -15,35 +16,75 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TestSuiteComponent {
     isLoading: boolean = true;
+    isSearching: boolean = false;
     testSuiteId: number;
     testModules: TestModule[];
+    tempTestModules: TestModule[];
     tempName: string;
 
     constructor(
+        private zone: NgZone,
         private toastr: ToastrService,
         private handleErrorService: HandleErrorService,
-        private testSuitesService: TestSuitesService,
         private testModulesService: TestModulesService,
         private testCasesService: TestCasesService,
         private route: ActivatedRoute,
         public dialog: MatDialog
-    ) { }
-
-    ngOnInit() {
-        this.route.paramMap
-            .subscribe(params => {
-                this.testSuiteId = this.route.snapshot.params['id'];
-                this.testModulesService.getTestModules(this.testSuiteId)
-                    .subscribe(testModules => {
-                        this.testModules = testModules;
-                        this.isLoading = false;
-                    }, error => {
-                        this.handleErrorService.handleError(error);
-                    });
-            })
+    ) {
+        this.testSuiteId = Number(this.route.snapshot.paramMap.get('id'))
     }
 
+    eventOptions: SortablejsOptions = {
+        onChoose: () => {
+            this.tempTestModules = this.testModules.slice();
+        },
+        onUpdate: (event) => {
+            const origin = this.tempTestModules[event.oldIndex];
+            const targetId = this.tempTestModules[event.newIndex].id;
+
+            this.testModulesService
+                .sortTestModules(origin, targetId)
+                .subscribe(res => {
+                    this.zone.run(() => {
+                        this.testModules = res;
+                    })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
+        }
+    };
+
+    ngOnInit() {
+        this.testModulesService.getTestModules(this.testSuiteId)
+            .subscribe(testModules => {
+                this.testModules = testModules;
+                this.isLoading = false;
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
+
+    searchTestCases(searchText: string): void {
+        if (searchText.length === 0) {
+            this.isSearching = false;
+            return;
+        }
+        this.testCasesService
+            .searchTestCases(searchText)
+            .subscribe(testCases => {
+                this.testModules.forEach(m => {
+                    this.isSearching = true;
+                    m.testCases = testCases.filter(c => c.testModuleId === m.id);
+                });
+            }, error => {
+                this.handleErrorService.handleError(error);
+            })
+    };
+
     getTestCases(testModule: TestModule) {
+        if (this.isSearching) {
+            return;
+        }
         const index = this.testModules.indexOf(testModule);
         this.testCasesService
             .getTestCases(testModule)
@@ -76,6 +117,11 @@ export class TestSuiteComponent {
 
     createTestModule(testModule: TestModule) {
         testModule.testSuiteId = this.testSuiteId;
+        if (this.testModules.length > 0) {
+            testModule.sequence = this.testModules[this.testModules.length - 1].sequence + 1;
+        } else {
+            testModule.sequence = 1;
+        }
         this.testModulesService.createTestModule(testModule)
             .subscribe(res => {
                 this.testModules.push(res);

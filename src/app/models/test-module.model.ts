@@ -4,6 +4,7 @@ export class TestModule extends Base {
     id: number;
     testSuiteId?: number;
     name: string;
+    sequence: number;
     testCases: TestCase[];
     testResults: TestResult[];
     passes: TestResult[];
