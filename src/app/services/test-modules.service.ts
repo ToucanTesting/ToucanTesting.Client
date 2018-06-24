@@ -31,6 +31,10 @@ export class TestModulesService {
         return this.http.put<TestModule>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}`, testModule)
     }
 
+    public sortTestModules(origin: TestModule, targetId: number): Observable<TestModule[]> {
+        return this.http.put<TestModule[]>(`${environment.apiUrl}test-suites/${origin.testSuiteId}/test-modules/${targetId}/sort`, origin)
+    }
+
     public deleteTestModule(testModule: TestModule) {
         return this.http.delete(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}`);
     }

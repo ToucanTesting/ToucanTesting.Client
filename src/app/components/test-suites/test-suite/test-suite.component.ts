@@ -8,6 +8,7 @@ import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
     selector: 'test-suite',
@@ -18,6 +19,7 @@ export class TestSuiteComponent {
     isSearching: boolean = false;
     testSuiteId: number;
     testModules: TestModule[];
+    tempTestModules: TestModule[];
     tempName: string;
 
     constructor(
@@ -30,6 +32,23 @@ export class TestSuiteComponent {
     ) { 
         this.testSuiteId = Number(this.route.snapshot.paramMap.get('id'))
     }
+
+    eventOptions: SortablejsOptions = {
+        onChoose: () => {
+          this.tempTestModules = this.testModules.slice();
+        },
+        onUpdate: (event) => {
+          const origin = this.tempTestModules[event.oldIndex];
+          const targetId = this.tempTestModules[event.newIndex].id;
+          this.testModulesService
+            .sortTestModules(origin, targetId)
+            .subscribe(res => {
+              this.testModules = res;
+            }, error => {
+              this.handleErrorService.handleError(error);
+            });
+        }
+      };
 
     ngOnInit() {
         this.testModulesService.getTestModules(this.testSuiteId)
@@ -94,6 +113,11 @@ export class TestSuiteComponent {
 
     createTestModule(testModule: TestModule) {
         testModule.testSuiteId = this.testSuiteId;
+        if (this.testModules.length > 0) {
+            testModule.sequence = this.testModules[this.testModules.length - 1].sequence + 1;
+        } else {
+            testModule.sequence = 1;
+        }
         this.testModulesService.createTestModule(testModule)
             .subscribe(res => {
                 this.testModules.push(res);
