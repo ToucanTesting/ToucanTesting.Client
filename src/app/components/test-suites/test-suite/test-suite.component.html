@@ -9,7 +9,7 @@
   <div class="card-body" *ngIf="!isLoading">
     <search-bar (callback)="searchTestCases($event)"></search-bar>
   </div>
-  <div class="card-body" *ngIf="!isLoading">
+  <div class="card-body" *ngIf="!isLoading" [sortablejs]="testModules" [sortablejsOptions]="eventOptions">
     <tt-no-content *ngIf="testModules?.length <= 0" [hidden]="isLoading" [type]="'module'"></tt-no-content>
     <div id="accordion" *ngFor="let testModule of testModules; let i = index">
       <div *ngIf="testModule.testCases.length > 0 || !isSearching" class="card list-group list-group-flush">

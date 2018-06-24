@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { TestCase, TestAction } from '@models';
 import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,7 @@ export class TestActionsComponent {
   tempDescription: string;
 
   constructor(
+    private zone: NgZone,
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
     private testActionsService: TestActionsService
@@ -32,7 +33,9 @@ export class TestActionsComponent {
       this.testActionsService
         .sortTestActions(origin, targetId)
         .subscribe(res => {
-          this.testCase.testActions = res;
+          this.zone.run(() => {
+            this.testCase.testActions = res;
+          })
         }, error => {
           this.handleErrorService.handleError(error);
         });
