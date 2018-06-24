@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone } from '@angular/core';
 import { TestCase } from '@models';
 import { ExpectedResultsService, HandleErrorService } from '@services';
 import { ExpectedResult } from '../../../models';
@@ -16,31 +16,27 @@ export class ExpectedResultsComponent {
   tempExpectedResults: ExpectedResult[];
   tempDescription: string;
 
-  constructor(
-    private zone: NgZone,
-    private toastr: ToastrService,
-    private handleErrorService: HandleErrorService,
-    private expectedResultsService: ExpectedResultsService
-  ) { }
-
   eventOptions: SortablejsOptions = {
-    onChoose: () => {
-      this.tempExpectedResults = this.testCase.expectedResults.slice();
-    },
+    onChoose: () => this.tempExpectedResults = this.testCase.expectedResults.slice(),
     onUpdate: (event) => {
       const origin = this.tempExpectedResults[event.oldIndex];
       const targetId = this.tempExpectedResults[event.newIndex].id;
       this.expectedResultsService
         .sortExpectedResults(origin, targetId)
         .subscribe(res => {
-          this.zone.run(() => {
-            this.testCase.expectedResults = res;
-          })
+          this.zone.run(() => this.testCase.expectedResults = res);
         }, error => {
           this.handleErrorService.handleError(error);
         });
     }
   };
+
+  constructor(
+    private zone: NgZone,
+    private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
+    private expectedResultsService: ExpectedResultsService
+  ) { }
 
   toggleIsEditing(expectedResult: ExpectedResult) {
     if (!this.isTestRun) {
