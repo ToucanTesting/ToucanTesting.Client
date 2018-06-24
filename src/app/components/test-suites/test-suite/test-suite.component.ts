@@ -4,7 +4,7 @@ import { DialogType } from '../../../enums';
 import { CreateTestCaseDialogComponent } from '@components/shared/dialogs/create/test-case/create-test-case-dialog.component';
 import { CreateTestModuleDialogComponent } from '@components/shared/dialogs/create/test-module/create-test-module-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, HostListener, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../../shared/dialogs/delete/delete-dialog.component';
 import { ToastrService } from 'ngx-toastr';
@@ -23,32 +23,36 @@ export class TestSuiteComponent {
     tempName: string;
 
     constructor(
+        private zone: NgZone,
         private toastr: ToastrService,
         private handleErrorService: HandleErrorService,
         private testModulesService: TestModulesService,
         private testCasesService: TestCasesService,
         private route: ActivatedRoute,
         public dialog: MatDialog
-    ) { 
+    ) {
         this.testSuiteId = Number(this.route.snapshot.paramMap.get('id'))
     }
 
     eventOptions: SortablejsOptions = {
         onChoose: () => {
-          this.tempTestModules = this.testModules.slice();
+            this.tempTestModules = this.testModules.slice();
         },
         onUpdate: (event) => {
-          const origin = this.tempTestModules[event.oldIndex];
-          const targetId = this.tempTestModules[event.newIndex].id;
-          this.testModulesService
-            .sortTestModules(origin, targetId)
-            .subscribe(res => {
-              this.testModules = res;
-            }, error => {
-              this.handleErrorService.handleError(error);
-            });
+            const origin = this.tempTestModules[event.oldIndex];
+            const targetId = this.tempTestModules[event.newIndex].id;
+
+            this.testModulesService
+                .sortTestModules(origin, targetId)
+                .subscribe(res => {
+                    this.zone.run(() => {
+                        this.testModules = res;
+                    })
+                }, error => {
+                    this.handleErrorService.handleError(error);
+                });
         }
-      };
+    };
 
     ngOnInit() {
         this.testModulesService.getTestModules(this.testSuiteId)
