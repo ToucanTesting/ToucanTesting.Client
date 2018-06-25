@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone } from '@angular/core';
 import { TestCase, TestAction } from '@models';
 import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
-import { TestCaseComponent } from '@components/shared/test-case/test-case.component';
 import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
@@ -16,31 +15,27 @@ export class TestActionsComponent {
   tempTestActions: TestAction[];
   tempDescription: string;
 
-  constructor(
-    private zone: NgZone,
-    private toastr: ToastrService,
-    private handleErrorService: HandleErrorService,
-    private testActionsService: TestActionsService
-  ) { }
-
   eventOptions: SortablejsOptions = {
-    onChoose: () => {
-      this.tempTestActions = this.testCase.testActions.slice();
-    },
+    onChoose: () => this.tempTestActions = this.testCase.testActions.slice(),
     onUpdate: (event) => {
       const origin = this.tempTestActions[event.oldIndex];
       const targetId = this.tempTestActions[event.newIndex].id;
       this.testActionsService
         .sortTestActions(origin, targetId)
         .subscribe(res => {
-          this.zone.run(() => {
-            this.testCase.testActions = res;
-          })
+          this.zone.run(() => this.testCase.testActions = res);
         }, error => {
           this.handleErrorService.handleError(error);
         });
     }
   };
+
+  constructor(
+    private zone: NgZone,
+    private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
+    private testActionsService: TestActionsService
+  ) { }
 
   toggleIsEditing(testAction: TestAction) {
     if (!this.isTestRun) {
@@ -91,10 +86,6 @@ export class TestActionsComponent {
       }, error => {
         this.handleErrorService.handleError(error);
       });
-  }
-
-  sortedTestActions(testCase: TestCase) {
-    return testCase.testActions.sort((a, b) => a.sequence - b.sequence)
   }
 
 }

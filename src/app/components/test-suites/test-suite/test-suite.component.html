@@ -13,7 +13,7 @@
     <tt-no-content *ngIf="testModules?.length <= 0" [hidden]="isLoading" [type]="'module'"></tt-no-content>
     <div id="accordion" *ngFor="let testModule of testModules; let i = index">
       <div *ngIf="testModule.testCases.length > 0 || !isSearching" class="card list-group list-group-flush">
-        <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="list-group-item d-flex justify-content-between align-items-center sortable">
           <span #toggle (click)="getTestCases(testModule)" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false"
             [attr.aria-controls]="'collapse-' + i" class="clickable-text">{{testModule.name}}
           </span>

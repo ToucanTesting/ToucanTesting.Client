@@ -1,6 +1,6 @@
 <div [sortablejs]="testCase.testActions" [sortablejsOptions]="eventOptions">
   <ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
-    <div class="card modal-item" *ngIf="testCase.testActions.length > 0">
+    <div class="card modal-item sortable" *ngIf="testCase.testActions.length > 0">
       <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
         <span class="editable" *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
           <strong>{{i + 1}}.</strong> {{testAction.description}}

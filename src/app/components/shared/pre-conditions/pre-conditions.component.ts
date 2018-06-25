@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
@@ -15,31 +15,27 @@ export class PreConditionsComponent {
   tempConditions: TestCondition[];
   tempDescription: string;
 
-  constructor(
-    private zone: NgZone,
-    private toastr: ToastrService,
-    private handleErrorService: HandleErrorService,
-    private testConditionsService: TestConditionsService
-  ) { }
-
   eventOptions: SortablejsOptions = {
-    onChoose: () => {
-      this.tempConditions = this.testCase.testConditions.slice();
-    },
+    onChoose: () => this.tempConditions = this.testCase.testConditions.slice(),
     onUpdate: (event) => {
       const origin = this.tempConditions[event.oldIndex];
       const targetId = this.tempConditions[event.newIndex].id;
       this.testConditionsService
         .sortTestConditions(origin, targetId)
         .subscribe(res => {
-          this.zone.run(() => {
-            this.testCase.testConditions = res;
-          })
+          this.zone.run(() => this.testCase.testConditions = res);
         }, error => {
           this.handleErrorService.handleError(error);
         });
     }
   };
+
+  constructor(
+    private zone: NgZone,
+    private toastr: ToastrService,
+    private handleErrorService: HandleErrorService,
+    private testConditionsService: TestConditionsService
+  ) { }
 
   toggleIsEditing(testCondition: TestCondition) {
     if (!this.isTestRun) {
