@@ -7,6 +7,7 @@ import { DeleteDialogComponent } from './../shared/dialogs/delete/delete-dialog.
 import { DialogType } from './../../enums';
 import { TestSuite } from '@models';
 import { ToastrService } from 'ngx-toastr';
+import { saveAs } from 'file-saver';
 
 @Component({
     selector: 'test-suites',
@@ -100,6 +101,18 @@ export class TestSuitesComponent {
             .subscribe(res => {
                 this.testSuites.push(res);
                 this.toastr.success(res.name, 'CREATED');
+            }, error => {
+                this.handleErrorService.handleError(error);
+            });
+    }
+
+    exportToCsv(testSuite: TestSuite): void {
+        this.toastr.info('Please Wait', 'PREPARING DATA')
+        this.testSuitesService
+            .exportToCsv(testSuite.id)
+            .subscribe(res => {
+                saveAs(res, `${testSuite.name}.csv`);
+                this.toastr.success(testSuite.name, 'EXPORTED');
             }, error => {
                 this.handleErrorService.handleError(error);
             });
