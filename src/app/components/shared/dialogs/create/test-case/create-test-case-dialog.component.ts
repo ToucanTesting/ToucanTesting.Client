@@ -44,17 +44,18 @@ export class CreateTestCaseDialogComponent {
         this.testCaseForm = this.fb.group({
             testModuleId: null,
             description: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(255)])],
+            automationId: [null, Validators.compose([Validators.minLength(4), Validators.maxLength(4)])],
             isAutomated: false,
             hasCriteria: false,
             priority: Priority.Low
         })
     }
 
-
     setTestCaseForm(values) {
         this.testCaseForm.setValue({
             testModuleId: values.testModuleId,
             description: values.description,
+            automationId: values.automationId,
             isAutomated: values.isAutomated,
             hasCriteria: values.hasCriteria,
             priority: values.priority

@@ -9,7 +9,9 @@ export class HandleErrorService {
     ) { }
 
     public handleError(error: any): void {
-        if (_.has(error, error.Description)) {
+        if (error.error.Message) {
+            this.toastr.error(`<small>${error.error.Message}<small>`, 'ERROR');
+        } else if (_.has(error, error.Description)) {
             let errors = '';
             error.error.Description.forEach((err) => errors += `<small>${err}<small><br>`);
             this.toastr.error(errors, 'ERROR');

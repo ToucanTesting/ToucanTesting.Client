@@ -28,7 +28,7 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { PriorityPipe } from './pipes/priority.pipe';
-import { OrderModule } from 'ngx-order-pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -112,6 +112,7 @@ export function tokenGetter() {
     TotalsChartComponent,
     AutoChartComponent,
     FilterPipe,
+    OrderByPipe,
     PaginationComponent,
     SearchBarComponent
   ],
@@ -136,7 +137,6 @@ export function tokenGetter() {
       }
     }),
     FormsModule,
-    OrderModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',

@@ -44,7 +44,6 @@ export class IssuesComponent implements OnInit {
   }
 
   openTestCaseEditDialog(testIssue: TestIssue): void {
-    console.log('hit')
     const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue', payload: testIssue } });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -62,7 +61,6 @@ export class IssuesComponent implements OnInit {
       .subscribe((res: TestIssue) => {
         this.toastr.success(testIssue.reference, 'UPDATED');
       }, error => {
-        console.log(error)
         this.handleErrorService.handleError(error);
       });
   }

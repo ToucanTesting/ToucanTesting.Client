@@ -26,6 +26,12 @@
           <option [value]="priorityOptions.Critical">Critical</option>
         </select>
       </div>
+      <div *ngIf="testCaseForm.value.isAutomated" class="form-group">
+          <label for="automationIdInput">Automation ID</label>
+          <input type="text" class="form-control" [ngClass]="{'is-invalid': !testCaseForm.controls['automationId'].valid && testCaseForm.controls['automationId'].touched}" id="automationIdInput" placeholder="Automation ID" formControlName="automationId">
+          <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('minlength')">Must be 4 characters long.</small>
+          <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('maxlength')">Must be 4 characters long.</small>
+        </div>
       <div class="form-check">
         <label class="form-check-label">
           <input type="checkbox" class="form-check-input" formControlName="isAutomated"> Automated

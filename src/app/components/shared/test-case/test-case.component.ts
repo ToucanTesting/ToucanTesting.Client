@@ -68,6 +68,7 @@ export class TestCaseComponent {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         testCase.description = res.description;
+        testCase.automationId = res.automationId;
         testCase.isAutomated = res.isAutomated;
         testCase.hasCriteria = res.hasCriteria;
         testCase.priority = res.priority;
