@@ -38,8 +38,6 @@ export class CreateTestCaseDialogComponent {
             this.setTestCaseForm(data.payload);
         }
         this.testSuiteId = (data.testSuiteId) ? data.testSuiteId : null;
-
-        console.log(this.testCaseForm.value.isAutomated);
     }
 
     createTestCaseForm() {
