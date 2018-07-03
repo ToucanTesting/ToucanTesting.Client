@@ -29,4 +29,8 @@ export class TestSuitesService {
     public deleteTestSuite(id: number) {
         return this.http.delete(`${environment.apiUrl}test-suites/${id}`);
     }
+
+    public exportToCsv(id: number) {
+        return this.http.get(`${environment.apiUrl}test-suites/${id}/export`, {responseType: "blob"});
+    }
 }

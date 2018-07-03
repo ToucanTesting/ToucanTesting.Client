@@ -17,6 +17,7 @@
               <mat-icon>more_vert</mat-icon>
             </span>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <span class="dropdown-item" (click)="exportToCsv(testSuite)">Export to CSV</span>
               <span class="dropdown-item" (click)="openUpsertDialog(testSuite)">Edit</span>
               <span class="dropdown-item" (click)="openDeleteDialog(testSuite)">Delete</span>
             </div>
