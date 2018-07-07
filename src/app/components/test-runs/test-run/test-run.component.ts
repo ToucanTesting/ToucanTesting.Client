@@ -103,9 +103,9 @@ export class TestRunComponent {
             })
     }
 
-    public getExpectedResults(testModule: TestModule, testCase: TestCase) {
+    public getExpectedResults(testCase: TestCase) {
         if (testCase.expectedResults.length <= 0) {
-            this.expectedResultsService.getTestResults(testModule, testCase)
+            this.expectedResultsService.getExpectedResults(testCase)
                 .subscribe(expectedResults => {
                     testCase.expectedResults = expectedResults;
                 }, error => {

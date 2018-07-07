@@ -14,6 +14,10 @@ export class TestCasesService {
     return this.http.post<TestCase>(`${environment.apiUrl}test-cases`, testCase);
   }
 
+  public getTestCase(testCaseId: number): Observable<TestCase> {
+    return this.http.get<TestCase>(`${environment.apiUrl}test-cases/${testCaseId}`)
+  }
+
   public getTestCases(testModule: TestModule, beforeDate?: Date): Observable<TestCase[]> {
     if (beforeDate) {
       return this.http.get<TestCase[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases?beforeDate=${beforeDate}`)
