@@ -63,6 +63,14 @@ export class TestRunsComponent implements OnInit {
             .getTestRuns(this.pagination)
             .subscribe(res => {
                 this.pagination.totalPages = res.headers.get('totalPages');
+                if (Number(this.route.snapshot.queryParamMap.get('pageNumber')) > Number(this.pagination.totalPages)) {
+                    const urlTree = this.router.parseUrl(this.router.url);
+                    urlTree.queryParams['pageNumber'] = this.pagination.totalPages;
+                    pagination.pageNumber = this.pagination.totalPages;
+
+                    this.router.navigateByUrl(urlTree);
+                    this.getTestRuns(pagination);
+                }
                 this.testRuns = res.body;
                 this.isLoading = false;
             }, error => {
