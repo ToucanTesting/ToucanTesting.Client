@@ -76,8 +76,10 @@ export class TestReportComponent implements OnInit {
             this.testModulesService
               .getTestReport(testRun.testSuiteId, testRun.createdAt)
               .subscribe(testModules => {
+                var testCases = [];
                 testModules.forEach((testModule) => {
                   testModule.testCases.forEach(tc => {
+                    testCases.push(tc);
                     if (tc.isAutomated) {
                       this.totalTestCases.auto += 1;
                       this.autoTestCases.total += 1;
@@ -85,10 +87,15 @@ export class TestReportComponent implements OnInit {
                       this.manualTestCases.total += 1;
                     }
                   })
-
                   this.totalTestCases.all += testModule.testCases.length;
 
                 })
+
+                this.testResults.forEach(tr => {
+                  var testCase = testCases.find(tc => tc.id === tr.testCaseId);
+                  tr.testModuleId = testCase.testModuleId;
+                })
+
                 this.testModules = testModules.map(testModule => ({
                   ...testModule,
                   sort: null,
