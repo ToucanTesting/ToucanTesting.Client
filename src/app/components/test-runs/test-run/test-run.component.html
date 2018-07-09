@@ -1,20 +1,30 @@
 <tt-loader *ngIf="isLoading"></tt-loader>
-<div *ngIf="testModules" class="card-body">
-  <h5 class="card-title">{{testRun?.name}}</h5>
-  <div id="accordion" *ngFor="let testModule of testModules; let i = index">
-    <div class="card list-group list-group-flush">
-      <div class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <span #toggle class="clickable-text" data-toggle="collapse" [attr.data-target]="'#collapse-' + i"
-          aria-expanded="false" [attr.aria-controls]="'collapse-' + i" (click)="getTestResults(testModule)">{{testModule.name}}</span>
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <strong>{{testRun?.name}}</strong>
+    <a (click)="openUpsertDialog()" class="header-button" style="cursor:pointer;">
+      <mat-icon>add</mat-icon>
+    </a>
+  </div>
+  <div class="card-body" *ngIf="!isLoading">
+    <search-bar (callback)="searchTestCases($event)"></search-bar>
+  </div>
+  <div *ngIf="testModules" class="card-body">
+    <div id="accordion" *ngFor="let testModule of testModules; let i = index">
+      <div *ngIf="testModule.testCases.length > 0 || !isSearching" class="card list-group list-group-flush">
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <span #toggle class="clickable-text" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false" [attr.aria-controls]="'collapse-' + i"
+              (click)="getTestResults(testModule)">{{testModule.name}}</span>
+          </div>
+          <div>
+            <!-- Placeholder -->
+          </div>
         </div>
-        <div>
-          <!-- Placeholder -->
-        </div>
-      </div>
-      <div id="collapse-{{i}}" class="collapse" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
-        <div class="card-body">
-          <test-module [testModule]="testModule" [isTestRun]=true [testRunId]="testRun.id"></test-module>
+        <div id="collapse-{{i}}" class="collapse" [ngClass]="{'show': isSearching}" [attr.aria-labelledby]="'heading-' + i" data-parent="#accordion">
+          <div class="card-body">
+            <test-module [testModule]="testModule" [isTestRun]=true [testRunId]="testRun.id"></test-module>
+          </div>
         </div>
       </div>
     </div>

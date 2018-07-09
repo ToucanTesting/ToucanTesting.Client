@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TestRunComponent {
     isLoading: boolean = true;
+    isSearching: boolean = false;
     testRun: TestRun;
     testRunId: number;
     testResults: TestResult[] = [];
@@ -75,6 +76,23 @@ export class TestRunComponent {
 
             })
     }
+
+    searchTestCases(searchText: string): void {
+        if (searchText.length === 0) {
+            this.isSearching = false;
+            return;
+        }
+        this.testCasesService
+            .searchTestCases(searchText)
+            .subscribe(testCases => {
+                this.testModules.forEach(m => {
+                    this.isSearching = true;
+                    m.testCases = testCases.filter(c => c.testModuleId === m.id);
+                });
+            }, error => {
+                this.handleErrorService.handleError(error);
+            })
+    };
 
     public getTestResults(testModule: TestModule) {
         const index = this.testModules.indexOf(testModule);
