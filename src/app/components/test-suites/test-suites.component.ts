@@ -80,7 +80,7 @@ export class TestSuitesComponent {
     openUpsertDialog(testSuite?: TestSuite): void {
         const dialogRef = this.dialog.open(CreateTestSuiteDialogComponent, {
             data: {
-                title: 'Create a New Test Suite',
+                title: (testSuite) ? 'Rename Test Suite' : 'Create a New Test Suite',
                 type: DialogType.TestSuite,
                 testSuite: testSuite
             }
