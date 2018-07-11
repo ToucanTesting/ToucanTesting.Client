@@ -5,7 +5,7 @@
     </a>
   </li>
   <li class="nav-item" [ngClass]="{'link-active': isLinkActive('/test-runs')}">
-    <a class="nav-link" [routerLink]="['/test-runs']" [queryParams]="{pageNumber: '1', pageSize: '10'}">
+    <a class="nav-link" [routerLink]="['/test-runs']" [queryParams]="{pageNumber: '1', pageSize: '10', searchText: ''}">
       Runs
     </a>
   </li>

@@ -14,8 +14,8 @@ export class TestActionsService {
         return this.http.post<TestAction>(`${environment.apiUrl}test-actions`, testAction);
     }
 
-    public getTestActions(testModule: TestModule, testCase: TestCase): Observable<TestAction[]> {
-        return this.http.get<TestAction[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/test-actions`)
+    public getTestActions(testCase: TestCase): Observable<TestAction[]> {
+        return this.http.get<TestAction[]>(`${environment.apiUrl}test-cases/${testCase.id}/test-actions`)
     }
 
     public updateTestAction(testAction: TestAction): Observable<TestAction> {

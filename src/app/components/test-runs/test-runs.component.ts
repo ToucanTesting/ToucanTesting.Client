@@ -15,6 +15,7 @@ import { Pagination } from '../../interfaces/pagination.interface';
 })
 export class TestRunsComponent implements OnInit {
     isLoading: boolean = true;
+    isSearching: boolean = false;
     testRuns: TestRun[];
     panelOpenState: boolean = false;
     pagination: Pagination;
@@ -35,6 +36,7 @@ export class TestRunsComponent implements OnInit {
             pageSize: this.route.snapshot.queryParamMap.get('pageSize'),
             totalPages: "1"
         };
+
         this.getTestRuns(this.pagination);
     }
 
@@ -57,12 +59,28 @@ export class TestRunsComponent implements OnInit {
         });
     }
 
-    getTestRuns(pagination: Pagination) {
+    searchTestRuns(searchText: string): void {
+        if (searchText.length === 0) {
+            this.isSearching = false;
+        }
+        this.getTestRuns(this.pagination, searchText);
+    };
+
+    getTestRuns(pagination: Pagination, searchText?: string) {
         this.pagination = pagination;
+        this.isSearching = !!searchText;
         this.testRunsService
-            .getTestRuns(this.pagination)
+            .getTestRuns(this.pagination, searchText)
             .subscribe(res => {
                 this.pagination.totalPages = res.headers.get('totalPages');
+                if (Number(this.route.snapshot.queryParamMap.get('pageNumber')) > Number(this.pagination.totalPages)) {
+                    const urlTree = this.router.parseUrl(this.router.url);
+                    urlTree.queryParams['pageNumber'] = this.pagination.totalPages;
+                    pagination.pageNumber = this.pagination.totalPages;
+
+                    this.router.navigateByUrl(urlTree);
+                    this.getTestRuns(pagination);
+                }
                 this.testRuns = res.body;
                 this.isLoading = false;
             }, error => {

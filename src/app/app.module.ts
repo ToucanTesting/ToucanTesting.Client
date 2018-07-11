@@ -24,6 +24,7 @@ import {
   MatDialogModule,
 } from '@angular/material';
 import { SortablejsModule } from 'angular-sortablejs';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { KeysPipe } from './pipes/keys.pipe';
 import { StatusPipe } from './pipes/status.pipe';
@@ -138,6 +139,7 @@ export function tokenGetter() {
     }),
     FormsModule,
     ReactiveFormsModule,
+    BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       enableHtml: true

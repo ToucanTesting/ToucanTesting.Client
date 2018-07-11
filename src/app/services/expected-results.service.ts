@@ -14,8 +14,8 @@ export class ExpectedResultsService {
         return this.http.post<ExpectedResult>(`${environment.apiUrl}expected-results`, expectedResult);
     }
 
-    public getTestResults(testModule: TestModule, testCase: TestCase): Observable<ExpectedResult[]> {
-        return this.http.get<ExpectedResult[]>(`${environment.apiUrl}test-suites/${testModule.testSuiteId}/test-modules/${testModule.id}/test-cases/${testCase.id}/expected-results`)
+    public getExpectedResults(testCase: TestCase): Observable<ExpectedResult[]> {
+        return this.http.get<ExpectedResult[]>(`${environment.apiUrl}test-cases/${testCase.id}/expected-results`)
     }
 
     public updateExpectedResult(expectedResult: ExpectedResult): Observable<ExpectedResult> {

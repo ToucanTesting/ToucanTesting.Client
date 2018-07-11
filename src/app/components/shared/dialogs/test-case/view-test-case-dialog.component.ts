@@ -22,7 +22,6 @@ export class ViewTestCaseDialogComponent implements OnInit {
     title: string;
     type: string = 'expected';
     testCase: TestCase;
-    testModule: TestModule;
     isTestReport: boolean = false;
     priorityOptions = Priority;
 
@@ -39,16 +38,14 @@ export class ViewTestCaseDialogComponent implements OnInit {
         this.title = data.title;
         this.type = data.type;
         this.testCase = data.testCase;
-        this.testModule = data.testModule;
         this.isTestReport = data.isTestReport;
     }
 
     ngOnInit() {
         if (this.testCase.expectedResults.length <= 0 && this.type !== 'issue') {
-            this.expectedResultsService.getTestResults(this.testModule, this.testCase)
+            this.expectedResultsService.getExpectedResults(this.testCase)
                 .subscribe((expectedResults: ExpectedResult[]) => {
-                    const index = this.testModule.testCases.indexOf(this.testCase)
-                    this.testModule.testCases[index].expectedResults = expectedResults;
+                    this.testCase.expectedResults = expectedResults;
                 }, error => {
                     this.handleErrorService.handleError(error);
                 });
@@ -126,9 +123,9 @@ export class ViewTestCaseDialogComponent implements OnInit {
         return description;
     }
 
-    public getTestActions(testModule: TestModule, testCase: TestCase) {
+    public getTestActions(testCase: TestCase) {
         if (testCase.testActions.length <= 0) {
-            this.testActionsService.getTestActions(testModule, testCase)
+            this.testActionsService.getTestActions(testCase)
                 .subscribe(testActions => {
                     this.testCase.testActions = testActions;
                 }, error => {
@@ -137,9 +134,9 @@ export class ViewTestCaseDialogComponent implements OnInit {
         }
     }
 
-    public getTestResults(testModule: TestModule, testCase: TestCase) {
+    public getTestResults(testCase: TestCase) {
         if (testCase.expectedResults.length <= 0) {
-            this.expectedResultsService.getTestResults(testModule, testCase)
+            this.expectedResultsService.getExpectedResults(testCase)
                 .subscribe(expectedResults => {
                     this.testCase.expectedResults = expectedResults;
                 }, error => {
@@ -148,9 +145,9 @@ export class ViewTestCaseDialogComponent implements OnInit {
         }
     }
 
-    public getTestConditions(testModule: TestModule, testCase: TestCase) {
+    public getTestConditions(testCase: TestCase) {
         if (testCase.testConditions.length <= 0) {
-            this.testConditionsService.getTestConditions(testModule, testCase)
+            this.testConditionsService.getTestConditions(testCase)
                 .subscribe(testConditions => {
                     this.testCase.testConditions = testConditions;
                 }, error => {

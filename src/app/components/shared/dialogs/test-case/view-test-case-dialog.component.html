@@ -4,15 +4,15 @@
     <ul class="nav nav-tabs card-header-tabs" role="tablist">
       <li class="nav-item">
         <a #expectedTab class="nav-link active" id="expected-tab" data-toggle="tab" href="#expected" role="tab" [attr.aria-controls]="expected-tab"
-          aria-selected="true" (click)="getTestResults(testModule, testCase); type = 'expected'">Expected Results</a>
+          aria-selected="true" (click)="getTestResults(testCase); type = 'expected'">Expected Results</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="pre-conditions-tab" data-toggle="tab" href="#pre-conditions" role="tab" [attr.aria-controls]="pre-conditions-tab"
-          aria-selected="false" (click)="getTestConditions(testModule, testCase); type = 'condition'">Pre-Conditions</a>
+          aria-selected="false" (click)="getTestConditions(testCase); type = 'condition'">Pre-Conditions</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="test-actions-tab" data-toggle="tab" href="#test-actions" role="tab" aria-controls="contact" [attr.aria-controls]="test-actions-tab"
-          aria-selected="false" (click)="getTestActions(testModule, testCase); type = 'action'">Test Actions</a>
+          aria-selected="false" (click)="getTestActions(testCase); type = 'action'">Test Actions</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="test-issues-tab" data-toggle="tab" href="#test-issues" role="tab" aria-controls="contact" [attr.aria-controls]="test-issues-tab"

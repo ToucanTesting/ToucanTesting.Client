@@ -11,6 +11,11 @@
         <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('minlength')">Must be at least 3 characters long.</small>
         <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('maxlength')">Cannot exceed 255 characters.</small>
       </div>
+      <div class="form-group"*ngIf="testSuiteId">
+        <label for="lastTestedSelectInput">Last Tested</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': !testCaseForm.controls['lastTested'].valid && testCaseForm.controls['lastTested'].touched}"
+          id="lastTestedSelectInput" placeholder="MM/DD/YYYY" formControlName="lastTested" bsDatepicker [bsValue]="lastTested">
+      </div>
       <div class="form-group" *ngIf="testSuiteId">
         <label for="selectTestModule">Test Module</label>
         <select class="form-control" id="selectTestModule" formControlName="testModuleId">
@@ -27,11 +32,12 @@
         </select>
       </div>
       <div *ngIf="testCaseForm.value.isAutomated" class="form-group">
-          <label for="automationIdInput">Automation ID</label>
-          <input type="text" class="form-control" [ngClass]="{'is-invalid': !testCaseForm.controls['automationId'].valid && testCaseForm.controls['automationId'].touched}" id="automationIdInput" placeholder="Automation ID" formControlName="automationId">
-          <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('minlength')">Must be 4 characters long.</small>
-          <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('maxlength')">Must be 4 characters long.</small>
-        </div>
+        <label for="automationIdInput">Automation ID</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': !testCaseForm.controls['automationId'].valid && testCaseForm.controls['automationId'].touched}"
+          id="automationIdInput" placeholder="Automation ID" formControlName="automationId">
+        <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('minlength')">Must be 4 characters long.</small>
+        <small class="invalid-feedback" *ngIf="testCaseForm.controls['automationId'].hasError('maxlength')">Must be 4 characters long.</small>
+      </div>
       <div class="form-check">
         <label class="form-check-label">
           <input type="checkbox" class="form-check-input" formControlName="isAutomated"> Automated
