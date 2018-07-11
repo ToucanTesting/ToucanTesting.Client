@@ -6,8 +6,9 @@
       <mat-icon>add</mat-icon>
     </a>
   </div>
-  <div class="card-body">
+  <div class="card-body" *ngIf="!isLoading">
     <div *ngIf="!isLoading">
+      <search-bar (callback)="searchTestRuns($event)"></search-bar>
       <pagination [pageData]="pagination" (callback)="getTestRuns($event)"></pagination>
       <br>
       <tt-no-content *ngIf="testRuns?.length <= 0" [hidden]="isLoading" [type]="'run'"></tt-no-content>

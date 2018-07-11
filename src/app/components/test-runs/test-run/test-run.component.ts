@@ -85,8 +85,8 @@ export class TestRunComponent {
         this.testCasesService
             .searchTestCases(searchText)
             .subscribe(testCases => {
+                this.isSearching = true;
                 this.testModules.forEach(m => {
-                    this.isSearching = true;
                     m.testCases = testCases.filter(c => c.testModuleId === m.id);
                 });
             }, error => {

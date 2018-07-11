@@ -15,11 +15,12 @@ export class TestRunsService {
         return this.http.post<TestRun>(`${environment.apiUrl}test-runs`, testRun);
     }
 
-    public getTestRuns(pagination: Pagination): Observable<any> {
+    public getTestRuns(pagination: Pagination, searchText?: string): Observable<any> {
         return this.http.get<any>(`${environment.apiUrl}test-runs`, {
             params: {
                 pageNumber: pagination.pageNumber,
-                pageSize: pagination.pageSize
+                pageSize: pagination.pageSize,
+                searchText: searchText || ""
             },
             observe: 'response'
         });
