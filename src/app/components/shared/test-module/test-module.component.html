@@ -45,12 +45,22 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByButton">
             <span class="dropdown-item">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.onlyNeverTested" (click)="filterTestCases()"> Only Never Tested
+                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.onlyNeverTested" (click)="filterTestCases()"> Never Tested
               </label>
             </span>
             <span class="dropdown-item">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" [(ngModel)]="filters.needsCriteria" (click)="filterTestCases()"> Needs Criteria
+              </label>
+            </span>
+            <span class="dropdown-item">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.isAutomated" (click)="filterTestCases()"> Automated
+              </label>
+            </span>
+            <span class="dropdown-item">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.hasIssues" (click)="filterTestCases()"> Has Issues
               </label>
             </span>
           </div>
@@ -61,12 +71,10 @@
             <strong>{{displayFriendly(testModule.sort)}}</strong>
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByButton">
-            <span (click)="testModule.sort = 'id'" class="dropdown-item">Id</span>
             <span (click)="testModule.sort = 'description'" class="dropdown-item">Description</span>
             <span (click)="testModule.sort = 'priority'" class="dropdown-item">Priority</span>
             <span (click)="testModule.sort = 'lastTested'" class="dropdown-item">Last Tested</span>
             <span (click)="testModule.sort = 'isAutomated'" class="dropdown-item">Automated</span>
-            <span (click)="testModule.sort = 'testIssues'" class="dropdown-item">Issues</span>
             <span (click)="testModule.sort = 'hasCriteria'" class="dropdown-item">Needs Criteria</span>
           </div>
         </span>

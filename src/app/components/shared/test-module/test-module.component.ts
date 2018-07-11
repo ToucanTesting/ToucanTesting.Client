@@ -26,7 +26,9 @@ export class TestModuleComponent {
 
   filters = {
     onlyNeverTested: false,
-    needsCriteria: false
+    needsCriteria: false,
+    isAutomated: false,
+    hasIssues: false
   };
 
   constructor(
@@ -47,6 +49,22 @@ export class TestModuleComponent {
     if (this.filters.needsCriteria) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (results[i].hasCriteria) {
+          results.splice(results.indexOf(results[i]), 1)
+        }
+      }
+    }
+
+    if (this.filters.isAutomated) {
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (!results[i].isAutomated) {
+          results.splice(results.indexOf(results[i]), 1)
+        }
+      }
+    }
+
+    if (this.filters.hasIssues) {
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (results[i].testIssues.length < 1) {
           results.splice(results.indexOf(results[i]), 1)
         }
       }
@@ -114,9 +132,6 @@ export class TestModuleComponent {
   displayFriendly(ugly: string) {
     let friendly = '';
     switch (ugly) {
-      case 'id':
-        friendly = 'Id';
-        break;
       case 'description':
         friendly = 'Description';
         break;
@@ -128,9 +143,6 @@ export class TestModuleComponent {
         break;
       case 'isAutomated':
         friendly = 'Automated';
-        break;
-      case 'testIssues':
-        friendly = 'Issues';
         break;
       case 'hasCriteria':
         friendly = 'Needs Criteria';
