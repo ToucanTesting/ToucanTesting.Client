@@ -100,7 +100,7 @@ export class TestSuiteComponent {
             data: {
                 title: 'Add a Test Module',
                 type: DialogType.TestModule,
-                testModule: testModule || null
+                testModule: testModule || null,
             }
         });
 
@@ -164,7 +164,7 @@ export class TestSuiteComponent {
     }
 
     openCreateTestCaseDialog(testModule: TestModule): void {
-        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { width: '300px', data: { title: 'Add a Test Case', type: DialogType.TestCase } });
+        const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { width: '300px', data: { title: 'Add a Test Case', type: DialogType.TestCase, testModule: testModule } });
 
         dialogRef.afterClosed().subscribe(testCase => {
             if (testCase) {

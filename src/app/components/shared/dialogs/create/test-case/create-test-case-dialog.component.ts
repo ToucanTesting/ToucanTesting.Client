@@ -1,15 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { TestSuitesService, TestModulesService, HandleErrorService } from '@services';
-import { TestSuite, TestModule, TestCase } from '@models';
+import { TestModulesService, HandleErrorService, TestCasesService } from '@services';
+import { TestModule, TestCase } from '@models';
 import { DialogType, Priority } from './../../../../../enums';
 import { ToastrService } from 'ngx-toastr';
 
 interface IDialogData {
     title: string;
     type: DialogType;
+    testModule: TestModule;
     payload?: TestCase;
     testSuiteId?: number;
 }
@@ -22,6 +22,7 @@ export class CreateTestCaseDialogComponent {
     testSuiteId: number;
     testModules: TestModule[];
     title: string;
+    testModule: TestModule;
     priorityOptions = Priority;
     testCaseForm: FormGroup;
 
@@ -30,14 +31,27 @@ export class CreateTestCaseDialogComponent {
         private handleErrorService: HandleErrorService,
         private fb: FormBuilder,
         private testModulesService: TestModulesService,
+        private testCasesService: TestCasesService,
         public dialogRef: MatDialogRef<CreateTestCaseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
         this.title = data.title;
+        this.testModule = data.testModule;
         this.createTestCaseForm();
         if (data.payload) {
             this.setTestCaseForm(data.payload);
         }
         this.testSuiteId = (data.testSuiteId) ? data.testSuiteId : null;
+    }
+
+    testCaseUniqueValidator(descriptionKey: string, testModule: TestModule) {
+        return (group: FormGroup) => {
+            let descriptionInput = group.controls[descriptionKey];
+            const testCase = testModule.testCases.find(c => c.description === descriptionInput.value);
+            if (!!testCase && testCase.isEnabled && testCase.id !== this.data.payload.id) {
+                return descriptionInput.setErrors({ testCaseUnique: true });
+            }
+            return null;
+        };
     }
 
     createTestCaseForm() {
@@ -49,7 +63,7 @@ export class CreateTestCaseDialogComponent {
             isAutomated: false,
             hasCriteria: false,
             priority: Priority.Low
-        })
+        }, { validator: this.testCaseUniqueValidator('description', this.testModule) })
     }
 
     setTestCaseForm(values) {
@@ -68,7 +82,7 @@ export class CreateTestCaseDialogComponent {
         this.dialogRef.close();
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         if (this.testSuiteId) {
             this.testModulesService
                 .getTestModules(this.testSuiteId)
@@ -77,6 +91,10 @@ export class CreateTestCaseDialogComponent {
                 }, error => {
                     this.handleErrorService.handleError(error);
                 });
+        }
+
+        if (this.testModule.testCases.length === 0) {
+            this.testModule.testCases = await this.testCasesService.getTestCases(this.testModule).toPromise();
         }
     }
 

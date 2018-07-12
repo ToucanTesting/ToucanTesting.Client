@@ -63,7 +63,7 @@ export class TestCaseComponent {
   }
 
   openTestCaseEditDialog(testCase: TestCase, testSuiteId?: number): void {
-    const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Update a Test Case', payload: testCase, testSuiteId: (testSuiteId) ? testSuiteId : null } });
+    const dialogRef = this.dialog.open(CreateTestCaseDialogComponent, { data: { title: 'Update a Test Case', payload: testCase, testSuiteId: (testSuiteId) ? testSuiteId : null, testModule: this.testModule } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
