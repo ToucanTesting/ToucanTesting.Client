@@ -107,11 +107,13 @@ export class TestSuitesComponent {
     }
 
     exportToCsv(testSuite: TestSuite): void {
+        testSuite.isDownloading = true;
         this.toastr.info('Please Wait', 'PREPARING DATA')
         this.testSuitesService
             .exportToCsv(testSuite.id)
             .subscribe(res => {
                 saveAs(res, `${testSuite.name}.csv`);
+                testSuite.isDownloading = false;
                 this.toastr.success(testSuite.name, 'EXPORTED');
             }, error => {
                 this.handleErrorService.handleError(error);
