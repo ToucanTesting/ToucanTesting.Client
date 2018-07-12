@@ -28,7 +28,7 @@ export class PaginationComponent {
   public first(): void {
     const urlTree = this.router.parseUrl(this.router.url);
     this.pageData.pageNumber = "1";
-    urlTree.queryParams['pageNumber'] = "1";
+    urlTree.queryParams['pageNumber'] = this.pageData.pageNumber;
 
     this.router.navigateByUrl(urlTree);
     this.callback.emit(this.pageData);
@@ -60,6 +60,7 @@ export class PaginationComponent {
 
   public last(): void {
     const urlTree = this.router.parseUrl(this.router.url);
+    this.pageData.pageNumber = this.pageData.totalPages;
     urlTree.queryParams['pageNumber'] = this.pageData.totalPages;
 
     this.router.navigateByUrl(urlTree);

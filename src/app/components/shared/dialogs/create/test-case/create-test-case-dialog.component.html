@@ -10,6 +10,7 @@
         <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('required')">Must include a description.</small>
         <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('minlength')">Must be at least 3 characters long.</small>
         <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('maxlength')">Cannot exceed 255 characters.</small>
+        <small class="invalid-feedback" *ngIf="testCaseForm.controls['description'].hasError('testCaseUnique')">A Test Case already exists with this description.</small>
       </div>
       <div class="form-group"*ngIf="testSuiteId">
         <label for="lastTestedSelectInput">Last Tested</label>
