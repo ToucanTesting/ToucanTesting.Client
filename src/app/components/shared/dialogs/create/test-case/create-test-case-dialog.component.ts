@@ -45,9 +45,11 @@ export class CreateTestCaseDialogComponent {
 
     testCaseUniqueValidator(descriptionKey: string, testModule: TestModule) {
         return (group: FormGroup) => {
+            let editingId = (this.data.payload) ? this.data.payload.id : null;
             let descriptionInput = group.controls[descriptionKey];
             const testCase = testModule.testCases.find(c => c.description === descriptionInput.value);
-            if (!!testCase && testCase.isEnabled && testCase.id !== this.data.payload.id) {
+            
+            if (!!testCase && testCase.isEnabled && testCase.id !== editingId) {
                 return descriptionInput.setErrors({ testCaseUnique: true });
             }
             return null;
