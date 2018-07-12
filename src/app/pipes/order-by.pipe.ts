@@ -7,6 +7,8 @@ export class OrderByPipe implements PipeTransform {
 
   transform(arr: string[], sortProp: string, sortDir?: string): any[] {
     arr.sort((a: any, b: any) => {
+      sortProp = (!sortProp) ? 'id' : sortProp;
+
       if (this.tryLowerCase(a[sortProp]) < this.tryLowerCase(b[sortProp])) {
         return -1;
       } else if (this.tryLowerCase(a[sortProp]) > this.tryLowerCase(b[sortProp])) {
