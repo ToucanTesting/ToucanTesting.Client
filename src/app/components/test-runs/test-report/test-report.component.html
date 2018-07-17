@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="issues-tab" data-toggle="tab" href="#issues" role="tab" attr.aria-controls="issues-tab" aria-selected="false"
-                (click)="getTestIssues()">Issues</a>
+                (click)="hasIssues=false;getTestIssues()">Issues</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="failed-tab" data-toggle="tab" href="#failed" role="tab" attr.aria-controls="failed-tab" aria-selected="false"
@@ -38,21 +38,21 @@
             <canvas id="modulesChart"></canvas>
           </div>
           <div class="tab-pane fade" id="issues" role="tabpanel" attr.aria-labelledby="issues-tab">
-            <tt-issues></tt-issues>
+            <tt-issues [testIssues]="testRun?.testIssues" ></tt-issues>
           </div>
           <div class="tab-pane fade" id="failed" role="tabpanel" attr.aria-labelledby="failed-tab">
             <div *ngFor="let testCase of testCases">
-              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Fail" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
+              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Fail" [testCase]="testCase" [isTestReport]="true" [testRunId]="testRun?.id"></tt-test-case>
             </div>
           </div>
           <div class="tab-pane fade" id="cnt" role="tabpanel" attr.aria-labelledby="cnt-tab">
             <div *ngFor="let testCase of testCases">
-              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.CNT" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
+              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.CNT" [testCase]="testCase" [isTestReport]="true" [testRunId]="testRun?.id"></tt-test-case>
             </div>
           </div>
           <div class="tab-pane fade" id="passed" role="tabpanel" attr.aria-labelledby="passed-tab">
             <div *ngFor="let testCase of testCases">
-              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Pass" [testCase]="testCase" [isTestReport]="true"></tt-test-case>
+              <tt-test-case *ngIf="testCase.testResult.status === testResultStatus.Pass" [testCase]="testCase" [isTestReport]="true" [testRunId]="testRun?.id"></tt-test-case>
             </div>
           </div>
         </div>

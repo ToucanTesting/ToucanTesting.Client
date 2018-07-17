@@ -27,14 +27,16 @@ export class IssuesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.testIssuesService
-      .getTestIssues()
-      .subscribe(testIssues => {
-        this.testIssues = testIssues;
-        this.isLoading = false;
-      }, error => {
-        this.handleErrorService.handleError(error);
-      });
+    if (!this.testIssues) {
+      this.testIssuesService
+        .getTestIssues()
+        .subscribe(testIssues => {
+          this.testIssues = testIssues;
+          this.isLoading = false;
+        }, error => {
+          this.handleErrorService.handleError(error);
+        });
+    }
   }
 
   openTestIssueDeleteDialog(testIssue: TestIssue): void {
