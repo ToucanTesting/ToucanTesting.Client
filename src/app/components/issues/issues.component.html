@@ -7,15 +7,16 @@
         <div>
           <strong>{{testIssue.reference}}</strong> {{testIssue.description}}
         </div>
-        <div *ngIf="testIssue.testModuleName || testIssue.testCaseDescription">
-          <small style="color: #777" class="clickable-text" (click)="openTestCaseViewDialog(testIssue.testCaseId)">{{testIssue.testModuleName}} > {{testIssue.testCaseDescription}}</small>
-        </div>
       </span>
       <div class="dropdown">
         <span class="options-dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <mat-icon>more_vert</mat-icon>
         </span>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <span class="dropdown-item" (click)="openTestCaseViewDialog(testIssue.testCaseId)">View Test Case</span>
+          <span *ngIf="testIssue.testRunId > 0 && router.url.indexOf('test-reports') === -1" class="dropdown-item" [routerLink]="['/test-reports', testIssue.testRunId]">Go To Test Report</span>
+          <span *ngIf="testIssue.testRunId > 0" class="dropdown-item" [routerLink]="['/test-runs', testIssue.testRunId]">Go To Test Run</span>
+          <div class="dropdown-divider"></div>
           <span class="dropdown-item" (click)="openTestIssueEditDialog(testIssue)">Edit</span>
           <span class="dropdown-item" (click)="openTestIssueDeleteDialog(testIssue)">Delete</span>
         </div>
