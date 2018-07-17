@@ -62,7 +62,7 @@
         aria-expanded="false">More</span>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
         <span class="dropdown-item" (click)="openTestCaseViewDialog(testModule, testCase, 'issue')" *ngIf="testCase.testIssues && testCase.testIssues.length > 0">View Issues</span>
-        <span class="dropdown-item" (click)="openLogIssueDialog(testCase)">Log Issue</span>
+        <span class="dropdown-item" (click)="openLogIssueDialog(testCase, testRunId)">Log Issue</span>
       </div>
     </div>
   </div>

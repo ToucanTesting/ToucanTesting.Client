@@ -1,4 +1,4 @@
-import { Base, TestSuite, TestResult } from '@models';
+import { Base, TestSuite, TestResult, TestIssue } from '@models';
 
 export class TestRun extends Base {
     id: number;
@@ -6,4 +6,5 @@ export class TestRun extends Base {
     testSuite: TestSuite;
     testSuiteId?: number;
     testResults: TestResult[];
+    testIssues: TestIssue[];
 }

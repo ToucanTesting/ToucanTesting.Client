@@ -248,6 +248,7 @@ export class TestReportComponent implements OnInit {
               testCase.testIssues.push(testIssue);
             }
           })
+          this.testRun.testIssues = testIssues.filter(ti => ti.testRunId === this.testRun.id);
           this.hasIssues = true;
         }, error => {
           this.handleErrorService.handleError(error);
