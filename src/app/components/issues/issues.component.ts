@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { TestCasesService, HandleErrorService, TestIssuesService } from '@services';
 import { TestCase, TestIssue } from '@models';
 import { ToastrService } from 'ngx-toastr';
@@ -8,15 +9,16 @@ import { ViewTestCaseDialogComponent } from '@components/shared/dialogs/test-cas
 import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-issues',
+  selector: 'tt-issues',
   templateUrl: './issues.component.html',
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
   isLoading: boolean = true;
-  testIssues: TestIssue[];
+  @Input() public testIssues: TestIssue[];
 
   constructor(
+    private router: Router,
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
     private testIssuesService: TestIssuesService,

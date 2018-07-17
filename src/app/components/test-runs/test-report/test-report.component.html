@@ -16,6 +16,10 @@
                 aria-selected="true">Overview</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="issues-tab" data-toggle="tab" href="#issues" role="tab" attr.aria-controls="issues-tab" aria-selected="false"
+                (click)="getTestIssues()">Issues</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="failed-tab" data-toggle="tab" href="#failed" role="tab" attr.aria-controls="failed-tab" aria-selected="false"
                 (click)="getTestIssues()">Failed</a>
             </li>
@@ -32,6 +36,9 @@
         <div class="card-body tab-content">
           <div class="tab-pane fade show active" id="overview" role="tabpanel" attr.aria-labelledby="overview-tab">
             <canvas id="modulesChart"></canvas>
+          </div>
+          <div class="tab-pane fade" id="issues" role="tabpanel" attr.aria-labelledby="issues-tab">
+            <tt-issues></tt-issues>
           </div>
           <div class="tab-pane fade" id="failed" role="tabpanel" attr.aria-labelledby="failed-tab">
             <div *ngFor="let testCase of testCases">
