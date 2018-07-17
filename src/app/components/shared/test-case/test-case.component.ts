@@ -79,14 +79,13 @@ export class TestCaseComponent {
     });
   }
 
-  openLogIssueDialog(testCase: TestCase): void {
+  openLogIssueDialog(testCase: TestCase, testRunId?: number): void {
     const dialogRef = this.dialog.open(LogIssueDialogComponent, { data: { title: 'Log an Issue' } });
 
     dialogRef.afterClosed().subscribe((testIssue: TestIssue) => {
       if (testIssue) {
         testIssue.testCaseId = testCase.id;
-        testIssue.testModuleName = this.testModule.name;
-        testIssue.testCaseDescription = testCase.description;
+        testIssue.testRunId = testRunId || null;
         this.addTestIssue(testCase, testIssue)
       }
     });
