@@ -28,6 +28,8 @@ export class TestModuleComponent {
     onlyNeverTested: false,
     needsCriteria: false,
     isAutomated: false,
+    isManual: false,
+    notAutomated: false,
     hasIssues: false
   };
 
@@ -57,6 +59,14 @@ export class TestModuleComponent {
     if (this.filters.isAutomated) {
       for (let i = results.length - 1; i >= 0; i--) {
         if (!results[i].isAutomated) {
+          results.splice(results.indexOf(results[i]), 1)
+        }
+      }
+    }
+
+    if (this.filters.isManual) {
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (results[i].isAutomated) {
           results.splice(results.indexOf(results[i]), 1)
         }
       }

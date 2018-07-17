@@ -55,12 +55,18 @@
             </span>
             <span class="dropdown-item">
               <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.hasIssues" (click)="filterTestCases()"> Has Issues
+              </label>
+            </span>
+            <div class="dropdown-divider"></div>
+            <span class="dropdown-item">
+              <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" [(ngModel)]="filters.isAutomated" (click)="filterTestCases()"> Automated
               </label>
             </span>
             <span class="dropdown-item">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.hasIssues" (click)="filterTestCases()"> Has Issues
+                <input class="form-check-input" type="checkbox" [(ngModel)]="filters.isManual" (click)="filterTestCases()"> Manual
               </label>
             </span>
           </div>
