@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TestCasesService, HandleErrorService, TestIssuesService } from '@services';
 import { TestCase, TestIssue } from '@models';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,7 @@ import { DeleteDialogComponent } from '@components/shared/dialogs/delete/delete-
 import { LogIssueDialogComponent } from '@components/shared/dialogs/create/log-issue/log-issue-dialog.component';
 import { ViewTestCaseDialogComponent } from '@components/shared/dialogs/test-case/view-test-case-dialog.component';
 import { MatDialog } from '@angular/material';
+import { Pagination } from 'app/interfaces/pagination.interface';
 
 @Component({
   selector: 'tt-issues',
@@ -15,9 +16,12 @@ import { MatDialog } from '@angular/material';
 })
 export class IssuesComponent implements OnInit {
   isLoading: boolean = true;
+  isSearching: boolean = false;
+  pagination: Pagination;
   @Input() public testIssues: TestIssue[];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
     private handleErrorService: HandleErrorService,
@@ -27,16 +31,13 @@ export class IssuesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.testIssues) {
-      this.testIssuesService
-        .getTestIssues()
-        .subscribe(testIssues => {
-          this.testIssues = testIssues;
-          this.isLoading = false;
-        }, error => {
-          this.handleErrorService.handleError(error);
-        });
-    }
+    this.pagination = {
+      pageNumber: this.route.snapshot.queryParamMap.get('pageNumber'),
+      pageSize: this.route.snapshot.queryParamMap.get('pageSize'),
+      totalPages: '1'
+    };
+
+    this.getTestIssues(this.pagination);
   }
 
   openTestIssueDeleteDialog(testIssue: TestIssue): void {
@@ -74,6 +75,35 @@ export class IssuesComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(res => {
+      });
+  }
+
+  searchTestIssues(searchText: string): void {
+    if (searchText.length === 0) {
+      this.isSearching = false;
+    }
+    this.getTestIssues(this.pagination, searchText);
+  };
+
+  getTestIssues(pagination: Pagination, searchText?: string) {
+    this.pagination = pagination;
+    this.isSearching = !!searchText;
+    this.testIssuesService
+      .getTestIssues(this.pagination, searchText)
+      .subscribe(res => {
+        this.pagination.totalPages = res.headers.get('totalPages');
+        if (Number(this.route.snapshot.queryParamMap.get('pageNumber')) > Number(this.pagination.totalPages)) {
+          const urlTree = this.router.parseUrl(this.router.url);
+          urlTree.queryParams['pageNumber'] = this.pagination.totalPages;
+          pagination.pageNumber = this.pagination.totalPages;
+
+          this.router.navigateByUrl(urlTree);
+          this.getTestIssues(pagination);
+        }
+        this.testIssues = res.body;
+        this.isLoading = false;
+      }, error => {
+        this.handleErrorService.handleError(error);
       });
   }
 

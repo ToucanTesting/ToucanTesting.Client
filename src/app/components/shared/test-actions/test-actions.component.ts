@@ -1,4 +1,4 @@
-import { Component, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone, SimpleChanges, OnChanges } from '@angular/core';
 import { TestCase, TestAction } from '@models';
 import { TestActionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
@@ -9,13 +9,15 @@ import { SortablejsOptions } from 'angular-sortablejs';
   templateUrl: './test-actions.component.html',
   styleUrls: ['./test-actions.component.scss']
 })
-export class TestActionsComponent {
+export class TestActionsComponent implements OnChanges {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  @Input() isSorting: boolean = false;
   tempTestActions: TestAction[];
   tempDescription: string;
 
   eventOptions: SortablejsOptions = {
+    draggable: '.draggable',
     onChoose: () => this.tempTestActions = this.testCase.testActions.slice(),
     onUpdate: (event) => {
       const origin = this.tempTestActions[event.oldIndex];
@@ -37,8 +39,12 @@ export class TestActionsComponent {
     private testActionsService: TestActionsService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.isSorting = changes.isSorting.currentValue;
+  }
+
   toggleIsEditing(testAction: TestAction) {
-    if (!this.isTestRun) {
+    if (!this.isTestRun && !this.isSorting) {
       testAction.isEditing = !testAction.isEditing;
     }
   }

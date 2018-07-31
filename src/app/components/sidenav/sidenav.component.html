@@ -10,7 +10,7 @@
     </a>
   </li>
   <li class="nav-item" [routerLinkActive]="['link-active']">
-      <a class="nav-link" [routerLink]="['/issues']">
+      <a class="nav-link" [routerLink]="['/issues']" [queryParams]="{pageNumber: '1', pageSize: '10', searchText: ''}">
         Issues
       </a>
     </li>

@@ -20,7 +20,7 @@ export class TestRunsService {
             params: {
                 pageNumber: pagination.pageNumber,
                 pageSize: pagination.pageSize,
-                searchText: searchText || ""
+                searchText: searchText || ''
             },
             observe: 'response'
         });

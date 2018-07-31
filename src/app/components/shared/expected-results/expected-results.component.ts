@@ -1,4 +1,4 @@
-import { Component, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { TestCase } from '@models';
 import { ExpectedResultsService, HandleErrorService } from '@services';
 import { ExpectedResult } from '../../../models';
@@ -10,13 +10,15 @@ import { SortablejsOptions } from 'angular-sortablejs';
   templateUrl: './expected-results.component.html',
   styleUrls: ['./expected-results.component.scss']
 })
-export class ExpectedResultsComponent {
+export class ExpectedResultsComponent implements OnChanges {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  @Input() isSorting: boolean;
   tempExpectedResults: ExpectedResult[];
   tempDescription: string;
 
   eventOptions: SortablejsOptions = {
+    draggable: '.draggable',
     onChoose: () => this.tempExpectedResults = this.testCase.expectedResults.slice(),
     onUpdate: (event) => {
       const origin = this.tempExpectedResults[event.oldIndex];
@@ -38,8 +40,12 @@ export class ExpectedResultsComponent {
     private expectedResultsService: ExpectedResultsService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.isSorting = changes.isSorting.currentValue;
+  }
+
   toggleIsEditing(expectedResult: ExpectedResult) {
-    if (!this.isTestRun) {
+    if (!this.isTestRun && !this.isSorting) {
       expectedResult.isEditing = !expectedResult.isEditing;
     }
   }

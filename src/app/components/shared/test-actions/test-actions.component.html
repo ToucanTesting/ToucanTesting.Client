@@ -1,14 +1,17 @@
 <div [sortablejs]="testCase.testActions" [sortablejsOptions]="eventOptions">
   <ng-container *ngFor="let testAction of testCase.testActions; let i = index;">
-    <div class="card modal-item sortable" *ngIf="testCase.testActions.length > 0">
+    <div class="card modal-item" [ngClass]="{'draggable sortable': isSorting }" *ngIf="testCase.testActions.length > 0">
       <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card-body d-flex justify-content-between">
-        <span class="editable" *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
-          <strong>{{i + 1}}.</strong> {{testAction.description}}
-          <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
-        </span>
+        <div>
+          <i class="fa fa-sort" *ngIf="isSorting"></i>
+          <span class="editable" *ngIf="!testAction.isEditing" (click)="toggleIsEditing(testAction); tempDescription = testAction.description">
+            <strong> {{i + 1}}.</strong> {{testAction.description}}
+            <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun && !isSorting">edit</mat-icon>
+          </span>
+        </div>
         <input autofocus class="form-control" *ngIf="testAction.isEditing" matInput (blur)="renameTestAction(testAction)" (keyup.escape)="cancelEdit(testAction)"
           (keyup.enter)="renameTestAction(testAction)" [(ngModel)]="testAction.description" />
-        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" *ngIf="!testAction.isEditing" class="toolbar">
+        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" *ngIf="!testAction.isEditing && !isSorting" class="toolbar">
           <mat-icon (click)="deleteTestAction(testAction)">delete</mat-icon>
         </span>
       </div>
