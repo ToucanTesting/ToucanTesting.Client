@@ -34,7 +34,7 @@ export class TestRunsComponent implements OnInit {
         this.pagination = {
             pageNumber: this.route.snapshot.queryParamMap.get('pageNumber'),
             pageSize: this.route.snapshot.queryParamMap.get('pageSize'),
-            totalPages: "1"
+            totalPages: '1'
         };
 
         this.getTestRuns(this.pagination);

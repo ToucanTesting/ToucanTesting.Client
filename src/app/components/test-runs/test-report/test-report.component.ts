@@ -76,7 +76,7 @@ export class TestReportComponent implements OnInit {
             this.testModulesService
               .getTestReport(testRun.testSuiteId, testRun.createdAt)
               .subscribe(testModules => {
-                var testCases = [];
+                const testCases = [];
                 testModules.forEach((testModule) => {
                   testModule.testCases.forEach(tc => {
                     testCases.push(tc);
@@ -92,7 +92,7 @@ export class TestReportComponent implements OnInit {
                 })
 
                 this.testResults.forEach(tr => {
-                  var testCase = testCases.find(tc => tc.id === tr.testCaseId);
+                  const testCase = testCases.find(tc => tc.id === tr.testCaseId);
                   tr.testModuleId = testCase.testModuleId;
                 })
 
