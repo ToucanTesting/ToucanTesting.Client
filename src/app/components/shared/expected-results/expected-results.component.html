@@ -5,7 +5,7 @@
       <div class="card-body d-flex justify-content-between">
         <div>
           <i class="fa fa-sort" *ngIf="isSorting"></i>
-          <span class="editable" *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
+          <span [ngClass]="{'editable': !isSorting}" *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
             {{expectedResult.description}}
             <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun && !isSorting">edit</mat-icon>
           </span>
