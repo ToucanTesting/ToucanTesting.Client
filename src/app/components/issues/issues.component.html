@@ -2,9 +2,6 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <strong>Test Issues</strong>
-    <a (click)="openUpsertDialog()" class="header-button" style="cursor:pointer;">
-      <mat-icon>add</mat-icon>
-    </a>
   </div>
   <div class="card-body" *ngIf="!isLoading">
     <search-bar (callback)="searchTestIssues($event)"></search-bar>
