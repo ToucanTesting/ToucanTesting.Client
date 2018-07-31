@@ -1,16 +1,20 @@
 <div [sortablejs]="testCase.expectedResults" [sortablejsOptions]="eventOptions">
   <ng-container *ngFor="let expectedResult of testCase.expectedResults; let i = index;">
-    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card modal-item sortable" *ngIf="testCase.expectedResults.length > 0">
+    <div (mouseover)="hoverIndex = i" (mouseleave)="hoverIndex = null" class="card modal-item" [ngClass]="{'draggable sortable': isSorting }"
+      *ngIf="testCase.expectedResults.length > 0">
       <div class="card-body d-flex justify-content-between">
-        <span class="editable" *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
-          {{expectedResult.description}}
-          <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun">edit</mat-icon>
-        </span>
+        <div>
+          <i class="fa fa-sort" *ngIf="isSorting"></i>
+          <span class="editable" *ngIf="!expectedResult.isEditing" (click)="toggleIsEditing(expectedResult); tempDescription = expectedResult.description">
+            {{expectedResult.description}}
+            <mat-icon class="edit-icon" *ngIf="hoverIndex === i && !isTestRun && !isSorting">edit</mat-icon>
+          </span>
+        </div>
         <input autofocus class="form-control" *ngIf="expectedResult.isEditing" matInput (blur)="updateExpectedResult(expectedResult)"
           (keyup.escape)="cancelEdit(expectedResult)" (keyup.enter)="updateExpectedResult(expectedResult)" [(ngModel)]="expectedResult.description"
         />
-        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" class="toolbar">
-          <mat-icon (click)="deleteExpectedResult(expectedResult)" *ngIf="!expectedResult.isEditing">delete</mat-icon>
+        <span [ngClass]="{'ghost':!(hoverIndex === i || isTestRun)}" *ngIf="!expectedResult.isEditing && !isSorting" class="toolbar">
+          <mat-icon (click)="deleteExpectedResult(expectedResult)" >delete</mat-icon>
         </span>
       </div>
     </div>

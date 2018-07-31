@@ -23,6 +23,7 @@ export class ViewTestCaseDialogComponent implements OnInit {
     type: string = 'expected';
     testCase: TestCase;
     isTestReport: boolean = false;
+    isSorting: boolean = false;
     priorityOptions = Priority;
 
     constructor(
@@ -54,6 +55,10 @@ export class ViewTestCaseDialogComponent implements OnInit {
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    toggleSorting() {
+        this.isSorting = !this.isSorting;
     }
 
     addExpectedResult(description: string) {

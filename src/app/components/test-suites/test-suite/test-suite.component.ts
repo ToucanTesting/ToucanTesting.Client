@@ -17,6 +17,7 @@ import { SortablejsOptions } from 'angular-sortablejs';
 export class TestSuiteComponent {
     isLoading: boolean = true;
     isSearching: boolean = false;
+    isSorting: boolean = false;
     testSuiteId: number;
     testModules: TestModule[];
     tempTestModules: TestModule[];
@@ -35,6 +36,7 @@ export class TestSuiteComponent {
     }
 
     eventOptions: SortablejsOptions = {
+        draggable: '.draggable',
         onChoose: () => {
             this.tempTestModules = this.testModules.slice();
         },
@@ -62,6 +64,10 @@ export class TestSuiteComponent {
             }, error => {
                 this.handleErrorService.handleError(error);
             });
+    }
+
+    toggleSorting() {
+        this.isSorting = !this.isSorting;
     }
 
     searchTestCases(searchText: string): void {

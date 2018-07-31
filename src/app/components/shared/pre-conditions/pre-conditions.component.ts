@@ -1,4 +1,4 @@
-import { Component, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone, SimpleChanges } from '@angular/core';
 import { TestCase, TestCondition } from '@models';
 import { TestConditionsService, HandleErrorService } from '@services';
 import { ToastrService } from 'ngx-toastr';
@@ -12,10 +12,12 @@ import { SortablejsOptions } from 'angular-sortablejs';
 export class PreConditionsComponent {
   @Input() testCase: TestCase;
   @Input() isTestRun: boolean = false;
+  @Input() isSorting: boolean = false;
   tempConditions: TestCondition[];
   tempDescription: string;
 
   eventOptions: SortablejsOptions = {
+    draggable: '.draggable',
     onChoose: () => this.tempConditions = this.testCase.testConditions.slice(),
     onUpdate: (event) => {
       const origin = this.tempConditions[event.oldIndex];
@@ -37,8 +39,12 @@ export class PreConditionsComponent {
     private testConditionsService: TestConditionsService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.isSorting = changes.isSorting.currentValue;
+  }
+
   toggleIsEditing(testCondition: TestCondition) {
-    if (!this.isTestRun) {
+    if (!this.isTestRun && !this.isSorting) {
       testCondition.isEditing = !testCondition.isEditing;
     }
   }
