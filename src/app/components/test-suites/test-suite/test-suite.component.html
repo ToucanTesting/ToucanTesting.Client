@@ -19,7 +19,7 @@
         <div class="list-group-item d-flex justify-content-between align-items-center">
           <span>
             <i class="fa fa-sort" *ngIf="isSorting"></i>
-            <span #toggle (click)="getTestCases(testModule)" data-toggle="collapse" [attr.data-target]="'#collapse-' + i" aria-expanded="false"
+            <span #toggle (click)="getTestCases(testModule)" [attr.data-toggle]="isSorting ? null : 'collapse'" [attr.data-target]="'#collapse-' + i" aria-expanded="false"
               [attr.aria-controls]="'collapse-' + i" [ngClass]="{'clickable-text': !isSorting}"> {{testModule.name}}
             </span>
           </span>
