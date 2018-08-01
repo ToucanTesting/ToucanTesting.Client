@@ -88,6 +88,7 @@ export class TestRunComponent {
                 this.isSearching = true;
                 this.testModules.forEach(m => {
                     m.testCases = testCases.filter(c => c.testModuleId === m.id);
+                    this.getTestModuleTestResults(m);
                 });
             }, error => {
                 this.handleErrorService.handleError(error);

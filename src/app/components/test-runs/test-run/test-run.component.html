@@ -6,7 +6,7 @@
       <mat-icon>more_vert</mat-icon>
     </span>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="headerDropdownButton">
-      <span class="dropdown-item" href [routerLink]="['/test-reports', testRun.id]">View Report</span>
+      <span class="dropdown-item" href [routerLink]="['/test-reports', testRun?.id]">View Report</span>
     </div>
   </div>
   <div class="card-body" *ngIf="!isLoading">
