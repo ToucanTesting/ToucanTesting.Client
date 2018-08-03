@@ -17,14 +17,19 @@ export class TestIssuesService {
   }
 
   public getTestIssues(pagination?: Pagination, searchText?: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}test-issues`, {
-      params: {
-        pageNumber: (pagination && pagination.pageNumber) ? pagination.pageNumber : '0',
-        pageSize: (pagination && pagination.pageSize) ? pagination.pageSize : '0',
-        searchText: (searchText) ? searchText : ''
-      },
-      observe: 'response'
-    });
+    if (pagination) {
+      return this.http.get<any>(`${environment.apiUrl}test-issues`, {
+        params: {
+          pageNumber: (pagination && pagination.pageNumber) ? pagination.pageNumber : '0',
+          pageSize: (pagination && pagination.pageSize) ? pagination.pageSize : '0',
+          searchText: (searchText) ? searchText : ''
+        },
+        observe: 'response'
+      });
+    } else {
+      return this.http.get<any>(`${environment.apiUrl}test-issues`);
+    }
+
   }
 
   public updateTestIssue(testIssueId: number, testIssue: TestIssue): Observable<TestIssue> {
