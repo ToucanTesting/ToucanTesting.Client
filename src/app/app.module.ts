@@ -132,7 +132,8 @@ export function tokenGetter() {
         whitelistedDomains: [
           'localhost:5000',
           'api.toucantesting.com',
-          'as-kno2toucanapi-dev.azurewebsites.net'
+          'as-kno2toucanapi-dev.azurewebsites.net',
+          'api-toucan-rj-perch-tst-wu2.azurewebsites.net'
         ],
         throwNoTokenError: true
       }
