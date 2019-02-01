@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "start http://localhost:4200 & ng serve --port 4200",
+    "start": "ng serve",
     "build-kno2": "ng build --prod --configuration=kno2",
     "build-perch": "ng build --prod --configuration=perch",
     "test": "ng test",
